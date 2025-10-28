@@ -38,13 +38,13 @@
         :root {
             /* Light Mode Colors - Based on Color Guide */
             --bg-primary: #FFFFFF;
-            --bg-secondary: rgba(255, 255, 255, 0.8);
-            --bg-tertiary: #F5F7FA;
-            --bg-hover: rgba(239, 246, 255, 0.8);
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-tertiary: #F8FAFF;
+            --bg-hover: rgba(239, 246, 255, 0.95);
             --text-primary: #1E1E1E;
             --text-secondary: #6B7280;
             --text-tertiary: #9CA3AF;
-            --border-color: #E5E7EB;
+            --border-color: rgba(86, 157, 255, 0.2);
             --accent-blue: #0055E9;
             --accent-blue-hover: #0032A0;
             --accent-mint: #00CBC8;
@@ -68,20 +68,26 @@
             --blue-900: #0032A0;
 
             /* Content Gradient - Light */
-            --content-gradient: radial-gradient(1200px ellipse at 20% -10%, rgba(86,157,255,.16) 0%, rgba(86,157,255,.06) 35%, transparent 70%),
-                                linear-gradient(180deg, #FFFFFF 0%, #F5F7FA 100%);
+            --content-gradient: radial-gradient(ellipse 120% 100% at 50% -20%, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.08) 30%, transparent 60%),
+                                radial-gradient(ellipse 80% 80% at 80% 80%, rgba(106,20,217,0.12) 0%, rgba(0,203,200,0.08) 40%, transparent 70%),
+                                linear-gradient(180deg,
+                                    #FFFFFF 0%,
+                                    rgba(240,245,255,0.6) 25%,
+                                    rgba(227,238,255,0.7) 50%,
+                                    rgba(217,230,255,0.5) 75%,
+                                    #FFFFFF 100%);
         }
 
         [data-theme="dark"] {
             /* Dark Mode Colors - Based on Color Guide */
-            --bg-primary: #0A0E1A;
-            --bg-secondary: rgba(26, 31, 46, 0.8);
+            --bg-primary: #0D1426;
+            --bg-secondary: rgba(26, 31, 46, 0.9);
             --bg-tertiary: #1A1F2E;
-            --bg-hover: rgba(51, 65, 85, 0.8);
+            --bg-hover: rgba(51, 65, 85, 0.9);
             --text-primary: #F9FAFB;
             --text-secondary: #9CA3AF;
             --text-tertiary: #6B7280;
-            --border-color: #2D3748;
+            --border-color: rgba(86, 157, 255, 0.2);
             --accent-blue: #569DFF;
             --accent-blue-hover: #0055E9;
             --accent-mint: #00CBC8;
@@ -105,8 +111,14 @@
             --blue-900: #0032A0;
 
             /* Content Gradient - Dark */
-            --content-gradient: radial-gradient(1200px ellipse at 20% -10%, rgba(86,157,255,.22) 0%, rgba(86,157,255,.10) 35%, transparent 70%),
-                                linear-gradient(180deg, #0A0E1A 0%, #0D1426 100%);
+            --content-gradient: radial-gradient(ellipse 120% 100% at 50% -20%, rgba(86,157,255,0.25) 0%, rgba(0,85,233,0.15) 30%, transparent 60%),
+                                radial-gradient(ellipse 80% 80% at 80% 80%, rgba(106,20,217,0.20) 0%, rgba(0,203,200,0.12) 40%, transparent 70%),
+                                linear-gradient(180deg,
+                                    #0A0E1A 0%,
+                                    rgba(13,20,38,0.95) 25%,
+                                    rgba(20,28,51,0.9) 50%,
+                                    rgba(26,35,64,0.85) 75%,
+                                    #0D1426 100%);
         }
 
         body {
@@ -323,6 +335,19 @@
             -webkit-backdrop-filter: blur(10px);
             overflow: hidden;
             transition: all 0.2s;
+            border: 1px solid transparent;
+            background-image:
+                linear-gradient(var(--bg-tertiary), var(--bg-tertiary)),
+                linear-gradient(135deg, rgba(86,157,255,0.3) 0%, rgba(0,85,233,0.2) 50%, rgba(106,20,217,0.25) 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .project-item:hover {
+            background-image:
+                linear-gradient(var(--bg-tertiary), var(--bg-tertiary)),
+                linear-gradient(135deg, rgba(86,157,255,0.5) 0%, rgba(0,85,233,0.35) 50%, rgba(106,20,217,0.4) 100%);
+            box-shadow: 0 2px 8px rgba(86,157,255,0.15);
         }
 
         .project-header {
