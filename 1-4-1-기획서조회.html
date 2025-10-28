@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기획서 조회 - CEN AI Studio</title>
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fastly.jsdelivr.net/gh/fonts-archive/HallymGothic/HallymGothic.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Font Families */
+        body {
+            font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'HallymGothic', 'SUIT', sans-serif;
+        }
+
+        h1[lang="en"], h2[lang="en"], h3[lang="en"], h4[lang="en"], h5[lang="en"], h6[lang="en"],
+        .en-title {
+            font-family: 'Gilroy', 'SUIT', sans-serif;
+        }
+
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --bg-tertiary: #F5F7FA;
+            --bg-hover: rgba(239, 246, 255, 0.8);
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border-color: #E5E7EB;
+            --accent-blue: #0055E9;
+            --accent-blue-hover: #0032A0;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --accent-purple: #6A14D9;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+            --glass-blur: 20px;
+            --gradient-1: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%);
+            --gradient-2: linear-gradient(90deg, #00CBC8 0%, #569DFF 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0A0E1A;
+            --bg-secondary: rgba(26, 31, 46, 0.8);
+            --bg-tertiary: #1A1F2E;
+            --bg-hover: rgba(51, 65, 85, 0.8);
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-tertiary: #6B7280;
+            --border-color: #2D3748;
+            --accent-blue: #569DFF;
+            --accent-blue-hover: #0055E9;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../CEN_img/bg/배경_라이트.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+
+        [data-theme="dark"] body::before {
+            background-image: url('../CEN_img/bg/배경_다크.jpg');
+            opacity: 0.15;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar - Same as 1-4-촬영기획.html */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 72px;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        .logo-light { display: block; }
+        .logo-dark { display: none; }
+        [data-theme="dark"] .logo-light { display: none; }
+        [data-theme="dark"] .logo-dark { display: block; }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            box-sizing: border-box;
+        }
+
+        .workflow-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+        }
+
+        .step-item-stepper.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .step-item-stepper.completed {
+            color: var(--accent-mint);
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .step-item-stepper.active .step-number {
+            background: white;
+            border-color: white;
+            color: var(--accent-blue);
+        }
+
+        .step-item-stepper.completed .step-number {
+            background: var(--accent-mint);
+            border-color: var(--accent-mint);
+            color: white;
+        }
+
+        .step-arrow {
+            color: var(--border-color);
+            font-size: 16px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .icon-btn.icon-only {
+            padding: 10px;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 32px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .page-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Tabs */
+        .tabs-container {
+            margin-bottom: 24px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-blue);
+            border-bottom-color: var(--accent-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Planning Document */
+        .planning-document {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .document-section {
+            margin-bottom: 32px;
+        }
+
+        .document-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title-doc {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .planning-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .planning-table th,
+        .planning-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .planning-table th {
+            background: var(--bg-tertiary);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .planning-table td {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .planning-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .planning-table tr:hover td {
+            background: var(--bg-hover);
+        }
+
+        /* Scene Details */
+        .scene-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .scene-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s;
+        }
+
+        .scene-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        .scene-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .scene-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--accent-blue);
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+        }
+
+        .scene-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon-small {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+
+        .btn-icon-small svg {
+            stroke: var(--text-primary);
+        }
+
+        .btn-icon-small:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-icon-small:hover svg {
+            stroke: white;
+        }
+
+        .btn-icon-small.delete:hover {
+            background: var(--accent-coral);
+            border-color: var(--accent-coral);
+        }
+
+        .scene-detail-grid {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+        }
+
+        .scene-image {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            object-fit: cover;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar (simplified for this example) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="../CEN_img/logo/로고 라이트모드.png" alt="CEN AI Studio" class="logo logo-light" onclick="location.href='index.html'">
+                <img src="../CEN_img/logo/로고 다크모드.png" alt="CEN AI Studio" class="logo logo-dark" onclick="location.href='index.html'">
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header with Workflow Stepper -->
+            <header class="header">
+                <div class="workflow-stepper">
+                    <div class="step-item-stepper completed">
+                        <div class="step-number">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span>정보입력</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper completed">
+                        <div class="step-number">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span>스토리보드 생성</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper active">
+                        <div class="step-number">3</div>
+                        <span>촬영기획</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper">
+                        <div class="step-number">4</div>
+                        <span>영상제작</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn icon-only" onclick="toggleTheme()" title="테마 전환">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="theme-icon-sun" style="display:none;">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="theme-icon-moon">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">기획서 조회</h1>
+                    <p class="page-description">AI가 생성한 촬영 기획서를 확인하고 씬별로 편집하세요</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="switchTab(1)">프로젝트 개요</button>
+                        <button class="tab-btn" onclick="switchTab(2)">연출 상세</button>
+                    </div>
+
+                    <!-- Tab 1: Project Overview -->
+                    <div class="tab-content active" id="tab1">
+                        <div class="planning-document">
+                            <div class="document-section">
+                                <h2 class="section-title-doc">프로젝트 개요</h2>
+                                <table class="planning-table">
+                                    <tr>
+                                        <th style="width: 200px;">항목</th>
+                                        <th>내용</th>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>프로젝트명</strong></td>
+                                        <td>브랜드 스토리 영상</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>촬영 일정</strong></td>
+                                        <td>2025년 11월 15일 - 11월 17일 (3일)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>총 예상 소요시간</strong></td>
+                                        <td>18시간</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>총 씬 수</strong></td>
+                                        <td>8개 씬</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>총 예산</strong></td>
+                                        <td>10,000,000원</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Scene Details -->
+                    <div class="tab-content" id="tab2">
+                        <div class="planning-document">
+                            <div class="document-section">
+                                <h2 class="section-title-doc">씬별 연출 상세</h2>
+                                <div class="scene-grid">
+                                    <!-- Scene 1 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 1</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(1)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(1)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="Scene 1" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">실내 스튜디오, 자연광 활용</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">브랜드 로고와 제품이 부드럽게 등장하는 오프닝 씬. 따뜻한 톤으로 브랜드의 친근함을 강조.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">부드러운 피아노 배경음악, 자연 효과음</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"자연이 주는 아름다움"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 2 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 2</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(2)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(2)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 2 - 들판의 풀과 바람.png" alt="Scene 2" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">야외 공원, 드론 촬영</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">모델이 자연 속에서 제품을 사용하는 모습. 생동감 있는 움직임과 표정 강조.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">경쾌한 어쿠스틱 기타, 새소리</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"매일을 특별하게"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 3 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 3</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(3)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(3)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 3 - 숲속의 하늘을 바라보는 여성.png" alt="Scene 3" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">실내 스튜디오, 클로즈업 촬영</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">제품의 디테일과 질감을 강조하는 클로즈업 컷. 프리미엄 감성 전달.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">잔잔한 스트링, 제품 텍스처 효과음</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"순수한 성분, 확실한 효과"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 4 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 4</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(4)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(4)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="Scene 4" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">카페 실내, 슬라이더 촬영</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">일상에서 자신감 있게 제품을 사용하는 엔딩 씬. 브랜드 메시지와 로고로 마무리.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">업리프팅 사운드, 브랜드 징글</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"당신의 아름다움을 완성하세요"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 5 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 5</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(5)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(5)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 5 - 피부 위의 물방울.png" alt="Scene 5" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">클로즈업, 매크로 촬영</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">피부에 제품을 바른 후 수분감을 강조하는 디테일 촬영. 텍스처와 효과 부각.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">부드러운 앰비언트, 물방울 소리</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"자연의 수분을 그대로"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 6 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 6</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(6)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(6)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 6 - 에센스를 바르는 손.png" alt="Scene 6" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">핸드 클로즈업, 슬로우 모션</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">제품 사용 과정을 보여주는 핸드 디테일. 사용법과 질감 전달.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">부드러운 배경음악, 질감 효과음</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"피부가 원하는 것"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 7 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 7</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(7)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(7)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 7 - 자신감 있는 미소.png" alt="Scene 7" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">인물 클로즈업, 자연광</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">제품 사용 후 자신감 있는 표정. 긍정적 결과와 만족감 표현.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">밝은 피아노, 긍정적 분위기</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"빛나는 당신"</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Scene 8 -->
+                                    <div class="scene-card">
+                                        <div class="scene-header">
+                                            <span class="scene-badge">씬 8</span>
+                                            <div class="scene-actions">
+                                                <button class="btn-icon-small" onclick="editScene(8)" title="편집">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                    </svg>
+                                                </button>
+                                                <button class="btn-icon-small delete" onclick="deleteScene(8)" title="삭제">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <img src="../CEN_img/SOLIUM_광고/Scene 8 - 브랜드 엔딩.png" alt="Scene 8" class="scene-image">
+                                        <div class="scene-detail-grid">
+                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-value">브랜드 로고 중심, 제품 배치</div>
+
+                                            <div class="detail-label">Description</div>
+                                            <div class="detail-value">브랜드 로고와 제품이 함께 나오는 엔딩 씬. 최종 메시지 전달.</div>
+
+                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-value">브랜드 시그니처 사운드, 마무리 음악</div>
+
+                                            <div class="detail-label">Text</div>
+                                            <div class="detail-value">"SOLIUM - 자연에서 시작된 아름다움"</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="exportPlanning()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        AI 영상 기획서 내보내기
+                    </button>
+                    <button class="btn btn-primary" onclick="startProduction()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        AI 영상 생산 시작하기
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            const sunIcon = document.querySelector('.theme-icon-sun');
+            const moonIcon = document.querySelector('.theme-icon-moon');
+            if (newTheme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const sunIcon = document.querySelector('.theme-icon-sun');
+            const moonIcon = document.querySelector('.theme-icon-moon');
+            if (savedTheme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        });
+
+        // Tab Switching
+        function switchTab(tabNumber) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to selected tab
+            document.querySelectorAll('.tab-btn')[tabNumber - 1].classList.add('active');
+            document.getElementById(`tab${tabNumber}`).classList.add('active');
+        }
+
+        // Edit Scene
+        function editScene(sceneNumber) {
+            // Open scene editing modal (1-4-2-기획서씬편집.html)
+            window.location.href = `1-4-2-기획서씬편집.html?scene=${sceneNumber}`;
+        }
+
+        // Delete Scene
+        function deleteScene(sceneNumber) {
+            // Open delete confirmation modal (1-6-프로젝트삭제.html)
+            if (confirm(`씬 ${sceneNumber}을 삭제하시겠습니까?`)) {
+                alert(`씬 ${sceneNumber}이 삭제되었습니다.`);
+            }
+        }
+
+        // Export Planning
+        function exportPlanning() {
+            alert('AI 영상 기획서를 내보냅니다.');
+        }
+
+        // Start Production
+        function startProduction() {
+            window.location.href = '1-5-영상제작.html';
+        }
+    </script>
+</body>
+</html>

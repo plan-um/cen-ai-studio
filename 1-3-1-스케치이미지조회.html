@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>씬 상세 - CEN AI Studio</title>
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fastly.jsdelivr.net/gh/fonts-archive/HallymGothic/HallymGothic.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'HallymGothic', 'SUIT', sans-serif;
+        }
+
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --bg-tertiary: #F5F7FA;
+            --bg-hover: rgba(239, 246, 255, 0.8);
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border-color: #E5E7EB;
+            --accent-blue: #0055E9;
+            --accent-blue-hover: #0032A0;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --accent-purple: #6A14D9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+            --glass-blur: 20px;
+            --gradient-1: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%);
+            --gradient-2: linear-gradient(90deg, #00CBC8 0%, #569DFF 100%);
+
+            /* Blue Scale */
+            --blue-50: #EAF2FF;
+            --blue-100: #D9E6FF;
+            --blue-200: #C7DAFF;
+            --blue-300: #6AA8FF;
+            --blue-500: #569DFF;
+            --blue-700: #0055E9;
+            --blue-900: #0032A0;
+
+            /* Content Gradient - Light */
+            --content-gradient: radial-gradient(1200px ellipse at 20% -10%, rgba(86,157,255,.16) 0%, rgba(86,157,255,.06) 35%, transparent 70%),
+                                linear-gradient(180deg, #FFFFFF 0%, #F5F7FA 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0A0E1A;
+            --bg-secondary: rgba(26, 31, 46, 0.8);
+            --bg-tertiary: #1A1F2E;
+            --bg-hover: rgba(51, 65, 85, 0.8);
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-tertiary: #6B7280;
+            --border-color: #2D3748;
+            --accent-blue: #569DFF;
+            --accent-blue-hover: #0055E9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+            /* Blue Scale (same values for dark) */
+            --blue-50: #EAF2FF;
+            --blue-100: #D9E6FF;
+            --blue-200: #C7DAFF;
+            --blue-300: #6AA8FF;
+            --blue-500: #569DFF;
+            --blue-700: #0055E9;
+            --blue-900: #0032A0;
+
+            /* Content Gradient - Dark */
+            --content-gradient: radial-gradient(1200px ellipse at 20% -10%, rgba(86,157,255,.22) 0%, rgba(86,157,255,.10) 35%, transparent 70%),
+                                linear-gradient(180deg, #0A0E1A 0%, #0D1426 100%);
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar - Same as other pages */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 72px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-light {
+            display: block;
+        }
+
+        .logo-dark {
+            display: none;
+        }
+
+        [data-theme="dark"] .logo-light {
+            display: none;
+        }
+
+        [data-theme="dark"] .logo-dark {
+            display: block;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: visible;
+            padding: 20px 0;
+        }
+
+        .sidebar-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .sidebar-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+            position: absolute;
+            right: 20px;
+            top: 22px;
+            color: var(--text-primary);
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .sidebar-toggle-btn svg {
+            opacity: 0.7;
+        }
+
+        .sidebar-toggle-btn:hover svg {
+            opacity: 1;
+        }
+
+        .sidebar.collapsed {
+            width: 72px;
+        }
+
+        .sidebar.collapsed .logo {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed .sidebar-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .project-list {
+            padding: 0 12px;
+        }
+
+        .project-item {
+            margin-bottom: 8px;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .project-header {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            align-items: center;
+        }
+
+        .project-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .project-expand-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--text-tertiary);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        .project-item.expanded .project-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .project-steps {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-primary);
+        }
+
+        .project-item.expanded .project-steps {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .step-item-link {
+            display: block;
+            padding: 10px 16px 10px 44px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+
+        .step-item-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-left-color: var(--accent-blue);
+        }
+
+        .step-item-link.active {
+            color: var(--accent-blue);
+            font-weight: 600;
+            background: var(--bg-tertiary);
+            border-left-color: var(--accent-blue);
+        }
+
+        .step-outputs {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            min-width: 180px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-10px);
+            transition: all 0.2s;
+            z-index: 100;
+            margin-left: 8px;
+        }
+
+        .step-item-link:hover .step-outputs {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        .output-item {
+            display: block;
+            padding: 10px 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .output-item:last-child {
+            border-bottom: none;
+        }
+
+        .output-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-blue);
+        }
+
+        .project-thumbnail {
+            width: 64px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        .project-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-footer {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .account-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .account-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .account-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .account-info {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
+
+        .account-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .account-email {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            box-sizing: border-box;
+        }
+
+        .workflow-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            white-space: nowrap;
+        }
+
+        .step-item-stepper.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .step-item-stepper.completed {
+            color: var(--accent-mint);
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .step-item-stepper.active .step-number {
+            background: white;
+            border-color: white;
+            color: var(--accent-blue);
+        }
+
+        .step-item-stepper.completed .step-number {
+            background: var(--accent-mint);
+            border-color: var(--accent-mint);
+            color: white;
+        }
+
+        .step-arrow {
+            color: var(--border-color);
+            font-size: 16px;
+        }
+
+        .header.with-stepper {
+            justify-content: space-between;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .icon-btn.icon-only {
+            padding: 10px;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 32px;
+            background: var(--content-gradient);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .breadcrumb-separator {
+            color: var(--border-color);
+        }
+
+        .breadcrumb-current {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        /* Scene Detail Layout */
+        .scene-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 1200px) {
+            .scene-detail-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scene Image */
+        .scene-image-section {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .scene-number-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .scene-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-tertiary);
+        }
+
+        .scene-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scene-image-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-blue);
+            border: 2px solid var(--accent-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Scene Info Form */
+        .scene-info-section {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .scene-info-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-label .label-icon {
+            margin-right: 6px;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'SUIT', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* Action Bar */
+        .action-bar {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-bar-left {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-bar-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* History Panel */
+        .history-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border-left: 1px solid var(--border-color);
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-panel.open {
+            right: 0;
+        }
+
+        .history-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .history-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .history-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .history-search {
+            width: 100%;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .history-search:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 8px;
+        }
+
+        .history-filter-btn {
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-filter-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        .history-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .history-item {
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .history-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .history-user {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .history-time {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .history-action {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="../CEN_img/logo/로고 라이트모드.png" alt="CEN AI Studio" class="logo logo-light" onclick="location.href='index.html'">
+                <img src="../CEN_img/logo/로고 다크모드.png" alt="CEN AI Studio" class="logo logo-dark" onclick="location.href='index.html'">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="사이드바 접기">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="sidebar-section-header">
+                    <div class="sidebar-section-title">최근 프로젝트</div>
+                </div>
+                <div class="project-list">
+                    <div class="project-item expanded" id="project-1">
+                        <div class="project-header" onclick="toggleProjectExpand(1)">
+                            <img src="../CEN_img/dummy/Glossy_Balm_Model_Image_3x4_d0fb3031-ce5e-420d-9bd0-99501bc1e48a.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">신제품 런칭 광고</div>
+                                <div class="project-meta">Step 2 · 어제</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="1-2-정보입력.html" class="step-item-link">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                            <a href="1-3-스토리보드생성.html" class="step-item-link active">
+                                2. 스토리보드 생성
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">스토리보드</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">씬 1</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">씬 2</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">씬 3</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">씬 4</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=5" class="output-item">씬 5</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=6" class="output-item">씬 6</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=7" class="output-item">씬 7</a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=8" class="output-item">씬 8</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-2">
+                        <div class="project-header" onclick="toggleProjectExpand(2)">
+                            <img src="../CEN_img/dummy/LipBalm_Shimmer_Img_2400_3_0aede52b-e5a8-44aa-a435-d204ca55c9f8.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">봄 시즌 프로모션</div>
+                                <div class="project-meta">Step 4 · 2일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link">
+                                2. 스토리보드 생성
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">스토리보드</a>
+                                    <a href="#" class="output-item">씬 1</a>
+                                    <a href="#" class="output-item">씬 2</a>
+                                    <a href="#" class="output-item">씬 3</a>
+                                    <a href="#" class="output-item">씬 4</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link">
+                                3. 촬영기획
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">촬영 기획서</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link active">
+                                4. 영상제작
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">영상</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-3">
+                        <div class="project-header" onclick="toggleProjectExpand(3)">
+                            <img src="../CEN_img/dummy/rare-beauty-first-look-products.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">브랜드 스토리 영상</div>
+                                <div class="project-meta">Step 3 · 3일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link">
+                                2. 스토리보드 생성
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">스토리보드</a>
+                                    <a href="#" class="output-item">씬 1</a>
+                                    <a href="#" class="output-item">씬 2</a>
+                                    <a href="#" class="output-item">씬 3</a>
+                                    <a href="#" class="output-item">씬 4</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link active">
+                                3. 촬영기획
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">촬영 기획서</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-4">
+                        <div class="project-header" onclick="toggleProjectExpand(4)">
+                            <img src="../CEN_img/dummy/Woman_doing_her_lip_care_routine_by_applying_a_lip_balm_1200x.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">여름 세일 이벤트</div>
+                                <div class="project-meta">Step 1 · 4일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link active">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-5">
+                        <div class="project-header" onclick="toggleProjectExpand(5)">
+                            <img src="../CEN_img/dummy/ten_baume-levres_rvb.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">고객 리뷰 영상</div>
+                                <div class="project-meta">Step 3 · 5일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link">
+                                2. 스토리보드 생성
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">스토리보드</a>
+                                    <a href="#" class="output-item">씬 1</a>
+                                    <a href="#" class="output-item">씬 2</a>
+                                    <a href="#" class="output-item">씬 3</a>
+                                    <a href="#" class="output-item">씬 4</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link active">
+                                3. 촬영기획
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">촬영 기획서</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-6">
+                        <div class="project-header" onclick="toggleProjectExpand(6)">
+                            <img src="../CEN_img/dummy/Lip-Packaging-jpg.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">제품 사용법 안내</div>
+                                <div class="project-meta">Step 2 · 1주 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link active">
+                                2. 스토리보드 생성
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">스토리보드</a>
+                                    <a href="#" class="output-item">씬 1</a>
+                                    <a href="#" class="output-item">씬 2</a>
+                                    <a href="#" class="output-item">씬 3</a>
+                                    <a href="#" class="output-item">씬 4</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-7">
+                        <div class="project-header" onclick="toggleProjectExpand(7)">
+                            <img src="../CEN_img/dummy/ChatGPT Image 2025년 10월 24일 오후 02_44_21.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">할로윈 특별 프로모션</div>
+                                <div class="project-meta">Step 4 · 1주 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link">
+                                2. 스토리보드 생성
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">스토리보드</a>
+                                    <a href="#" class="output-item">씬 1</a>
+                                    <a href="#" class="output-item">씬 2</a>
+                                    <a href="#" class="output-item">씬 3</a>
+                                    <a href="#" class="output-item">씬 4</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link">
+                                3. 촬영기획
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">촬영 기획서</a>
+                                </div>
+                            </a>
+                            <a href="#" class="step-item-link active">
+                                4. 영상제작
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">영상</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-8">
+                        <div class="project-header" onclick="toggleProjectExpand(8)">
+                            <img src="../CEN_img/dummy/ChatGPT Image 2025년 10월 24일 오후 02_51_09.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">크리스마스 캠페인</div>
+                                <div class="project-meta">Step 1 · 2주 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <a href="#" class="step-item-link active">
+                                1. 정보입력
+                                <div class="step-outputs">
+                                    <a href="#" class="output-item">프로젝트 정보</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="account-btn">
+                    <div class="account-avatar">HM</div>
+                    <div class="account-info">
+                        <div class="account-name">홍민수</div>
+                        <div class="account-email">hmsu@company.com</div>
+                    </div>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header with-stepper">
+                <div class="workflow-stepper">
+                    <div class="step-item-stepper completed">
+                        <div class="step-number">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <span>정보입력</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper active">
+                        <div class="step-number">2</div>
+                        <span>스토리보드 생성</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper">
+                        <div class="step-number">3</div>
+                        <span>촬영기획</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper">
+                        <div class="step-number">4</div>
+                        <span>영상제작</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn icon-only" onclick="toggleTheme()" title="테마 전환">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="theme-icon-sun" style="display:none;">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="theme-icon-moon">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" onclick="toggleHistoryPanel()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M8 16H3v5"></path>
+                        </svg>
+                        <span>작업 히스토리</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <div class="breadcrumb-item">
+                        <a href="index.html" class="breadcrumb-link">홈</a>
+                    </div>
+                    <span class="breadcrumb-separator">›</span>
+                    <div class="breadcrumb-item">
+                        <a href="1-3-스토리보드생성.html" class="breadcrumb-link" id="projectTitle">신제품 런칭 광고</a>
+                    </div>
+                    <span class="breadcrumb-separator">›</span>
+                    <div class="breadcrumb-item">
+                        <span class="breadcrumb-current" id="breadcrumbScene">씬 1</span>
+                    </div>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title" id="sceneTitle">씬 1</h1>
+                    <p class="page-description">AI가 생성한 씬 이미지를 확인하고 세부 정보를 수정하세요</p>
+                </div>
+
+                <!-- Scene Detail -->
+                <div class="scene-detail-container">
+                    <!-- Left: Scene Image -->
+                    <div class="scene-image-section">
+                        <div class="scene-number-badge" id="sceneBadge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                            Scene 1
+                        </div>
+                        <div class="scene-image-container">
+                            <img id="sceneImage" src="../CEN_img/스토리보드 이미지 샘플/화장품_1.png" alt="Scene" class="scene-image">
+                        </div>
+                        <div class="scene-image-actions">
+                            <button class="btn btn-primary" onclick="regenerateImage()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                                </svg>
+                                이미지 재생성
+                            </button>
+                            <button class="btn btn-secondary" onclick="uploadImage()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                이미지 업로드
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Scene Info Form -->
+                    <div class="scene-info-section">
+                        <h2 class="scene-info-title">씬 정보</h2>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">🎬</span>
+                                장면 (Scene)
+                            </label>
+                            <textarea class="form-textarea" id="sceneDescription" placeholder="장면 설명을 입력하세요"></textarea>
+                            <div class="form-hint">촬영할 장면의 구체적인 내용을 설명하세요</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">✨</span>
+                                무드 (Mood)
+                            </label>
+                            <input type="text" class="form-input" id="sceneMood" placeholder="예: 평온, 내면의 고요">
+                            <div class="form-hint">전달하고자 하는 분위기나 감정</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">🏞️</span>
+                                배경 (Background)
+                            </label>
+                            <input type="text" class="form-input" id="sceneBackground" placeholder="예: 부드러운 햇살 아래의 언덕 풍경">
+                            <div class="form-hint">촬영 배경 및 환경</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">📹</span>
+                                촬영 (Camera Work)
+                            </label>
+                            <input type="text" class="form-input" id="sceneCameraWork" placeholder="예: 미디엄 클로즈업, 천천히 줌 인">
+                            <div class="form-hint">카메라 앵글, 샷 타입, 움직임</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">💡</span>
+                                의도 (Intent)
+                            </label>
+                            <textarea class="form-textarea" id="sceneIntent" placeholder="예: 내면의 '각성'을 예고. 자연과의 첫 연결을 암시"></textarea>
+                            <div class="form-hint">이 씬을 통해 전달하고자 하는 메시지</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <span class="label-icon">🎨</span>
+                                색감 (Color Tone)
+                            </label>
+                            <input type="text" class="form-input" id="sceneColorTone" placeholder="예: 따뜻한 톤, 내추럴한 골드빛 자연광">
+                            <div class="form-hint">컬러 팔레트 및 조명 톤</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Bar -->
+                <div class="action-bar">
+                    <div class="action-bar-left">
+                        <button class="btn btn-secondary" onclick="goBack()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            뒤로 가기
+                        </button>
+                    </div>
+                    <div class="action-bar-right">
+                        <button class="btn btn-secondary" id="prevSceneBtn" onclick="navigateScene(-1)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            이전 씬
+                        </button>
+                        <button class="btn btn-primary" onclick="saveScene()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                <polyline points="7 3 7 8 15 8"></polyline>
+                            </svg>
+                            저장
+                        </button>
+                        <button class="btn btn-secondary" id="nextSceneBtn" onclick="navigateScene(1)">
+                            다음 씬
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- History Panel -->
+        <aside class="history-panel" id="historyPanel">
+            <div class="history-header">
+                <div class="history-title-row">
+                    <h2 class="history-title">작업 히스토리</h2>
+                    <button class="icon-btn icon-only" onclick="toggleHistoryPanel()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <input type="text" class="history-search" placeholder="히스토리 검색...">
+                <div class="history-filters">
+                    <button class="history-filter-btn active">전체</button>
+                    <button class="history-filter-btn">생성</button>
+                    <button class="history-filter-btn">수정</button>
+                    <button class="history-filter-btn">완료</button>
+                </div>
+            </div>
+            <div class="history-content">
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">사용자</div>
+                        <div class="history-time">방금 전</div>
+                    </div>
+                    <div class="history-action">씬 1 정보 수정</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">사용자</div>
+                        <div class="history-time">5분 전</div>
+                    </div>
+                    <div class="history-action">씬 이미지 생성 완료</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">사용자</div>
+                        <div class="history-time">10분 전</div>
+                    </div>
+                    <div class="history-action">스토리보드 생성 완료</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Scene data based on SOLIUM storyboard
+        const scenes = {
+            1: {
+                description: "푸른 언덕 위, 한 여성이 눈을 감고 서 있다. 바람에 머리카락이 흔들리고 햇살이 얼굴을 스친다.",
+                mood: "평온, 내면의 고요",
+                background: "부드러운 햇살 아래의 언덕 풍경",
+                cameraWork: "미디엄 클로즈업, 천천히 줌 인",
+                intent: "내면의 '각성'을 예고. 자연과의 첫 연결을 암시",
+                colorTone: "따뜻한 톤, 내추럴한 골드빛 자연광",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_1.png"
+            },
+            2: {
+                description: "들판의 풀들이 부드럽게 흔들린다. 바람이 지나가며 생명력이 느껴진다",
+                mood: "생동감, 자연의 리듬",
+                background: "푸른 초원과 하늘, 얕은 피사계심도",
+                cameraWork: "로우 앵글, 바람에 흔들리는 잎사귀를 슬로우 모션으로",
+                intent: "보이지 않는 자연의 에너지를 시각화. 인간과 자연의 교감을 암시",
+                colorTone: "소프트 그린 + 웜 옐로우 톤",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_2.png"
+            },
+            3: {
+                description: "카메라가 천천히 위로 향하며, 나무들 사이로 보이는 하늘을 비춘다",
+                mood: "숭고함, 확장감",
+                background: "깊은 숲속, 햇살이 나뭇가지 사이로 스며든다",
+                cameraWork: "로우 앵글에서 수직으로 올려다본다",
+                intent: "인간과 자연이 하나로 이어지는 상징적 이미지",
+                colorTone: "딥 그린과 쿨 블루, 신비로운 명암 대비",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_3.png"
+            },
+            4: {
+                description: "잎 끝의 물방울이 떨어지는 순간",
+                mood: "정적, 순수",
+                background: "어두운 숲속, 물방울에 빛이 반사됨",
+                cameraWork: "마이크로 클로즈업, 슬로우 모션",
+                intent: "자연의 숨결과 생명 에너지를 상징",
+                colorTone: "어두운 녹색과 투명한 하이라이트",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_4.png"
+            },
+            5: {
+                description: "물방울이 피부 위로 떨어지는 순간",
+                mood: "신비롭고 감각적",
+                background: "미니멀한 어두운 톤의 배경",
+                cameraWork: "마이크로로 물방울이 피부에 떨어지는 순간 포착",
+                intent: "'자연 → 제품'으로의 철학적 연결",
+                colorTone: "스킨과 액체 투명감 중심",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_5.png"
+            },
+            6: {
+                description: "여성이 손끝으로 에센스를 피부에 바른다",
+                mood: "감각적, 집중된 아름다움",
+                background: "자연광이 들어오는 실내, 미니멀한 배경",
+                cameraWork: "손과 피부의 클로즈업, 슬로우 모션",
+                intent: "제형이 피부에 흡수되는 순간, 자연의 에너지가 전달되는 이미지",
+                colorTone: "소프트 베이지 + 골드빛 하이라이트",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_6.png"
+            },
+            7: {
+                description: "여성이 정면을 바라보며 미소 짓는다. 눈빛이 맑고 강렬하다",
+                mood: "자신감, 깨달음, 평화",
+                background: "부드러운 자연광, 언덕 위 또는 미니멀 스튜디오 백그라운드",
+                cameraWork: "미디엄 샷, 느린 패닝으로 여운을 남김",
+                intent: "자연과의 조화를 통해 되찾은 '자신의 생명력'을 시각화",
+                colorTone: "따뜻한 골드와 자연광 톤",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_7.png"
+            },
+            8: {
+                description: "물방울과 빛이(혹은 기타 자연 요소) 트랜지션 되면서 브랜드 로고가 떠오른다",
+                mood: "고요하고 프리미엄한 엔딩",
+                background: "미니멀한 화이트 혹은 블랙 배경 위 자연의 빛 반사 효과",
+                cameraWork: "제품 클로즈업 + 로고 페이드 인",
+                intent: "'자연의 생명력이 깃든 브랜드'로 마무리. 인상 깊은 엔딩 인식 유도",
+                colorTone: "그린 컬러와 웜화이트",
+                image: "../CEN_img/스토리보드 이미지 샘플/화장품_8.png"
+            }
+        };
+
+        let currentScene = 1;
+
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', () => {
+            // Get scene number from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const sceneParam = urlParams.get('scene');
+            if (sceneParam) {
+                currentScene = parseInt(sceneParam);
+            }
+
+            // Load scene data
+            loadScene(currentScene);
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        });
+
+        function loadScene(sceneNumber) {
+            if (!scenes[sceneNumber]) {
+                sceneNumber = 1;
+            }
+
+            currentScene = sceneNumber;
+            const scene = scenes[sceneNumber];
+
+            // Update UI
+            document.getElementById('sceneTitle').textContent = `씬 ${sceneNumber}`;
+            document.getElementById('breadcrumbScene').textContent = `씬 ${sceneNumber}`;
+            document.getElementById('sceneBadge').innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                Scene ${sceneNumber}
+            `;
+            document.getElementById('sceneImage').src = scene.image;
+            document.getElementById('sceneDescription').value = scene.description;
+            document.getElementById('sceneMood').value = scene.mood;
+            document.getElementById('sceneBackground').value = scene.background;
+            document.getElementById('sceneCameraWork').value = scene.cameraWork;
+            document.getElementById('sceneIntent').value = scene.intent;
+            document.getElementById('sceneColorTone').value = scene.colorTone;
+
+            // Update navigation buttons
+            document.getElementById('prevSceneBtn').disabled = sceneNumber === 1;
+            document.getElementById('nextSceneBtn').disabled = sceneNumber === 8;
+
+            // Update URL
+            const newUrl = `${window.location.pathname}?scene=${sceneNumber}`;
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        function navigateScene(direction) {
+            const newScene = currentScene + direction;
+            if (newScene >= 1 && newScene <= 8) {
+                loadScene(newScene);
+            }
+        }
+
+        function saveScene() {
+            // Collect form data
+            const sceneData = {
+                description: document.getElementById('sceneDescription').value,
+                mood: document.getElementById('sceneMood').value,
+                background: document.getElementById('sceneBackground').value,
+                cameraWork: document.getElementById('sceneCameraWork').value,
+                intent: document.getElementById('sceneIntent').value,
+                colorTone: document.getElementById('sceneColorTone').value
+            };
+
+            // Update scene data
+            scenes[currentScene] = { ...scenes[currentScene], ...sceneData };
+
+            // Show success message
+            alert(`씬 ${currentScene} 정보가 저장되었습니다.`);
+        }
+
+        function regenerateImage() {
+            // Open manual regeneration modal for current scene
+            const urlParams = new URLSearchParams(window.location.search);
+            const sceneNumber = urlParams.get('scene') || '1';
+            window.open(`1-3-4-수동재생성.html?scene=${sceneNumber}`, '이미지재생성', 'width=700,height=800,scrollbars=yes');
+        }
+
+        function uploadImage() {
+            // Create file input dynamically for image upload
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    alert(`이미지 "${file.name}" 업로드 기능은 추후 구현됩니다.`);
+                    // TODO: Implement actual upload functionality
+                }
+            };
+            input.click();
+        }
+
+        function goBack() {
+            window.location.href = '1-3-스토리보드생성.html';
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const sunIcon = document.querySelector('.theme-icon-sun');
+            const moonIcon = document.querySelector('.theme-icon-moon');
+
+            if (theme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        // History Panel Toggle
+        function toggleHistoryPanel() {
+            const panel = document.getElementById('historyPanel');
+            panel.classList.toggle('open');
+        }
+
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // Toggle project expansion
+        function toggleProjectExpand(projectId) {
+            const projectItem = document.getElementById(`project-${projectId}`);
+            projectItem.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>

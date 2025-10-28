@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>씬 편집 - CEN AI Studio</title>
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fastly.jsdelivr.net/gh/fonts-archive/HallymGothic/HallymGothic.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Font Families */
+        body {
+            font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'HallymGothic', 'SUIT', sans-serif;
+        }
+
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --bg-tertiary: #F5F7FA;
+            --bg-hover: rgba(239, 246, 255, 0.8);
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border-color: #E5E7EB;
+            --accent-blue: #0055E9;
+            --accent-blue-hover: #0032A0;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --accent-purple: #6A14D9;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+            --glass-blur: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0A0E1A;
+            --bg-secondary: rgba(26, 31, 46, 0.8);
+            --bg-tertiary: #1A1F2E;
+            --bg-hover: rgba(51, 65, 85, 0.8);
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-tertiary: #6B7280;
+            --border-color: #2D3748;
+            --accent-blue: #569DFF;
+            --accent-blue-hover: #0055E9;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('../CEN_img/bg/배경_라이트.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+
+        [data-theme="dark"] body::before {
+            background-image: url('../CEN_img/bg/배경_다크.jpg');
+            opacity: 0.15;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Modal Container */
+        .modal-container {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Modal Header */
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        /* Modal Body */
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            max-height: calc(90vh - 160px);
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-label-required::after {
+            content: '*';
+            color: var(--accent-coral);
+            margin-left: 4px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'SUIT', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+        }
+
+        /* Card Radio Buttons */
+        .card-radio-group {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .card-radio-item {
+            position: relative;
+        }
+
+        .card-radio-input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .card-radio-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 8px;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            min-height: 85px;
+        }
+
+        .card-radio-label:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .card-radio-input:checked + .card-radio-label {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .card-radio-input:checked + .card-radio-label .card-radio-icon {
+            color: white;
+        }
+
+        .card-radio-input:checked + .card-radio-label .card-radio-text {
+            color: white;
+        }
+
+        .card-radio-icon {
+            width: 28px;
+            height: 28px;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .card-radio-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: color 0.2s;
+        }
+
+        .style-section {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .style-section:last-child {
+            border-bottom: none;
+        }
+
+        .style-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        /* Modal Footer */
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h2 class="modal-title">씬 편집</h2>
+                <button class="modal-close-btn" onclick="goBack()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="sceneEditForm">
+                    <!-- Video Style Section -->
+                    <div class="form-group">
+                        <label class="form-label form-label-required">영상 스타일</label>
+
+                        <!-- Camera Work Section -->
+                        <div class="style-section">
+                            <div class="style-section-title">카메라 워크</div>
+                                <div class="card-radio-group">
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-fixed" name="cameraWork" value="fixed" class="card-radio-input">
+                                        <label for="camera-fixed" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                                                <polyline points="17 2 12 7 7 2"></polyline>
+                                            </svg>
+                                            <span class="card-radio-text">고정 촬영</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-pan" name="cameraWork" value="pan" class="card-radio-input">
+                                        <label for="camera-pan" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                                <path d="M12 15l-3-3m6 0l-3 3"></path>
+                                            </svg>
+                                            <span class="card-radio-text">팬</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-tilt" name="cameraWork" value="tilt" class="card-radio-input">
+                                        <label for="camera-tilt" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                                <path d="M12 9v6m0-6l-2 2m2-2l2 2"></path>
+                                            </svg>
+                                            <span class="card-radio-text">틸트</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-dolly" name="cameraWork" value="dolly" class="card-radio-input">
+                                        <label for="camera-dolly" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M23 7l-7 5 7 5V7z"></path>
+                                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                                            </svg>
+                                            <span class="card-radio-text">돌리</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-tracking" name="cameraWork" value="tracking" class="card-radio-input">
+                                        <label for="camera-tracking" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                            </svg>
+                                            <span class="card-radio-text">트래킹</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-handheld" name="cameraWork" value="handheld" class="card-radio-input">
+                                        <label for="camera-handheld" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                            </svg>
+                                            <span class="card-radio-text">핸드헬드</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-crane" name="cameraWork" value="crane" class="card-radio-input">
+                                        <label for="camera-crane" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="17 1 21 5 17 9"></polyline>
+                                                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                                                <polyline points="7 23 3 19 7 15"></polyline>
+                                                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                                            </svg>
+                                            <span class="card-radio-text">크레인</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="camera-drone" name="cameraWork" value="drone" class="card-radio-input">
+                                        <label for="camera-drone" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="6" cy="6" r="2"></circle>
+                                                <circle cx="18" cy="6" r="2"></circle>
+                                                <circle cx="6" cy="18" r="2"></circle>
+                                                <circle cx="18" cy="18" r="2"></circle>
+                                                <rect x="9" y="9" width="6" height="6" rx="1"></rect>
+                                            </svg>
+                                            <span class="card-radio-text">드론</span>
+                                        </label>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!-- Shot Type Section -->
+                        <div class="style-section">
+                            <div class="style-section-title">샷</div>
+                                <div class="card-radio-group">
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-extreme-long" name="shotType" value="extreme-long" class="card-radio-input">
+                                        <label for="shot-extreme-long" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                <circle cx="12" cy="12" r="1"></circle>
+                                            </svg>
+                                            <span class="card-radio-text">익스트림 롱샷</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-long" name="shotType" value="long" class="card-radio-input">
+                                        <label for="shot-long" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                            <span class="card-radio-text">롱샷</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-full" name="shotType" value="full" class="card-radio-input">
+                                        <label for="shot-full" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                <path d="M12 8v8M8 12h8"></path>
+                                            </svg>
+                                            <span class="card-radio-text">풀샷</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-medium" name="shotType" value="medium" class="card-radio-input">
+                                        <label for="shot-medium" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="5" y="5" width="14" height="14" rx="2" ry="2"></rect>
+                                                <circle cx="12" cy="10" r="2"></circle>
+                                                <path d="M12 14v3"></path>
+                                            </svg>
+                                            <span class="card-radio-text">미디엄샷</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-close-up" name="shotType" value="close-up" class="card-radio-input">
+                                        <label for="shot-close-up" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="10" r="3"></circle>
+                                                <path d="M12 13v4M9 19h6"></path>
+                                            </svg>
+                                            <span class="card-radio-text">클로즈업</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-extreme-close-up" name="shotType" value="extreme-close-up" class="card-radio-input">
+                                        <label for="shot-extreme-close-up" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="8"></circle>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                            <span class="card-radio-text">익스트림 클로즈업</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="shot-over-shoulder" name="shotType" value="over-shoulder" class="card-radio-input">
+                                        <label for="shot-over-shoulder" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg>
+                                            <span class="card-radio-text">오버 숄더</span>
+                                        </label>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!-- Composition Section -->
+                        <div class="style-section">
+                            <div class="style-section-title">구도</div>
+                                <div class="card-radio-group">
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-thirds" name="composition" value="rule-of-thirds" class="card-radio-input">
+                                        <label for="comp-thirds" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                                <line x1="3" y1="11" x2="21" y2="11"></line>
+                                                <line x1="3" y1="13" x2="21" y2="13"></line>
+                                                <line x1="11" y1="3" x2="11" y2="21"></line>
+                                                <line x1="13" y1="3" x2="13" y2="21"></line>
+                                            </svg>
+                                            <span class="card-radio-text">3분할 법칙</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-center" name="composition" value="center" class="card-radio-input">
+                                        <label for="comp-center" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                            <span class="card-radio-text">센터 구도</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-symmetry" name="composition" value="symmetry" class="card-radio-input">
+                                        <label for="comp-symmetry" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                                <line x1="12" y1="3" x2="12" y2="21"></line>
+                                                <path d="M7 8l2 4-2 4M17 8l-2 4 2 4"></path>
+                                            </svg>
+                                            <span class="card-radio-text">대칭 구도</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-diagonal" name="composition" value="diagonal" class="card-radio-input">
+                                        <label for="comp-diagonal" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                                <line x1="3" y1="21" x2="21" y2="3"></line>
+                                            </svg>
+                                            <span class="card-radio-text">대각선 구도</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-frame" name="composition" value="frame-in-frame" class="card-radio-input">
+                                        <label for="comp-frame" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="2" y="2" width="20" height="20" rx="2"></rect>
+                                                <rect x="6" y="6" width="12" height="12" rx="1"></rect>
+                                            </svg>
+                                            <span class="card-radio-text">프레임 인 프레임</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-leading" name="composition" value="leading-lines" class="card-radio-input">
+                                        <label for="comp-leading" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                                <path d="M3 12h18M3 8l18 4M3 16l18-4"></path>
+                                            </svg>
+                                            <span class="card-radio-text">리딩 라인</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-low" name="composition" value="low-angle" class="card-radio-input">
+                                        <label for="comp-low" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M3 18l9-9 9 9"></path>
+                                                <rect x="3" y="3" width="18" height="18" rx="2" opacity="0.3"></rect>
+                                            </svg>
+                                            <span class="card-radio-text">로우 앵글</span>
+                                        </label>
+                                    </div>
+                                    <div class="card-radio-item">
+                                        <input type="radio" id="comp-high" name="composition" value="high-angle" class="card-radio-input">
+                                        <label for="comp-high" class="card-radio-label">
+                                            <svg class="card-radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M3 6l9 9 9-9"></path>
+                                                <rect x="3" y="3" width="18" height="18" rx="2" opacity="0.3"></rect>
+                                            </svg>
+                                            <span class="card-radio-text">하이 앵글</span>
+                                        </label>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label class="form-label form-label-required">Description</label>
+                        <textarea class="form-textarea" name="description" placeholder="씬에 대한 상세한 설명을 입력하세요">브랜드 로고와 제품이 부드럽게 등장하는 오프닝 씬. 따뜻한 톤으로 브랜드의 친근함을 강조.</textarea>
+                        <p class="form-hint">씬의 내용과 연출 의도를 구체적으로 작성하세요</p>
+                    </div>
+
+                    <!-- Sound -->
+                    <div class="form-group">
+                        <label class="form-label">Sound</label>
+                        <input type="text" class="form-input" name="sound" value="부드러운 피아노 배경음악, 자연 효과음" placeholder="배경음악 및 효과음을 입력하세요">
+                        <p class="form-hint">배경음악, 효과음, 대사 등을 입력하세요</p>
+                    </div>
+
+                    <!-- Text -->
+                    <div class="form-group">
+                        <label class="form-label">Text</label>
+                        <textarea class="form-textarea" name="text" placeholder="화면에 표시될 텍스트를 입력하세요" style="min-height: 80px;">"자연이 주는 아름다움"</textarea>
+                        <p class="form-hint">자막, 타이틀, 브랜드 메시지 등을 입력하세요</p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="goBack()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    취소
+                </button>
+                <button class="btn btn-primary" onclick="saveScene()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    저장
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+
+        // Close modal on overlay click
+        function closeModal(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                goBack();
+            }
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                goBack();
+            }
+        });
+
+        // Go back to previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        // Save scene
+        function saveScene() {
+            const form = document.getElementById('sceneEditForm');
+            const formData = new FormData(form);
+
+            // Validate required fields
+            const cameraWork = formData.get('cameraWork');
+            const shotType = formData.get('shotType');
+            const composition = formData.get('composition');
+            const description = formData.get('description');
+
+            if (!cameraWork || !shotType || !composition || !description.trim()) {
+                alert('필수 항목을 모두 입력해주세요.');
+                return;
+            }
+
+            // Simulate saving
+            alert('씬이 저장되었습니다.');
+            goBack();
+        }
+    </script>
+</body>
+</html>

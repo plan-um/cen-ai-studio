@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 검증 결과 - CEN AI Studio</title>
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fastly.jsdelivr.net/gh/fonts-archive/HallymGothic/HallymGothic.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'SUIT', sans-serif; }
+        h1, h2, h3 { font-family: 'HallymGothic', 'SUIT', sans-serif; }
+
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-tertiary: #F5F7FA;
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --border-color: #E5E7EB;
+            --accent-blue: #0055E9;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --glass-blur: 20px;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0A0E1A;
+            --bg-secondary: rgba(26, 31, 46, 0.95);
+            --bg-tertiary: #1A1F2E;
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --border-color: #2D3748;
+            --accent-blue: #569DFF;
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .modal-container {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--accent-coral);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .score-summary {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .overall-score {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent-mint);
+            margin-bottom: 8px;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .scenes-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .scenes-table th,
+        .scenes-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenes-table th {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .scenes-table td {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .scene-thumbnail {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .scene-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scene-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .scene-number {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .scene-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .score-high { background: rgba(0, 203, 200, 0.1); color: var(--accent-mint); }
+        .score-medium { background: rgba(255, 174, 31, 0.1); color: #FFAE1F; }
+        .score-low { background: rgba(255, 130, 136, 0.1); color: var(--accent-coral); }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 class="modal-title">스토리보드 AI 검증 결과</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="score-summary">
+                    <div class="overall-score">87/100</div>
+                    <div class="score-label">전체 평균 점수</div>
+                </div>
+
+                <table class="scenes-table">
+                    <thead>
+                        <tr>
+                            <th>씬 정보</th>
+                            <th style="width: 120px; text-align: center;">점수</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="씬 1" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 1</span>
+                                        <span class="scene-description">제품이 자연광에 비춰지는 오프닝 장면</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">92/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 2 - 들판의 풀과 바람.png" alt="씬 2" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 2</span>
+                                        <span class="scene-description">제품의 주요 기능 강조</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">88/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 3 - 숲속의 하늘을 바라보는 여성.png" alt="씬 3" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 3</span>
+                                        <span class="scene-description">사용자 경험과 감정적 연결</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">85/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="씬 4" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 4</span>
+                                        <span class="scene-description">모델의 표정과 제품 사용</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">90/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 5 - 피부 위의 물방울.png" alt="씬 5" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 5</span>
+                                        <span class="scene-description">제품 디테일 클로즈업 장면</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">86/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 6 - 에센스를 바르는 손.png" alt="씬 6" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 6</span>
+                                        <span class="scene-description">전체적인 브랜드 메시지 전달</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-medium">78/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 7 - 자신감 있는 미소.png" alt="씬 7" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 7</span>
+                                        <span class="scene-description">행동 유도 메시지</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">89/100</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="scene-info">
+                                    <img src="../CEN_img/SOLIUM_광고/Scene 8 - 브랜드 엔딩.png" alt="씬 8" class="scene-thumbnail">
+                                    <div class="scene-text">
+                                        <span class="scene-number">씬 8</span>
+                                        <span class="scene-description">최종 로고 노출과 CTA</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><span class="score-badge score-high">91/100</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="location.href='1-3-3-AI자동재생성.html'">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
+                    </svg>
+                    AI 자동 재생성
+                </button>
+                <button class="btn btn-primary" onclick="location.href='1-3-1-스케치이미지조회.html'">
+                    확인 완료
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeModal() {
+            window.history.back();
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const theme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEN AI Studio - Clean Blue</title>
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fastly.jsdelivr.net/gh/fonts-archive/HallymGothic/HallymGothic.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Font Families */
+        body {
+            font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Korean Headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'HallymGothic', 'SUIT', sans-serif;
+        }
+
+        /* English Headings */
+        h1[lang="en"], h2[lang="en"], h3[lang="en"], h4[lang="en"], h5[lang="en"], h6[lang="en"],
+        .en-title {
+            font-family: 'Gilroy', 'SUIT', sans-serif;
+        }
+
+        :root {
+            /* Light Mode Colors - Based on Color Guide */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-tertiary: #F8FAFF;
+            --bg-hover: rgba(239, 246, 255, 0.95);
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border-color: rgba(86, 157, 255, 0.2);
+
+            /* Blue Scale */
+            --blue-50: #EAF2FF;
+            --blue-100: #D9E6FF;
+            --blue-200: #C7DAFF;
+            --blue-300: #6AA8FF;
+            --blue-500: #569DFF;
+            --blue-700: #0055E9;
+            --blue-900: #0032A0;
+
+            --accent-blue: #0055E9;
+            --accent-blue-hover: #0032A0;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --accent-purple: #6A14D9;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+            --glass-blur: 20px;
+            --gradient-1: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%);
+            --gradient-2: linear-gradient(90deg, #00CBC8 0%, #569DFF 100%);
+
+            /* Content Gradient - Light */
+            --content-gradient: radial-gradient(ellipse 120% 100% at 50% -20%, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.08) 30%, transparent 60%),
+                                radial-gradient(ellipse 80% 80% at 80% 80%, rgba(106,20,217,0.12) 0%, rgba(0,203,200,0.08) 40%, transparent 70%),
+                                linear-gradient(180deg,
+                                    #FFFFFF 0%,
+                                    rgba(240,245,255,0.6) 25%,
+                                    rgba(227,238,255,0.7) 50%,
+                                    rgba(217,230,255,0.5) 75%,
+                                    #FFFFFF 100%);
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode Colors - Based on Color Guide */
+            --bg-primary: #0D1426;
+            --bg-secondary: rgba(26, 31, 46, 0.9);
+            --bg-tertiary: #1A1F2E;
+            --bg-hover: rgba(51, 65, 85, 0.9);
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-tertiary: #6B7280;
+            --border-color: rgba(86, 157, 255, 0.2);
+
+            /* Blue Scale (same values for dark) */
+            --blue-50: #EAF2FF;
+            --blue-100: #D9E6FF;
+            --blue-200: #C7DAFF;
+            --blue-300: #6AA8FF;
+            --blue-500: #569DFF;
+            --blue-700: #0055E9;
+            --blue-900: #0032A0;
+
+            --accent-blue: #569DFF;
+            --accent-blue-hover: #0055E9;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --accent-purple: #6A14D9;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+            --glass-blur: 20px;
+            --gradient-1: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%);
+            --gradient-2: linear-gradient(90deg, #00CBC8 0%, #569DFF 100%);
+
+            /* Content Gradient - Dark */
+            --content-gradient: radial-gradient(ellipse 120% 100% at 50% -20%, rgba(86,157,255,0.25) 0%, rgba(0,85,233,0.15) 30%, transparent 60%),
+                                radial-gradient(ellipse 80% 80% at 80% 80%, rgba(106,20,217,0.20) 0%, rgba(0,203,200,0.12) 40%, transparent 70%),
+                                linear-gradient(180deg,
+                                    #0A0E1A 0%,
+                                    rgba(13,20,38,0.95) 25%,
+                                    rgba(20,28,51,0.9) 50%,
+                                    rgba(26,35,64,0.85) 75%,
+                                    #0D1426 100%);
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        /* Modal Components */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .modal-close-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            max-height: calc(90vh - 160px);
+        }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .modal-btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .modal-btn-secondary:hover {
+            background: var(--bg-hover);
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: visible;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 72px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-light {
+            display: block;
+        }
+
+        .logo-dark {
+            display: none;
+        }
+
+        [data-theme="dark"] .logo-light {
+            display: none;
+        }
+
+        [data-theme="dark"] .logo-dark {
+            display: block;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: visible;
+            padding: 20px 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .sidebar-footer {
+            padding: 12px;
+            border-top: 1px solid var(--border-color);
+            transition: opacity 0.2s ease;
+        }
+
+        .account-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--bg-tertiary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .account-btn:hover {
+            background: var(--bg-hover);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-color: var(--accent-blue);
+        }
+
+        .account-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .account-info {
+            flex: 1;
+            min-width: 0;
+            text-align: left;
+        }
+
+        .account-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .account-email {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sidebar-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-tertiary);
+        }
+
+        .sidebar-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+            position: absolute;
+            right: 20px;
+            top: 22px;
+            color: var(--text-primary);
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .sidebar-toggle-btn svg {
+            opacity: 0.7;
+        }
+
+        .sidebar-toggle-btn:hover svg {
+            opacity: 1;
+        }
+
+        .sidebar.collapsed {
+            width: 72px;
+        }
+
+        .sidebar.collapsed .logo {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed .sidebar-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        .project-list {
+            padding: 0 12px;
+        }
+
+        .project-item {
+            margin-bottom: 8px;
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            background-image:
+                linear-gradient(var(--bg-tertiary), var(--bg-tertiary)),
+                linear-gradient(135deg, rgba(86,157,255,0.3) 0%, rgba(0,85,233,0.2) 50%, rgba(106,20,217,0.25) 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+
+        .project-header {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            align-items: center;
+        }
+
+        .project-item:hover {
+            background-image:
+                linear-gradient(var(--bg-tertiary), var(--bg-tertiary)),
+                linear-gradient(135deg, rgba(86,157,255,0.5) 0%, rgba(0,85,233,0.35) 50%, rgba(106,20,217,0.4) 100%);
+            box-shadow: 0 2px 8px rgba(86,157,255,0.15);
+        }
+
+        .project-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .project-expand-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--text-tertiary);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        .project-item.expanded .project-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .project-steps {
+            max-height: 0;
+            overflow-y: hidden;
+            overflow-x: visible;
+            transition: max-height 0.3s ease;
+            background: var(--bg-primary);
+        }
+
+        .project-item.expanded .project-steps {
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: visible;
+        }
+
+        .step-item-wrapper {
+            position: relative;
+        }
+
+        .step-item-link {
+            display: block;
+            padding: 10px 16px 10px 44px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            position: relative;
+        }
+
+        .step-item-link:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-left-color: var(--accent-blue);
+        }
+
+        .step-item-link.active {
+            color: var(--accent-blue);
+            font-weight: 600;
+            background: var(--bg-tertiary);
+            border-left-color: var(--accent-blue);
+        }
+
+        /* Step outputs submenu */
+        .step-outputs {
+            display: none;
+            position: fixed;
+            min-width: 200px;
+            max-width: 300px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            z-index: 999999;
+            padding: 4px 0;
+            white-space: nowrap;
+            pointer-events: auto;
+        }
+
+        .output-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 10px 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .output-item:last-child {
+            border-bottom: none;
+        }
+
+        .output-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-blue);
+        }
+
+        .output-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .output-item:hover .output-item-name {
+            color: var(--accent-blue);
+        }
+
+        .output-item-title {
+            font-size: 11px;
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 250px;
+        }
+
+        .project-thumbnail {
+            width: 64px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            flex-shrink: 0;
+            object-fit: cover;
+            filter: grayscale(70%) brightness(0.9);
+            transition: filter 0.3s ease;
+        }
+
+        .project-item:hover .project-thumbnail {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .project-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: 72px;
+            box-sizing: border-box;
+        }
+
+        /* Header with workflow stepper (for sub-pages) */
+        .header.with-stepper {
+            justify-content: space-between;
+        }
+
+        .workflow-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-item-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .step-item-stepper.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .step-item-stepper.completed {
+            color: var(--accent-mint);
+            cursor: pointer;
+        }
+
+        .step-item-stepper.completed:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .step-item-stepper:not(.active):not(.completed) {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .step-item-stepper.active .step-number {
+            background: white;
+            border-color: white;
+            color: var(--accent-blue);
+        }
+
+        .step-item-stepper.completed .step-number {
+            background: var(--accent-mint);
+            border-color: var(--accent-mint);
+            color: white;
+        }
+
+        .step-arrow {
+            color: var(--border-color);
+            font-size: 16px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-hover);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-color: var(--accent-blue);
+        }
+
+        .icon-btn.icon-only {
+            padding: 10px;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 32px;
+            background: var(--content-gradient);
+        }
+
+        /* CTA Banner */
+        .cta-section {
+            margin-bottom: 48px;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 2px;
+            align-items: stretch;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .cta-banner {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
+            padding: 24px 32px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        [data-theme="dark"] .cta-banner {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(139, 124, 255, 0.3) 100%);
+        }
+
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .cta-banner:hover::before {
+            opacity: 1;
+        }
+
+        .cta-icon {
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .cta-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            text-align: left;
+        }
+
+        .cta-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .cta-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .cta-input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .cta-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .cta-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .cta-start-btn {
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-start-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateX(2px);
+        }
+
+        .file-upload-area {
+            flex: 0 0 280px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            position: relative;
+        }
+
+        .file-upload-area:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        [data-theme="dark"] .file-upload-area {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        [data-theme="dark"] .file-upload-area:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .file-upload-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-upload-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .file-upload-hint {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+        }
+
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .view-all-link {
+            color: var(--accent-blue);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap 0.2s;
+        }
+
+        .view-all-link:hover {
+            gap: 8px;
+        }
+
+        .new-project-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--accent-blue) !important;
+            background: var(--bg-tertiary) !important;
+            transition: all 0.3s ease;
+        }
+
+        .new-project-card:hover {
+            border-color: var(--accent-blue) !important;
+            background: var(--bg-hover) !important;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .new-project-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 40px;
+        }
+
+        .new-project-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .new-project-card:hover .new-project-icon {
+            background: var(--accent-blue-hover);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .new-project-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-blue);
+            transition: color 0.3s;
+        }
+
+        .new-project-card:hover .new-project-text {
+            color: var(--accent-blue-hover);
+        }
+
+        /* Current Projects */
+        .current-projects {
+            margin-bottom: 48px;
+        }
+
+        .current-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 1400px) {
+            .current-projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .current-projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .current-projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .current-project-card {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .current-project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-blue);
+        }
+
+        .current-project-thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 124, 255, 0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .current-project-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .current-project-status-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 3px 8px;
+            background: rgba(0, 85, 233, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+            border: 1px solid rgba(86, 157, 255, 0.5);
+        }
+
+        .current-project-info {
+            padding: 16px;
+        }
+
+        .current-project-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .current-project-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .current-project-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .current-project-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .current-project-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        .current-project-step {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        /* AI Templates */
+        .ai-templates {
+            margin-bottom: 48px;
+        }
+
+        .templates-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 8px 0 24px 0;
+        }
+
+        .templates-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .templates-scroll::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+        }
+
+        .templates-scroll::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 4px;
+        }
+
+        .template-card {
+            min-width: 280px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-hover);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-blue);
+        }
+
+        .template-thumbnail {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .template-card-content {
+            padding: 20px;
+        }
+
+        .template-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .template-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .template-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        /* History Panel */
+        .history-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-left: 1px solid var(--border-color);
+            box-shadow: -4px 0 12px var(--shadow);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-panel.open {
+            right: 0;
+        }
+
+        .history-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .history-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .history-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .history-search {
+            width: 100%;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .history-search::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .history-search:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .history-filters {
+            display: flex;
+            gap: 8px;
+        }
+
+        .history-filter-btn {
+            padding: 6px 12px;
+            background: var(--bg-tertiary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-filter-btn.active {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        .history-filter-btn:hover {
+            background: var(--bg-hover);
+        }
+
+        .history-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .history-item {
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .history-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .history-user {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .history-time {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .history-action {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="../CEN_img/logo/로고 라이트모드.png" alt="CEN AI Studio" class="logo logo-light" onclick="refreshDashboard()">
+                <img src="../CEN_img/logo/로고 다크모드.png" alt="CEN AI Studio" class="logo logo-dark" onclick="refreshDashboard()">
+                <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="사이드바 접기">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="sidebar-section-header">
+                    <div class="sidebar-section-title">최근 프로젝트</div>
+                </div>
+                <div class="project-list">
+                    <div class="project-item" id="project-1">
+                        <div class="project-header" onclick="toggleProjectExpand(1)">
+                            <img src="../CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">신제품 런칭 광고</div>
+                                <div class="project-meta">Step 2 · 어제</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">신제품 런칭 광고 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-3-스토리보드생성.html" class="step-item-link active">2. 스토리보드 생성</a>
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">
+                                        <span class="output-item-name">스토리보드</span>
+                                        <span class="output-item-title">전체 스토리보드 보기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">
+                                        <span class="output-item-name">씬 1</span>
+                                        <span class="output-item-title">언덕 위의 여성 - 제품이 자연광에 비춰지는 오프닝 장면</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">
+                                        <span class="output-item-name">씬 2</span>
+                                        <span class="output-item-title">들판의 풀과 바람 - 제품의 주요 기능 강조</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">
+                                        <span class="output-item-name">씬 3</span>
+                                        <span class="output-item-title">숲속의 하늘을 바라보는 여성 - 사용자 경험과 감정적 연결</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">
+                                        <span class="output-item-name">씬 4</span>
+                                        <span class="output-item-title">잎 위의 물방울 - 모델의 표정과 제품 사용</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=5" class="output-item">
+                                        <span class="output-item-name">씬 5</span>
+                                        <span class="output-item-title">피부 위의 물방울 - 제품 디테일 클로즈업 장면</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=6" class="output-item">
+                                        <span class="output-item-name">씬 6</span>
+                                        <span class="output-item-title">에센스를 바르는 손 - 전체적인 브랜드 메시지 전달</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=7" class="output-item">
+                                        <span class="output-item-name">씬 7</span>
+                                        <span class="output-item-title">자신감 있는 미소 - 행동 유도 메시지</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=8" class="output-item">
+                                        <span class="output-item-name">씬 8</span>
+                                        <span class="output-item-title">브랜드 엔딩 - 최종 로고 노출과 CTA</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-2">
+                        <div class="project-header" onclick="toggleProjectExpand(2)">
+                            <img src="../CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">봄 시즌 프로모션</div>
+                                <div class="project-meta">Step 4 · 2일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">봄 시즌 프로모션 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-3-스토리보드생성.html" class="step-item-link">2. 스토리보드 생성</a>
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">
+                                        <span class="output-item-name">스토리보드</span>
+                                        <span class="output-item-title">전체 스토리보드 보기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">
+                                        <span class="output-item-name">씬 1</span>
+                                        <span class="output-item-title">봄꽃과 함께하는 제품 소개</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">
+                                        <span class="output-item-name">씬 2</span>
+                                        <span class="output-item-title">싱그러운 봄 배경의 제품 디스플레이</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">
+                                        <span class="output-item-name">씬 3</span>
+                                        <span class="output-item-title">봄 분위기 속 제품 사용 장면</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">
+                                        <span class="output-item-name">씬 4</span>
+                                        <span class="output-item-title">프로모션 안내 및 클로징 장면</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-4-촬영기획.html" class="step-item-link">3. 촬영기획</a>
+                                <div class="step-outputs">
+                                    <a href="1-4-촬영기획.html" class="output-item">
+                                        <span class="output-item-name">촬영 기획서</span>
+                                        <span class="output-item-title">촬영 기획서</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-5-영상제작.html" class="step-item-link active">4. 영상제작</a>
+                                <div class="step-outputs">
+                                    <a href="1-5-영상제작.html" class="output-item">
+                                        <span class="output-item-name">영상</span>
+                                        <span class="output-item-title">최종 영상</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-3">
+                        <div class="project-header" onclick="toggleProjectExpand(3)">
+                            <img src="../CEN_img/SOLIUM_광고/Scene 8 - 브랜드 엔딩.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">브랜드 스토리 영상</div>
+                                <div class="project-meta">Step 3 · 3일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">브랜드 스토리 영상 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-3-스토리보드생성.html" class="step-item-link">2. 스토리보드 생성</a>
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">
+                                        <span class="output-item-name">스토리보드</span>
+                                        <span class="output-item-title">전체 스토리보드 보기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">
+                                        <span class="output-item-name">씬 1</span>
+                                        <span class="output-item-title">브랜드 로고와 엔딩 장면</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">
+                                        <span class="output-item-name">씬 2</span>
+                                        <span class="output-item-title">브랜드의 철학과 가치 전달</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">
+                                        <span class="output-item-name">씬 3</span>
+                                        <span class="output-item-title">브랜드 히스토리와 비전</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">
+                                        <span class="output-item-name">씬 4</span>
+                                        <span class="output-item-title">브랜드 메시지 종합</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-4-촬영기획.html" class="step-item-link active">3. 촬영기획</a>
+                                <div class="step-outputs">
+                                    <a href="1-4-촬영기획.html" class="output-item">
+                                        <span class="output-item-name">촬영 기획서</span>
+                                        <span class="output-item-title">촬영 기획서</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-4">
+                        <div class="project-header" onclick="toggleProjectExpand(4)">
+                            <img src="../CEN_img/dummy/Woman_doing_her_lip_care_routine_by_applying_a_lip_balm_1200x.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">여름 세일 이벤트</div>
+                                <div class="project-meta">Step 1 · 4일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link active">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">여름 세일 이벤트 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-5">
+                        <div class="project-header" onclick="toggleProjectExpand(5)">
+                            <img src="../CEN_img/dummy/ten_baume-levres_rvb.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">고객 리뷰 영상</div>
+                                <div class="project-meta">Step 3 · 5일 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">고객 리뷰 영상 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-3-스토리보드생성.html" class="step-item-link">2. 스토리보드 생성</a>
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">
+                                        <span class="output-item-name">스토리보드</span>
+                                        <span class="output-item-title">전체 스토리보드 보기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">
+                                        <span class="output-item-name">씬 1</span>
+                                        <span class="output-item-title">고객 인터뷰 시작 장면</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">
+                                        <span class="output-item-name">씬 2</span>
+                                        <span class="output-item-title">제품 사용 전후 비교</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">
+                                        <span class="output-item-name">씬 3</span>
+                                        <span class="output-item-title">만족도와 실제 후기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">
+                                        <span class="output-item-name">씬 4</span>
+                                        <span class="output-item-title">추천 이유와 메시지</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=5" class="output-item">
+                                        <span class="output-item-name">씬 5</span>
+                                        <span class="output-item-title">종합 리뷰와 클로징</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-4-촬영기획.html" class="step-item-link active">3. 촬영기획</a>
+                                <div class="step-outputs">
+                                    <a href="1-4-촬영기획.html" class="output-item">
+                                        <span class="output-item-name">촬영 기획서</span>
+                                        <span class="output-item-title">촬영 기획서</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-6">
+                        <div class="project-header" onclick="toggleProjectExpand(6)">
+                            <img src="../CEN_img/dummy/Lip-Packaging-jpg.webp" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">제품 사용법 안내</div>
+                                <div class="project-meta">Step 2 · 1주 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">제품 사용법 안내 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-3-스토리보드생성.html" class="step-item-link active">2. 스토리보드 생성</a>
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">
+                                        <span class="output-item-name">스토리보드</span>
+                                        <span class="output-item-title">전체 스토리보드 보기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">
+                                        <span class="output-item-name">씬 1</span>
+                                        <span class="output-item-title">제품 소개 및 패키징</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">
+                                        <span class="output-item-name">씬 2</span>
+                                        <span class="output-item-title">사용 전 준비 단계</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">
+                                        <span class="output-item-name">씬 3</span>
+                                        <span class="output-item-title">올바른 사용 방법</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">
+                                        <span class="output-item-name">씬 4</span>
+                                        <span class="output-item-title">사용 후 관리 및 보관</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-7">
+                        <div class="project-header" onclick="toggleProjectExpand(7)">
+                            <img src="../CEN_img/dummy/ChatGPT Image 2025년 10월 24일 오후 02_44_21.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">할로윈 특별 프로모션</div>
+                                <div class="project-meta">Step 4 · 1주 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">할로윈 특별 프로모션 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-3-스토리보드생성.html" class="step-item-link">2. 스토리보드 생성</a>
+                                <div class="step-outputs">
+                                    <a href="1-3-스토리보드생성.html" class="output-item">
+                                        <span class="output-item-name">스토리보드</span>
+                                        <span class="output-item-title">전체 스토리보드 보기</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=1" class="output-item">
+                                        <span class="output-item-name">씬 1</span>
+                                        <span class="output-item-title">할로윈 분위기 오프닝</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=2" class="output-item">
+                                        <span class="output-item-name">씬 2</span>
+                                        <span class="output-item-title">할로윈 테마 제품 소개</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=3" class="output-item">
+                                        <span class="output-item-name">씬 3</span>
+                                        <span class="output-item-title">특별 할인 및 이벤트 안내</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=4" class="output-item">
+                                        <span class="output-item-name">씬 4</span>
+                                        <span class="output-item-title">할로윈 메이크업 튜토리얼</span>
+                                    </a>
+                                    <a href="1-3-1-스케치이미지조회.html?scene=5" class="output-item">
+                                        <span class="output-item-name">씬 5</span>
+                                        <span class="output-item-title">프로모션 종료일 및 CTA</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-4-촬영기획.html" class="step-item-link">3. 촬영기획</a>
+                                <div class="step-outputs">
+                                    <a href="1-4-촬영기획.html" class="output-item">
+                                        <span class="output-item-name">촬영 기획서</span>
+                                        <span class="output-item-title">촬영 기획서</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="step-item-wrapper">
+                                <a href="1-5-영상제작.html" class="step-item-link active">4. 영상제작</a>
+                                <div class="step-outputs">
+                                    <a href="1-5-영상제작.html" class="output-item">
+                                        <span class="output-item-name">영상</span>
+                                        <span class="output-item-title">최종 영상</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item" id="project-8">
+                        <div class="project-header" onclick="toggleProjectExpand(8)">
+                            <img src="../CEN_img/dummy/ChatGPT Image 2025년 10월 24일 오후 02_51_09.png" alt="Project" class="project-thumbnail">
+                            <div class="project-info">
+                                <div class="project-name">크리스마스 캠페인</div>
+                                <div class="project-meta">Step 1 · 2주 전</div>
+                            </div>
+                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="project-steps">
+                            <div class="step-item-wrapper">
+                                <a href="1-2-정보입력.html" class="step-item-link active">1. 정보입력</a>
+                                <div class="step-outputs">
+                                    <a href="1-2-정보입력.html" class="output-item">
+                                        <span class="output-item-name">프로젝트 정보</span>
+                                        <span class="output-item-title">크리스마스 캠페인 - 프로젝트 정보</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="account-btn" onclick="alert('내 계정 기능은 추후 구현됩니다.')">
+                    <div class="account-avatar">HM</div>
+                    <div class="account-info">
+                        <div class="account-name">홍민수</div>
+                        <div class="account-email">hmsu@company.com</div>
+                    </div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; opacity: 0.5;">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-actions">
+                    <button class="icon-btn icon-only" onclick="toggleTheme()" title="테마 전환">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="theme-icon-sun" style="display:none;">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="theme-icon-moon">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" onclick="toggleHistoryPanel()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M8 16H3v5"></path>
+                        </svg>
+                        <span>작업 히스토리</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <!-- Current Projects -->
+                <div class="current-projects">
+                    <div class="section-header">
+                        <h2 class="section-title">현재 진행 중인 프로젝트</h2>
+                    </div>
+                    <div class="current-projects-grid">
+                        <div class="current-project-card" onclick="openProject('project-1', 2)">
+                            <div class="current-project-thumbnail">
+                                <img src="../CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="신제품 런칭 광고">
+                                <div class="current-project-status-badge">진행중</div>
+                            </div>
+                            <div class="current-project-info">
+                                <div class="current-project-name">신제품 런칭 광고</div>
+                                <div class="current-project-meta">
+                                    <div class="current-project-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        어제
+                                    </div>
+                                    <div class="current-project-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                        </svg>
+                                        30초
+                                    </div>
+                                </div>
+                                <div class="current-project-progress">
+                                    <div class="current-project-progress-bar" style="width: 50%"></div>
+                                </div>
+                                <div class="current-project-step">Step 2 - 스토리보드 생성</div>
+                            </div>
+                        </div>
+
+                        <div class="current-project-card" onclick="openProject('project-2', 4)">
+                            <div class="current-project-thumbnail">
+                                <img src="../CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="봄 시즌 프로모션">
+                                <div class="current-project-status-badge">진행중</div>
+                            </div>
+                            <div class="current-project-info">
+                                <div class="current-project-name">봄 시즌 프로모션</div>
+                                <div class="current-project-meta">
+                                    <div class="current-project-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        2일 전
+                                    </div>
+                                    <div class="current-project-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                        </svg>
+                                        60초
+                                    </div>
+                                </div>
+                                <div class="current-project-progress">
+                                    <div class="current-project-progress-bar" style="width: 100%"></div>
+                                </div>
+                                <div class="current-project-step">Step 4 - 영상제작</div>
+                            </div>
+                        </div>
+
+                        <div class="current-project-card" onclick="openProject('project-3', 3)">
+                            <div class="current-project-thumbnail">
+                                <img src="../CEN_img/SOLIUM_광고/Scene 8 - 브랜드 엔딩.png" alt="브랜드 스토리 영상">
+                                <div class="current-project-status-badge">진행중</div>
+                            </div>
+                            <div class="current-project-info">
+                                <div class="current-project-name">브랜드 스토리 영상</div>
+                                <div class="current-project-meta">
+                                    <div class="current-project-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        3일 전
+                                    </div>
+                                    <div class="current-project-meta-item">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                                        </svg>
+                                        90초
+                                    </div>
+                                </div>
+                                <div class="current-project-progress">
+                                    <div class="current-project-progress-bar" style="width: 75%"></div>
+                                </div>
+                                <div class="current-project-step">Step 3 - 촬영기획</div>
+                            </div>
+                        </div>
+
+                        <div class="current-project-card new-project-card" onclick="createNewProject()">
+                            <div class="new-project-content">
+                                <div class="new-project-icon">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <div class="new-project-text">새 프로젝트</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Templates -->
+                <div class="ai-templates">
+                    <div class="section-header">
+                        <h2 class="section-title">이렇게 시작해볼까요?</h2>
+                    </div>
+                    <div class="templates-scroll">
+                        <div class="template-card" onclick="createFromTemplate('youtube-shorts')">
+                            <div class="template-thumbnail">
+                                <img src="../CEN_img/temp/제품 리뷰 템플릿.jpg" alt="제품 리뷰">
+                            </div>
+                            <div class="template-card-content">
+                                <h3 class="template-title">15초 제품 리뷰 템플릿</h3>
+                                <p class="template-description">빠르고 강렬한 제품 소개 영상을 만들어보세요</p>
+                                <span class="template-tag">#유튜브쇼츠</span>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="createFromTemplate('instagram-story')">
+                            <div class="template-thumbnail">
+                                <img src="../CEN_img/temp/감성 브랜드 스토리 템플릿.jpg" alt="브랜드 스토리">
+                            </div>
+                            <div class="template-card-content">
+                                <h3 class="template-title">감성 브랜드 스토리 템플릿</h3>
+                                <p class="template-description">브랜드의 감성을 전달하는 스토리 영상</p>
+                                <span class="template-tag">#인스타그램</span>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="createFromTemplate('product-launch')">
+                            <div class="template-thumbnail">
+                                <img src="../CEN_img/temp/신제품 런칭 템플릿.jpg" alt="신제품 런칭">
+                            </div>
+                            <div class="template-card-content">
+                                <h3 class="template-title">신제품 런칭 템플릿</h3>
+                                <p class="template-description">신제품 출시를 알리는 임팩트있는 영상</p>
+                                <span class="template-tag">#런칭캠페인</span>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="createFromTemplate('tutorial')">
+                            <div class="template-thumbnail">
+                                <img src="../CEN_img/temp/사용법 튜토리얼 템플릿 - 흑백 스케치.jpg" alt="사용법 튜토리얼">
+                            </div>
+                            <div class="template-card-content">
+                                <h3 class="template-title">사용법 튜토리얼 템플릿</h3>
+                                <p class="template-description">제품 사용법을 쉽게 설명하는 영상</p>
+                                <span class="template-tag">#튜토리얼</span>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="createFromTemplate('testimonial')">
+                            <div class="template-thumbnail">
+                                <img src="../CEN_img/temp/고객 후기 템플릿 흑백 스케치.jpg" alt="고객 후기">
+                            </div>
+                            <div class="template-card-content">
+                                <h3 class="template-title">고객 후기 템플릿</h3>
+                                <p class="template-description">진짜 고객의 목소리를 담은 영상</p>
+                                <span class="template-tag">#리뷰</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- History Panel -->
+        <aside class="history-panel" id="historyPanel">
+            <div class="history-header">
+                <div class="history-title-row">
+                    <h2 class="history-title">작업 히스토리</h2>
+                    <button class="icon-btn icon-only" onclick="toggleHistoryPanel()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <input type="text" class="history-search" placeholder="히스토리 검색...">
+                <div class="history-filters">
+                    <button class="history-filter-btn active" onclick="filterHistory('all')">전체</button>
+                    <button class="history-filter-btn" onclick="filterHistory('create')">생성</button>
+                    <button class="history-filter-btn" onclick="filterHistory('edit')">수정</button>
+                    <button class="history-filter-btn" onclick="filterHistory('complete')">완료</button>
+                </div>
+            </div>
+            <div class="history-content">
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">사용자</div>
+                        <div class="history-time">10분 전</div>
+                    </div>
+                    <div class="history-action">스토리보드 생성 완료</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">홍길동님</div>
+                        <div class="history-time">1시간 전</div>
+                    </div>
+                    <div class="history-action">프로젝트 정보 수정</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">사용자</div>
+                        <div class="history-time">2시간 전</div>
+                    </div>
+                    <div class="history-action">새 프로젝트 생성: 코카콜라 런칭 캠페인</div>
+                </div>
+                <div class="history-item">
+                    <div class="history-item-header">
+                        <div class="history-user">사용자</div>
+                        <div class="history-time">어제</div>
+                    </div>
+                    <div class="history-action">영상 제작 완료</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            const sunIcon = document.querySelector('.theme-icon-sun');
+            const moonIcon = document.querySelector('.theme-icon-moon');
+
+            if (newTheme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            const sunIcon = document.querySelector('.theme-icon-sun');
+            const moonIcon = document.querySelector('.theme-icon-moon');
+
+            if (savedTheme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        });
+
+        // History Panel Toggle
+        function toggleHistoryPanel() {
+            const panel = document.getElementById('historyPanel');
+            panel.classList.toggle('open');
+        }
+
+        // Refresh Dashboard (Logo click)
+        function refreshDashboard() {
+            location.reload();
+        }
+
+        // Create New Project (CTA)
+        function createNewProject() {
+            window.location.href = '1-2-정보입력.html';
+        }
+
+        // Open Project with Step
+        function openProject(projectId, step) {
+            sessionStorage.setItem('currentProject', JSON.stringify({
+                id: projectId,
+                step: step
+            }));
+
+            const stepPages = {
+                1: '1-2-정보입력.html',
+                2: '1-3-스토리보드생성.html',
+                3: '1-4-촬영기획.html',
+                4: '1-5-영상제작.html'
+            };
+
+            window.location.href = stepPages[step] || '1-2-정보입력.html';
+        }
+
+        // Create from Template
+        function createFromTemplate(templateType) {
+            sessionStorage.setItem('templateType', templateType);
+            window.location.href = '1-2-정보입력.html';
+        }
+
+        // Show All Current Projects
+        function showAllProjects() {
+            alert('전체 프로젝트 목록 기능은 추후 구현됩니다.');
+        }
+
+        // File Upload Handler
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                let fileList = Array.from(files).map(f => f.name).join('\n');
+                alert(`파일 업로드 완료!\n\n${fileList}\n\n프로젝트 생성 화면으로 이동합니다.`);
+                setTimeout(() => {
+                    window.location.href = '1-2-정보입력.html';
+                }, 1500);
+            }
+        }
+
+        // Start with Prompt
+        function startWithPrompt() {
+            const input = document.querySelector('.cta-input');
+            const prompt = input.value.trim();
+            if (prompt) {
+                sessionStorage.setItem('userPrompt', prompt);
+                alert(`프롬프트: "${prompt}"\n\n프로젝트 생성 화면으로 이동합니다.`);
+                setTimeout(() => {
+                    window.location.href = '1-2-정보입력.html';
+                }, 1500);
+            } else {
+                alert('어떤 영상을 만들고 싶은지 입력해주세요.');
+            }
+        }
+
+        // Handle Enter Key
+        function handlePromptEnter(event) {
+            if (event.key === 'Enter') {
+                startWithPrompt();
+            }
+        }
+
+        // Filter History
+        function filterHistory(type) {
+            document.querySelectorAll('.history-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            console.log('Filtering history by:', type);
+        }
+
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        // Toggle project expansion in sidebar
+        function toggleProjectExpand(projectId) {
+            const projectItem = document.getElementById(`project-${projectId}`);
+            projectItem.classList.toggle('expanded');
+        }
+
+        // Position step outputs on hover - move to body for proper layering
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrappers = document.querySelectorAll('.step-item-wrapper');
+
+            wrappers.forEach(wrapper => {
+                const link = wrapper.querySelector('.step-item-link');
+                const outputs = wrapper.querySelector('.step-outputs');
+
+                if (!link || !outputs) return;
+
+                // Move outputs to body to escape sidebar stacking context
+                document.body.appendChild(outputs);
+
+                wrapper.addEventListener('mouseenter', () => {
+                    const rect = link.getBoundingClientRect();
+                    outputs.style.left = (rect.right + 8) + 'px';
+                    outputs.style.top = rect.top + 'px';
+                    outputs.style.display = 'block';
+                });
+
+                wrapper.addEventListener('mouseleave', (e) => {
+                    // 마우스가 outputs로 이동했는지 확인
+                    setTimeout(() => {
+                        if (!outputs.matches(':hover') && !wrapper.matches(':hover')) {
+                            outputs.style.display = 'none';
+                        }
+                    }, 50);
+                });
+
+                outputs.addEventListener('mouseenter', () => {
+                    outputs.style.display = 'block';
+                });
+
+                outputs.addEventListener('mouseleave', () => {
+                    outputs.style.display = 'none';
+                });
+            });
+        });
+
+
+        // Modal functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal on overlay click
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal(e.target.id);
+            }
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const activeModal = document.querySelector('.modal-overlay.active');
+                if (activeModal) {
+                    closeModal(activeModal.id);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
