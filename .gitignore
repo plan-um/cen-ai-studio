@@ -37,4 +37,4 @@ yarn-error.log*
 
 # Temporary files
 tmp/
-temp/
+# temp/ - commented out to allow CEN_img/temp/ folder
