@@ -787,6 +787,46 @@
             line-height: 1.6;
         }
 
+        /* New Scene Card */
+        .new-scene-card {
+            background: linear-gradient(135deg, rgba(86, 157, 255, 0.05), rgba(106, 20, 217, 0.05));
+            border: 2px dashed var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+
+        .new-scene-card:hover {
+            background: linear-gradient(135deg, rgba(86, 157, 255, 0.1), rgba(106, 20, 217, 0.1));
+            border-color: var(--accent-blue);
+            border-style: dashed;
+        }
+
+        .new-scene-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .new-scene-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .new-scene-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
         /* Action Buttons */
         .action-buttons {
             display: flex;
@@ -1641,17 +1681,23 @@
                             </p>
                         </div>
                     </div>
+
+                    <!-- New Scene Card -->
+                    <div class="scene-card new-scene-card" onclick="createNewScene()">
+                        <div class="new-scene-content">
+                            <div class="new-scene-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </div>
+                            <div class="new-scene-text">새 씬 생성</div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <button class="btn btn-outline" onclick="createNewScene()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        씬 생성
-                    </button>
                     <button class="btn btn-outline" onclick="regenerateAI()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
@@ -1823,8 +1869,8 @@
 
         function createNewScene() {
             // Navigate to scene creation page (씬 생성)
-            // Get the next scene number (count existing scenes + 1)
-            const existingScenes = document.querySelectorAll('.scene-card').length;
+            // Get the next scene number (count existing scenes + 1, excluding the new-scene-card)
+            const existingScenes = document.querySelectorAll('.scene-card:not(.new-scene-card)').length;
             const newSceneNumber = existingScenes + 1;
             window.location.href = `1-3-1-스케치이미지조회.html?scene=${newSceneNumber}&new=true`;
         }
