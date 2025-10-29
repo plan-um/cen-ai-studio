@@ -2553,13 +2553,38 @@
             justify-content: center;
         }
 
-        .btn-danger {
+        .delete-modal-footer .btn {
             flex: 1;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .delete-modal-footer .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .delete-modal-footer .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .delete-modal-footer .btn-danger {
             background: var(--accent-coral);
             color: white;
         }
 
-        .btn-danger:hover {
+        .delete-modal-footer .btn-danger:hover {
             background: #e6747a;
             transform: translateY(-1px);
             box-shadow: var(--shadow-md);
