@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Test - CEN AI Studio</title>
+    <!-- Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <link href="https://fastly.jsdelivr.net/gh/fonts-archive/HallymGothic/HallymGothic.css" rel="stylesheet">
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="components/common.css">
+    <style>
+        /* App Container */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: margin-left 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.collapsed + .main-content,
+        .main-content.sidebar-collapsed {
+            margin-left: 60px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px;
+        }
+
+        .test-box {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .test-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--accent-blue);
+        }
+
+        .test-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Component -->
+        <div id="sidebar-root"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header Component -->
+            <div id="header-root"></div>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="test-box">
+                    <h1 class="test-title">Component System Test Page</h1>
+                    <p class="test-description">
+                        이 페이지는 새로운 컴포넌트 시스템을 테스트하기 위한 페이지입니다.
+                        <br><br>
+                        <strong>테스트 항목:</strong>
+                    </p>
+                    <ul class="test-description">
+                        <li>✅ Sidebar 렌더링 및 프로젝트 목록</li>
+                        <li>✅ 프로젝트 확장/축소 기능</li>
+                        <li>✅ Step 항목 및 Output 호버 메뉴</li>
+                        <li>✅ 사이드바 접기/펼치기</li>
+                        <li>✅ Header 렌더링 (스테퍼 없음)</li>
+                        <li>✅ 테마 토글 (라이트/다크 모드)</li>
+                        <li>✅ History Panel 열기/닫기</li>
+                        <li>✅ History 검색 및 필터링</li>
+                        <li>✅ CSS 스타일링 (common.css)</li>
+                        <li>✅ localStorage 상태 저장</li>
+                    </ul>
+                </div>
+
+                <div class="test-box">
+                    <h2 class="test-title">Interactive Tests</h2>
+                    <p class="test-description">
+                        <strong>1. Sidebar:</strong> 좌측 사이드바에서 프로젝트를 클릭하여 확장/축소해보세요.<br>
+                        <strong>2. Theme Toggle:</strong> 우측 상단 테마 버튼을 클릭하여 라이트/다크 모드를 전환해보세요.<br>
+                        <strong>3. History Panel:</strong> "작업 히스토리" 버튼을 클릭하여 패널을 열고, 검색 및 필터를 테스트해보세요.<br>
+                        <strong>4. Sidebar Toggle:</strong> 사이드바 상단의 접기 버튼을 클릭해보세요.<br>
+                        <strong>5. Project Delete:</strong> 프로젝트 항목에 마우스를 올리면 나타나는 삭제 버튼을 테스트해보세요.
+                    </p>
+                </div>
+
+                <div class="test-box">
+                    <h2 class="test-title">Status</h2>
+                    <p class="test-description">
+                        <strong>Component Files Loaded:</strong><br>
+                        - sidebar-data.js<br>
+                        - sidebar.js<br>
+                        - header.js<br>
+                        - history-data.js<br>
+                        - history-panel.js<br>
+                        - common.css (789 lines)
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- History Panel Component -->
+    <div id="history-panel-root"></div>
+
+    <!-- Component Scripts -->
+    <script src="components/sidebar-data.js"></script>
+    <script src="components/sidebar.js"></script>
+    <script src="components/header.js"></script>
+    <script src="components/history-data.js"></script>
+    <script src="components/history-panel.js"></script>
+
+    <script>
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        });
+
+        // Log component initialization
+        console.log('Components loaded:', {
+            sidebar: typeof window.toggleProjectExpand !== 'undefined',
+            header: typeof window.toggleTheme !== 'undefined',
+            history: typeof window.filterHistory !== 'undefined'
+        });
+    </script>
+</body>
+</html>
