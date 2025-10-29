@@ -487,13 +487,41 @@
             background: var(--bg-hover);
         }
 
+        .project-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .project-delete-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: var(--text-tertiary);
+            transition: all 0.2s;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .project-item:hover .project-delete-btn {
+            opacity: 1;
+        }
+
+        .project-delete-btn:hover {
+            background: rgba(255, 130, 136, 0.1);
+            color: var(--accent-coral);
+        }
+
         .project-expand-icon {
             width: 16px;
             height: 16px;
             color: var(--text-tertiary);
             transition: transform 0.2s;
             flex-shrink: 0;
-            margin-left: auto;
         }
 
         .project-item.expanded .project-expand-icon {
@@ -1415,15 +1443,23 @@
                 </div>
                 <div class="project-list">
                     <div class="project-item" id="project-1">
-                        <div class="project-header" onclick="toggleProjectExpand(1)">
-                            <img src="CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="Project" class="project-thumbnail">
-                            <div class="project-info">
+                        <div class="project-header">
+                            <img src="CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="Project" class="project-thumbnail" onclick="toggleProjectExpand(1)">
+                            <div class="project-info" onclick="toggleProjectExpand(1)">
                                 <div class="project-name">신제품 런칭 광고</div>
                                 <div class="project-meta">Step 2 · 어제</div>
                             </div>
-                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="project-actions">
+                                <div class="project-delete-btn" onclick="deleteProject(1, '신제품 런칭 광고'); event.stopPropagation();" title="프로젝트 삭제">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </div>
+                                <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="toggleProjectExpand(1)">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
                         </div>
                         <div class="project-steps">
                             <div class="step-item-wrapper">
@@ -1480,15 +1516,23 @@
                     </div>
 
                     <div class="project-item" id="project-2">
-                        <div class="project-header" onclick="toggleProjectExpand(2)">
-                            <img src="CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="Project" class="project-thumbnail">
-                            <div class="project-info">
+                        <div class="project-header">
+                            <img src="CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="Project" class="project-thumbnail" onclick="toggleProjectExpand(2)">
+                            <div class="project-info" onclick="toggleProjectExpand(2)">
                                 <div class="project-name">봄 시즌 프로모션</div>
                                 <div class="project-meta">Step 4 · 2일 전</div>
                             </div>
-                            <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="project-actions">
+                                <div class="project-delete-btn" onclick="deleteProject(2, '봄 시즌 프로모션'); event.stopPropagation();" title="프로젝트 삭제">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </div>
+                                <svg class="project-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="toggleProjectExpand(2)">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
                         </div>
                         <div class="project-steps">
                             <div class="step-item-wrapper">
@@ -2242,6 +2286,11 @@
         function toggleProjectExpand(projectId) {
             const projectItem = document.getElementById(`project-${projectId}`);
             projectItem.classList.toggle('expanded');
+        }
+
+        function deleteProject(projectId, projectName) {
+            // Open project delete confirmation modal (1-6-프로젝트삭제.html)
+            window.open(`1-6-프로젝트삭제.html?id=${projectId}&name=${encodeURIComponent(projectName)}`, '프로젝트삭제', 'width=500,height=350,scrollbars=no');
         }
 
         // Position step outputs on hover - move to body for proper layering

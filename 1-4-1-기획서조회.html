@@ -1803,8 +1803,10 @@
 
         // Delete Scene
         function deleteScene(sceneNumber) {
-            // Open delete confirmation modal (1-6-프로젝트삭제.html)
-            window.open('1-6-프로젝트삭제.html?type=scene&id=' + sceneNumber, '프로젝트삭제', 'width=500,height=300,scrollbars=no');
+            // Delete individual scene (not the whole project)
+            if (confirm(`씬 ${sceneNumber}을 삭제하시겠습니까?`)) {
+                alert(`씬 ${sceneNumber}이 삭제되었습니다.`);
+            }
         }
 
         // Export Planning
