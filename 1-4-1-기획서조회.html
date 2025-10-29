@@ -620,47 +620,6 @@
             color: var(--text-secondary);
         }
 
-        /* Tabs */
-        .tabs-container {
-            margin-bottom: 24px;
-        }
-
-        .tabs-header {
-            display: flex;
-            gap: 8px;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 24px;
-        }
-
-        .tab-btn {
-            padding: 12px 24px;
-            background: transparent;
-            border: none;
-            border-bottom: 3px solid transparent;
-            color: var(--text-secondary);
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: -2px;
-        }
-
-        .tab-btn:hover {
-            color: var(--text-primary);
-        }
-
-        .tab-btn.active {
-            color: var(--accent-blue);
-            border-bottom-color: var(--accent-blue);
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
 
         /* Planning Document */
         .planning-document {
@@ -1407,18 +1366,11 @@
                     <p class="page-description">AI가 생성한 촬영 기획서를 확인하고 씬별로 편집하세요</p>
                 </div>
 
-                <!-- Tabs -->
-                <div class="tabs-container">
-                    <div class="tabs-header">
-                        <button class="tab-btn active" onclick="switchTab(1)">프로젝트 개요</button>
-                        <button class="tab-btn" onclick="switchTab(2)">연출 상세</button>
-                    </div>
-
-                    <!-- Tab 1: Project Overview -->
-                    <div class="tab-content active" id="tab1">
-                        <div class="planning-document">
-                            <div class="document-section">
-                                <h2 class="section-title-doc">프로젝트 개요</h2>
+                <!-- Planning Document -->
+                <div class="planning-document">
+                    <!-- Section 1: Project Overview -->
+                    <div class="document-section">
+                        <h2 class="section-title-doc">프로젝트 개요</h2>
                                 <table class="planning-table">
                                     <tr>
                                         <th style="width: 200px;">항목</th>
@@ -1426,34 +1378,32 @@
                                     </tr>
                                     <tr>
                                         <td><strong>프로젝트명</strong></td>
-                                        <td>브랜드 스토리 영상</td>
+                                        <td>신제품 런칭 광고</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>촬영 일정</strong></td>
-                                        <td>2025년 11월 15일 - 11월 17일 (3일)</td>
+                                        <td><strong>제작 방식</strong></td>
+                                        <td>AI 영상 생성 (Text-to-Video & Image-to-Video)</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>총 예상 소요시간</strong></td>
-                                        <td>18시간</td>
+                                        <td><strong>예상 제작 시간</strong></td>
+                                        <td>약 2-4시간 (AI 렌더링 시간 포함)</td>
                                     </tr>
                                     <tr>
                                         <td><strong>총 씬 수</strong></td>
                                         <td>8개 씬</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>총 예산</strong></td>
-                                        <td>10,000,000원</td>
+                                        <td><strong>영상 길이</strong></td>
+                                        <td>약 30초 (각 씬 3-5초)</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tab 2: Scene Details -->
-                    <div class="tab-content" id="tab2">
-                        <div class="planning-document">
-                            <div class="document-section">
-                                <h2 class="section-title-doc">씬별 연출 상세</h2>
+                    <!-- Section 2: Scene Details -->
+                    <div class="document-section">
+                        <h2 class="section-title-doc">씬별 연출 상세</h2>
                                 <div class="scene-grid">
                                     <!-- Scene 1 -->
                                     <div class="scene-card">
@@ -1735,8 +1685,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -1792,17 +1740,6 @@
                 moonIcon.style.display = 'block';
             }
         });
-
-        // Tab Switching
-        function switchTab(tabNumber) {
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-
-            // Add active class to selected tab
-            document.querySelectorAll('.tab-btn')[tabNumber - 1].classList.add('active');
-            document.getElementById(`tab${tabNumber}`).classList.add('active');
-        }
 
         // Edit Scene
         function editScene(sceneNumber) {
