@@ -1848,6 +1848,11 @@
 
             // Show success message
             alert(`씬 ${currentScene} 정보가 저장되었습니다.`);
+
+            // Navigate back to storyboard page after saving
+            setTimeout(() => {
+                window.location.href = '1-3-스토리보드생성.html';
+            }, 500);
         }
 
         function regenerateImage() {
