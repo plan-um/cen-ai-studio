@@ -150,21 +150,22 @@
         }
 
         .sidebar-header {
-            padding: 24px 20px;
+            padding: 24px 12px 24px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             height: 72px;
             box-sizing: border-box;
             position: relative;
         }
 
         .logo {
-            height: 48px;
+            height: 64px;
             width: auto;
             cursor: pointer;
             transition: opacity 0.2s ease;
+            margin-left: 4px;
         }
 
         .logo-light {
@@ -351,6 +352,32 @@
                 linear-gradient(135deg, rgba(86,157,255,0.5) 0%, rgba(0,85,233,0.35) 50%, rgba(106,20,217,0.4) 100%);
             box-shadow: 0 2px 8px rgba(86,157,255,0.15);
         }
+        .project-item.active-project {
+            position: sticky;
+            top: 8px;
+            z-index: 10;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(0, 85, 233, 0.25), 0 0 0 4px rgba(0, 85, 233, 0.1);
+            background-image:
+                linear-gradient(var(--bg-primary), var(--bg-primary)),
+                linear-gradient(135deg, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.1) 50%, rgba(106,20,217,0.12) 100%);
+        }
+
+        .project-item.active-project::before {
+            content: '진행중';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #0055E9 0%, #569DFF 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
 
         .project-header {
             display: flex;
@@ -541,11 +568,11 @@
         .step-item-stepper {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
             color: var(--text-tertiary);
             cursor: pointer;
             transition: all 0.2s;
@@ -555,33 +582,34 @@
         .step-item-stepper.active {
             background: var(--accent-blue);
             color: white;
+            box-shadow: 0 4px 12px rgba(0, 85, 233, 0.25);
         }
 
         .step-item-stepper.completed {
-            color: var(--accent-mint);
+            color: var(--accent-blue);
             cursor: pointer;
         }
 
         .step-item-stepper.completed:hover {
-            background: var(--bg-tertiary);
+            background: rgba(86, 157, 255, 0.1);
         }
 
         .step-item-stepper:not(.active):not(.completed) {
             cursor: not-allowed;
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .step-number {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: var(--bg-tertiary);
             border: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
         }
 
         .step-item-stepper.active .step-number {
@@ -591,8 +619,8 @@
         }
 
         .step-item-stepper.completed .step-number {
-            background: var(--accent-mint);
-            border-color: var(--accent-mint);
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             color: white;
         }
 
@@ -1601,50 +1629,26 @@
 
                         <div class="form-group">
                             <label class="form-label">
-                                영상 길이<span class="required">*</span>
+                                제품명<span class="required">*</span>
                             </label>
-                            <div class="radio-cards">
-                                <label class="radio-card">
-                                    <input type="radio" name="duration" value="15" required>
-                                    <div class="radio-card-content">
-                                        <div class="radio-card-icon">⚡</div>
-                                        <div class="radio-card-title">15초</div>
-                                        <div class="radio-card-description">쇼츠, 릴스용</div>
-                                    </div>
-                                </label>
-                                <label class="radio-card">
-                                    <input type="radio" name="duration" value="30" required>
-                                    <div class="radio-card-content">
-                                        <div class="radio-card-icon">⏱️</div>
-                                        <div class="radio-card-title">30초</div>
-                                        <div class="radio-card-description">표준 광고 형식</div>
-                                    </div>
-                                </label>
-                                <label class="radio-card">
-                                    <input type="radio" name="duration" value="60" required>
-                                    <div class="radio-card-content">
-                                        <div class="radio-card-icon">🎬</div>
-                                        <div class="radio-card-title">60초</div>
-                                        <div class="radio-card-description">상세 설명용</div>
-                                    </div>
-                                </label>
-                                <label class="radio-card">
-                                    <input type="radio" name="duration" value="90" required>
-                                    <div class="radio-card-content">
-                                        <div class="radio-card-icon">📖</div>
-                                        <div class="radio-card-title">90초</div>
-                                        <div class="radio-card-description">브랜드 스토리</div>
-                                    </div>
-                                </label>
-                                <label class="radio-card">
-                                    <input type="radio" name="duration" value="120" required>
-                                    <div class="radio-card-content">
-                                        <div class="radio-card-icon">🎥</div>
-                                        <div class="radio-card-title">2분 이상</div>
-                                        <div class="radio-card-description">튜토리얼, 리뷰</div>
-                                    </div>
-                                </label>
-                            </div>
+                            <input type="text" class="form-input" placeholder="예: SOLIUM 리바이탈라이징 에센스" required>
+                            <div class="form-hint">광고할 제품 또는 서비스의 이름을 입력하세요</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                제품 설명<span class="required">*</span>
+                            </label>
+                            <textarea class="form-textarea" placeholder="제품의 주요 특징, 효능, 차별화 포인트 등을 입력하세요" rows="4" required></textarea>
+                            <div class="form-hint">제품의 핵심 가치와 특징을 구체적으로 작성해주세요</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                톤앤매너<span class="required">*</span>
+                            </label>
+                            <input type="text" class="form-input" placeholder="예: 고급스럽고 감성적인, 자연주의적이고 평온한" required>
+                            <div class="form-hint">영상에서 전달하고 싶은 분위기와 느낌을 입력하세요</div>
                         </div>
 
                         <div class="form-group">

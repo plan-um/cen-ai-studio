@@ -149,21 +149,22 @@
         }
 
         .sidebar-header {
-            padding: 24px 20px;
+            padding: 24px 12px 24px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             height: 72px;
             box-sizing: border-box;
             position: relative;
         }
 
         .logo {
-            height: 48px;
+            height: 64px;
             width: auto;
             cursor: pointer;
             transition: opacity 0.2s ease;
+            margin-left: 4px;
         }
 
         .logo-light {
@@ -348,6 +349,41 @@
                 linear-gradient(var(--bg-tertiary), var(--bg-tertiary)),
                 linear-gradient(135deg, rgba(86,157,255,0.5) 0%, rgba(0,85,233,0.35) 50%, rgba(106,20,217,0.4) 100%);
             box-shadow: 0 2px 8px rgba(86,157,255,0.15);
+        }
+        .project-item.active-project {
+            position: sticky;
+            top: 8px;
+            z-index: 10;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(0, 85, 233, 0.25), 0 0 0 4px rgba(0, 85, 233, 0.1);
+            background-image:
+                linear-gradient(var(--bg-primary), var(--bg-primary)),
+                linear-gradient(135deg, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.1) 50%, rgba(106,20,217,0.12) 100%);
+        }
+
+        .project-item.active-project::before {
+            content: '진행중';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #0055E9 0%, #569DFF 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+
+        .project-item.active {
+            background: var(--bg-hover);
+            background-image:
+                linear-gradient(var(--bg-hover), var(--bg-hover)),
+                linear-gradient(135deg, rgba(86,157,255,0.7) 0%, rgba(0,85,233,0.5) 50%, rgba(106,20,217,0.6) 100%);
+            box-shadow: 0 4px 12px rgba(86,157,255,0.25);
+            border: 1px solid rgba(86,157,255,0.4);
         }
 
         .project-header {
@@ -542,31 +578,39 @@
             gap: 8px;
             padding: 8px 16px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-tertiary);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             white-space: nowrap;
+            opacity: 0.4;
         }
 
         .step-item-stepper.active {
             background: var(--accent-blue);
             color: white;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 10px 20px;
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 85, 233, 0.3);
         }
 
         .step-item-stepper.completed {
-            color: var(--accent-mint);
+            color: var(--accent-blue);
             cursor: pointer;
+            opacity: 0.6;
         }
 
         .step-item-stepper.completed:hover {
-            background: var(--bg-tertiary);
+            background: rgba(86, 157, 255, 0.1);
+            opacity: 1;
         }
 
         .step-item-stepper:not(.active):not(.completed) {
             cursor: not-allowed;
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         .step-number {
@@ -580,17 +624,21 @@
             justify-content: center;
             font-size: 12px;
             font-weight: 600;
+            transition: all 0.3s;
         }
 
         .step-item-stepper.active .step-number {
             background: white;
             border-color: white;
             color: var(--accent-blue);
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
         }
 
         .step-item-stepper.completed .step-number {
-            background: var(--accent-mint);
-            border-color: var(--accent-mint);
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             color: white;
         }
 
@@ -683,6 +731,9 @@
         /* Page Header */
         .page-header {
             margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
         .page-title {
@@ -755,6 +806,18 @@
             font-size: 48px;
         }
 
+        /* Scene without image (Step 1 - before generation) */
+        .scene-image.no-image {
+            border: 2px dashed var(--border-color);
+            background: transparent;
+        }
+
+        .scene-image.no-image::before {
+            content: '이미지 생성 대기중';
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
         .scene-info {
             padding: 20px;
         }
@@ -789,18 +852,21 @@
 
         /* New Scene Card */
         .new-scene-card {
-            background: linear-gradient(135deg, rgba(86, 157, 255, 0.05), rgba(106, 20, 217, 0.05));
-            border: 2px dashed var(--border-color);
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--accent-blue);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 300px;
+            transition: all 0.3s ease;
         }
 
         .new-scene-card:hover {
-            background: linear-gradient(135deg, rgba(86, 157, 255, 0.1), rgba(106, 20, 217, 0.1));
+            background: var(--bg-hover);
             border-color: var(--accent-blue);
             border-style: dashed;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .new-scene-content {
@@ -808,23 +874,35 @@
             flex-direction: column;
             align-items: center;
             gap: 16px;
+            padding: 40px;
         }
 
         .new-scene-icon {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            background: var(--accent-blue);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            transition: all 0.3s;
+        }
+
+        .new-scene-card:hover .new-scene-icon {
+            background: var(--accent-blue-hover);
+            transform: scale(1.1);
         }
 
         .new-scene-text {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--accent-blue);
+            transition: color 0.3s;
+        }
+
+        .new-scene-card:hover .new-scene-text {
+            color: var(--accent-blue-hover);
         }
 
         /* Action Buttons */
@@ -1044,7 +1122,7 @@
                     <div class="sidebar-section-title">최근 프로젝트</div>
                 </div>
                 <div class="project-list">
-                    <div class="project-item" id="project-1">
+                    <div class="project-item active" id="project-1">
                         <div class="project-header" onclick="toggleProjectExpand(1)">
                             <img src="CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="Project" class="project-thumbnail">
                             <div class="project-info">
@@ -1556,8 +1634,17 @@
 
                 <!-- Page Header -->
                 <div class="page-header">
-                    <h1 class="page-title">스토리보드 생성</h1>
-                    <p class="page-description">AI가 생성한 스토리보드를 확인하고 수정하세요</p>
+                    <div>
+                        <h1 class="page-title">스토리보드 생성</h1>
+                        <p class="page-description">AI가 생성한 스토리보드를 확인하고 수정하세요</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="verifyAI()" style="align-self: flex-start;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"></path>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
+                        AI 검증
+                    </button>
                 </div>
 
                 <!-- Scene Grid -->
@@ -1682,6 +1769,24 @@
                         </div>
                     </div>
 
+                    <!-- Example: Scene without image (for Step 1 - before generation) -->
+                    <!-- Uncomment below and remove existing scene cards when in Step 1 state -->
+                    <!--
+                    <div class="scene-card">
+                        <div class="scene-image no-image">
+                        </div>
+                        <div class="scene-info">
+                            <div class="scene-header">
+                                <div class="scene-number">씬 1</div>
+                                <div class="scene-badge">대기중</div>
+                            </div>
+                            <p class="scene-description">
+                                정보입력 단계를 완료하면 자동으로 이미지가 생성됩니다.
+                            </p>
+                        </div>
+                    </div>
+                    -->
+
                     <!-- New Scene Card -->
                     <div class="scene-card new-scene-card" onclick="createNewScene()">
                         <div class="new-scene-content">
@@ -1698,26 +1803,6 @@
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
-                    <button class="btn btn-outline" onclick="verifyAI()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11l3 3L22 4"></path>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                        </svg>
-                        AI 검증
-                    </button>
-                    <button class="btn btn-outline" onclick="regenerateAI()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
-                        </svg>
-                        AI 재생성
-                    </button>
-                    <button class="btn btn-secondary" onclick="editManually()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                        수동 편집
-                    </button>
                     <button class="btn btn-primary" onclick="nextStep()">
                         다음 단계로
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1933,11 +2018,11 @@
     </script>
 
     <!-- AI Auto Regeneration Modal (1-3-3) -->
-    <div id="aiAutoRegenerateModal" class="ai-modal-overlay" style="display: none;">
-        <div class="ai-modal-container">
-            <div class="ai-modal-header">
-                <h2 class="ai-modal-title">AI 자동 재생성</h2>
-                <button class="ai-modal-close" onclick="closeAIAutoRegenerateModal()">
+    <div id="aiAutoRegenerateModal" class="auto-regenerate-modal-overlay" style="display: none;">
+        <div class="auto-regenerate-modal-container">
+            <div class="auto-regenerate-modal-header">
+                <h2 class="auto-regenerate-modal-title">AI 자동 재생성</h2>
+                <button class="auto-regenerate-modal-close" onclick="closeAIAutoRegenerateModal()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -1945,24 +2030,43 @@
                 </button>
             </div>
 
-            <div class="ai-modal-body">
-                <div class="ai-modal-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
-                    </svg>
+            <div class="auto-regenerate-modal-body">
+                <!-- Initial State -->
+                <div class="auto-regenerate-initial-state">
+                    <div class="auto-regenerate-modal-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
+                        </svg>
+                    </div>
+                    <p class="auto-regenerate-modal-message">
+                        AI가 씬을 자동으로 재생성합니다.
+                    </p>
+                    <p class="auto-regenerate-modal-details">
+                        기존 이미지는 유지되며 1-2분이 소요될 수 있습니다.
+                    </p>
                 </div>
-                <p class="ai-modal-message">
-                    AI가 검증 결과를 바탕으로 낮은 점수의 씬을 자동으로 재생성합니다.
-                </p>
-                <p class="ai-modal-details">
-                    78점 이하의 씬 1개가 재생성될 예정입니다.
-                    기존 이미지는 유지되며 2-3분이 소요될 수 있습니다.
-                </p>
+
+                <!-- Loading State -->
+                <div class="auto-regenerate-loading-state" style="display: none;">
+                    <div class="loading-spinner">
+                        <svg class="spinner-circle" width="80" height="80" viewBox="0 0 50 50">
+                            <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="3"></circle>
+                        </svg>
+                    </div>
+                    <div class="loading-steps">
+                        <p class="loading-step" data-step="1">입력받은 스토리보드를 분석 중입니다….</p>
+                        <p class="loading-step" data-step="2">스토리 속 장면을 AI가 상상하고 있습니다…</p>
+                        <p class="loading-step" data-step="3">AI 아티스트가 스케치의 첫 획을 긋고 있습니다.</p>
+                        <p class="loading-step" data-step="4">장면에 디테일을 더해 생동감을 불어넣는 중입니다.</p>
+                        <p class="loading-step" data-step="5">세상에 하나뿐인 이미지가 탄생하고 있습니다.</p>
+                        <p class="loading-step" data-step="6">스케치 이미지가 거의 완성되었습니다. 잠시만 기다려주세요!</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="ai-modal-footer">
+            <div class="auto-regenerate-modal-footer">
                 <button class="btn btn-secondary" onclick="closeAIAutoRegenerateModal()">취소</button>
-                <button class="btn btn-primary" onclick="confirmAIAutoRegenerate()">시작</button>
+                <button class="btn btn-primary" id="startAIRegenerateBtn" onclick="confirmAIAutoRegenerate()">시작</button>
             </div>
         </div>
     </div>
@@ -2122,6 +2226,171 @@
             display: flex;
             gap: 12px;
             justify-content: center;
+        }
+
+        /* AI Auto-Regenerate Modal Styles */
+        .auto-regenerate-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .auto-regenerate-modal-container {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.3s ease-out;
+        }
+
+        .auto-regenerate-modal-header {
+            padding: 24px 24px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .auto-regenerate-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .auto-regenerate-modal-close {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auto-regenerate-modal-close:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+
+        .auto-regenerate-modal-body {
+            padding: 32px 24px;
+        }
+
+        .auto-regenerate-initial-state {
+            text-align: center;
+        }
+
+        .auto-regenerate-modal-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 20px;
+            color: var(--accent-blue);
+        }
+
+        .auto-regenerate-modal-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .auto-regenerate-modal-message {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 12px 0;
+            line-height: 1.5;
+        }
+
+        .auto-regenerate-modal-details {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .auto-regenerate-modal-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        /* Loading State Styles */
+        .auto-regenerate-loading-state {
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 40px;
+        }
+
+        .spinner-circle {
+            animation: rotate 2s linear infinite;
+        }
+
+        .spinner-path {
+            stroke: var(--accent-blue);
+            stroke-linecap: round;
+            animation: dash 1.5s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 150;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -35;
+            }
+            100% {
+                stroke-dasharray: 90, 150;
+                stroke-dashoffset: -124;
+            }
+        }
+
+        .loading-steps {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .loading-step {
+            font-size: 14px;
+            color: var(--text-tertiary);
+            margin: 12px 0;
+            transition: all 0.5s ease;
+            line-height: 1.6;
+        }
+
+        .loading-step.active {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            transform: scale(1.05);
         }
 
         /* Manual Regeneration Modal Styles */
@@ -2290,17 +2559,57 @@
         }
 
         function confirmAIAutoRegenerate() {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '재생성 중...';
+            // Hide initial state and show loading state
+            document.querySelector('.auto-regenerate-initial-state').style.display = 'none';
+            document.querySelector('.auto-regenerate-loading-state').style.display = 'block';
 
-            setTimeout(() => {
-                alert('씬이 자동으로 재생성되었습니다.');
-                closeAIAutoRegenerateModal();
-                btn.disabled = false;
-                btn.textContent = '시작';
-                // TODO: Refresh scene images
-            }, 1500);
+            // Hide footer buttons
+            document.querySelector('.auto-regenerate-modal-footer').style.display = 'none';
+
+            // Disable close button during generation
+            const closeBtn = document.querySelector('.auto-regenerate-modal-close');
+            closeBtn.style.display = 'none';
+
+            // Start sequential step animation
+            const steps = document.querySelectorAll('.loading-step');
+            let currentStep = 0;
+
+            function animateStep() {
+                // Remove active class from all steps
+                steps.forEach(step => step.classList.remove('active'));
+
+                // Add active class to current step
+                if (currentStep < steps.length) {
+                    steps[currentStep].classList.add('active');
+                    currentStep++;
+
+                    // Move to next step after delay (each step takes ~3 seconds)
+                    setTimeout(animateStep, 3000);
+                } else {
+                    // All steps completed - finish regeneration
+                    setTimeout(() => {
+                        alert('씬이 자동으로 재생성되었습니다.');
+                        resetAIAutoRegenerateModal();
+                        closeAIAutoRegenerateModal();
+                    }, 1000);
+                }
+            }
+
+            // Start animation
+            animateStep();
+        }
+
+        function resetAIAutoRegenerateModal() {
+            // Reset modal to initial state
+            document.querySelector('.auto-regenerate-initial-state').style.display = 'block';
+            document.querySelector('.auto-regenerate-loading-state').style.display = 'none';
+            document.querySelector('.auto-regenerate-modal-footer').style.display = 'flex';
+            document.querySelector('.auto-regenerate-modal-close').style.display = 'flex';
+
+            // Remove active class from all steps
+            document.querySelectorAll('.loading-step').forEach(step => {
+                step.classList.remove('active');
+            });
         }
 
         // Manual Regeneration Modal Functions
@@ -2350,7 +2659,11 @@
         // Close modals on overlay click
         document.addEventListener('click', (e) => {
             if (e.target.id === 'aiAutoRegenerateModal') {
-                closeAIAutoRegenerateModal();
+                // Don't close if loading state is active
+                const loadingState = document.querySelector('.auto-regenerate-loading-state');
+                if (loadingState && loadingState.style.display !== 'block') {
+                    closeAIAutoRegenerateModal();
+                }
             }
             if (e.target.id === 'manualRegenerateModal2') {
                 closeManualRegenerateModal2();
@@ -2361,7 +2674,11 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (document.getElementById('aiAutoRegenerateModal').style.display === 'flex') {
-                    closeAIAutoRegenerateModal();
+                    // Don't close if loading state is active
+                    const loadingState = document.querySelector('.auto-regenerate-loading-state');
+                    if (loadingState && loadingState.style.display !== 'block') {
+                        closeAIAutoRegenerateModal();
+                    }
                 }
                 if (document.getElementById('manualRegenerateModal2').style.display === 'flex') {
                     closeManualRegenerateModal2();
@@ -2392,15 +2709,32 @@
                     <div class="score-label">전체 평균 점수</div>
                 </div>
 
+                <!-- Improvement Suggestions Section -->
+                <div class="improvement-section">
+                    <div class="improvement-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18h6"/>
+                            <path d="M10 22h4"/>
+                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+                        </svg>
+                        <span>개선사항 및 권장사항</span>
+                    </div>
+                    <div class="improvement-content">
+                        <p>씬 6의 브랜드 메시지 전달력이 다소 낮습니다. 제품의 핵심 가치와 브랜드 아이덴티티를 더욱 명확하게 표현할 것을 권장합니다. 전반적으로 우수한 점수이나, 일부 씬의 창의성을 보완하면 더욱 효과적인 스토리보드가 될 것입니다.</p>
+                    </div>
+                </div>
+
                 <table class="scenes-table">
                     <thead>
                         <tr>
                             <th>씬 정보</th>
+                            <th style="width: 150px;"></th>
                             <th style="width: 120px; text-align: center;">점수</th>
+                            <th style="width: 40px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(1)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="씬 1" class="scene-thumbnail">
@@ -2410,9 +2744,47 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">92/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-1">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">95/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">90/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">91/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">언덕 위에 서 있는 여성이 자연광을 받으며 평온한 표정을 짓고 있습니다. 자연과의 조화로운 연결을 강조하며 브랜드의 자연주의적 메시지를 효과적으로 전달합니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(2)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 2 - 들판의 풀과 바람.png" alt="씬 2" class="scene-thumbnail">
@@ -2422,9 +2794,47 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">88/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-2">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">87/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">88/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">89/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">들판의 풀과 바람이 부드럽게 흔들리는 장면으로 자연의 생명력을 표현합니다. 제품의 자연 친화적 이미지를 효과적으로 전달합니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(3)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 3 - 숲속의 하늘을 바라보는 여성.png" alt="씬 3" class="scene-thumbnail">
@@ -2434,9 +2844,47 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">85/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-3">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">83/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">86/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">86/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">숲 속에서 하늘을 올려다보는 여성의 모습이 평화로움과 희망을 전달합니다. 자연과의 교감을 통한 내면의 성장을 암시합니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(4)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="씬 4" class="scene-thumbnail">
@@ -2446,9 +2894,47 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">90/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-4">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">91/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">89/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">90/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">잎 위의 투명한 물방울이 자연의 순수함을 상징합니다. 제품의 순수 천연 성분과 수분감을 시각적으로 효과적으로 표현했습니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(5)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 5 - 피부 위의 물방울.png" alt="씬 5" class="scene-thumbnail">
@@ -2458,9 +2944,47 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">86/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-5">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">85/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">87/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">86/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">피부 위의 물방울 클로즈업으로 제품의 수분감과 흡수력을 강조합니다. 건강하고 촉촉한 피부 표현이 돋보입니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(6)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 6 - 에센스를 바르는 손.png" alt="씬 6" class="scene-thumbnail">
@@ -2470,9 +2994,54 @@
                                     </div>
                                 </div>
                             </td>
+                            <td style="text-align: center;">
+                                <button class="btn-regenerate-mini" onclick="event.stopPropagation(); regenerateScene(6);">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
+                                    </svg>
+                                    AI 재생성
+                                </button>
+                            </td>
                             <td style="text-align: center;"><span class="score-badge score-medium">78/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-6">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">76/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">79/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">79/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">손으로 에센스를 바르는 장면입니다. 제품 사용법을 자연스럽게 보여주지만, 브랜드 메시지 전달이 다소 약합니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">브랜드 아이덴티티가 명확하지 않음. 제품 특징이 충분히 부각되지 않음.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-yes">재생성 권장</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(7)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 7 - 자신감 있는 미소.png" alt="씬 7" class="scene-thumbnail">
@@ -2482,9 +3051,47 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">89/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr class="scene-details" id="scene-details-7">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">90/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">88/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">89/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">자신감 넘치는 미소가 제품 사용 후의 만족감과 긍정적 변화를 효과적으로 전달합니다. 감정적 공감대 형성이 우수합니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="scene-row" onclick="toggleSceneDetails(8)">
                             <td>
                                 <div class="scene-info">
                                     <img src="CEN_img/SOLIUM_광고/Scene 8 - 브랜드 엔딩.png" alt="씬 8" class="scene-thumbnail">
@@ -2494,19 +3101,51 @@
                                     </div>
                                 </div>
                             </td>
+                            <td></td>
                             <td style="text-align: center;"><span class="score-badge score-high">91/100</span></td>
+                            <td style="text-align: center;">
+                                <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </td>
+                        </tr>
+                        <tr class="scene-details" id="scene-details-8">
+                            <td colspan="4">
+                                <div class="details-content">
+                                    <div class="detail-row">
+                                        <div class="detail-item">
+                                            <div class="detail-label">메시지 전달력</div>
+                                            <div class="detail-value">92/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">창의성 및 독창성</div>
+                                            <div class="detail-value">90/100</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">브랜드/제품 적합성</div>
+                                            <div class="detail-value">91/100</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">추출된 설명</div>
+                                        <div class="detail-text">브랜드 로고와 CTA가 명확하게 노출되어 있습니다. 전체 스토리의 완결성과 브랜드 인지도 제고에 효과적입니다.</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">주요 이슈</div>
+                                        <div class="detail-text">없음</div>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-label">재생성 여부</div>
+                                        <div class="regenerate-status status-no">재생성 불필요</div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="verification-modal-footer">
-                <button class="btn btn-secondary" onclick="openAIAutoRegenerateModalFromVerification()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
-                    </svg>
-                    AI 자동 재생성
-                </button>
                 <button class="btn btn-primary" onclick="closeAIVerificationModal()">
                     확인 완료
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2609,6 +3248,58 @@
             color: var(--text-secondary);
         }
 
+        /* Improvement Section */
+        .improvement-section {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .improvement-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .improvement-content p {
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Mini Regenerate Button */
+        .btn-regenerate-mini {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--accent-coral);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-regenerate-mini:hover {
+            background: #FF6B72;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 130, 136, 0.3);
+        }
+
+        .btn-regenerate-mini svg {
+            flex-shrink: 0;
+        }
+
         .scenes-table {
             width: 100%;
             border-collapse: collapse;
@@ -2676,6 +3367,113 @@
         .score-medium { background: rgba(255, 174, 31, 0.1); color: #FFAE1F; }
         .score-low { background: rgba(255, 130, 136, 0.1); color: var(--accent-coral); }
 
+        /* Expandable Scene Details */
+        .scene-row {
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .scene-row:hover {
+            background: var(--bg-hover);
+        }
+
+        .expand-icon {
+            color: var(--text-tertiary);
+            transition: transform 0.3s;
+        }
+
+        .scene-row.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .scene-details {
+            display: none;
+            background: var(--bg-tertiary);
+        }
+
+        .scene-details.show {
+            display: table-row;
+        }
+
+        .details-content {
+            padding: 20px;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            background: var(--bg-primary);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .detail-section {
+            margin-bottom: 16px;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-section .detail-label {
+            margin-bottom: 8px;
+        }
+
+        .detail-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 12px;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .regenerate-status {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-no {
+            background: rgba(0, 203, 200, 0.1);
+            color: var(--accent-mint);
+        }
+
+        .status-yes {
+            background: rgba(255, 130, 136, 0.1);
+            color: var(--accent-coral);
+        }
+
         .verification-modal-footer {
             padding: 24px;
             border-top: 1px solid var(--border-color);
@@ -2704,6 +3502,33 @@
 
         function openAIAutoRegenerateModalFromVerification() {
             // Close verification modal and open auto regenerate modal
+            closeAIVerificationModal();
+            setTimeout(() => {
+                openAIAutoRegenerateModal();
+            }, 300);
+        }
+
+        function toggleSceneDetails(sceneId) {
+            const detailsRow = document.getElementById(`scene-details-${sceneId}`);
+            const sceneRow = detailsRow.previousElementSibling;
+
+            // Close all other details
+            document.querySelectorAll('.scene-details').forEach(row => {
+                if (row !== detailsRow) {
+                    row.classList.remove('show');
+                    if (row.previousElementSibling) {
+                        row.previousElementSibling.classList.remove('expanded');
+                    }
+                }
+            });
+
+            // Toggle current details
+            detailsRow.classList.toggle('show');
+            sceneRow.classList.toggle('expanded');
+        }
+
+        function regenerateScene(sceneId) {
+            // Close verification modal and open auto regenerate modal for specific scene
             closeAIVerificationModal();
             setTimeout(() => {
                 openAIAutoRegenerateModal();

@@ -131,21 +131,22 @@
         }
 
         .sidebar-header {
-            padding: 24px 20px;
+            padding: 24px 12px 24px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             height: 72px;
             box-sizing: border-box;
             position: relative;
         }
 
         .logo {
-            height: 48px;
+            height: 64px;
             width: auto;
             cursor: pointer;
             transition: opacity 0.2s ease;
+            margin-left: 4px;
         }
 
         .logo-light {
@@ -333,6 +334,32 @@
             cursor: pointer;
             transition: all 0.2s;
             align-items: center;
+        }
+
+        .project-item.active-project {
+            position: sticky;
+            top: 8px;
+            z-index: 10;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(0, 85, 233, 0.25), 0 0 0 4px rgba(0, 85, 233, 0.1);
+            background-image:
+                linear-gradient(var(--bg-primary), var(--bg-primary)),
+                linear-gradient(135deg, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.1) 50%, rgba(106,20,217,0.12) 100%);
+        }
+
+        .project-item.active-project::before {
+            content: '진행중';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #0055E9 0%, #569DFF 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 1;
         }
 
         .project-item:hover {
@@ -555,31 +582,39 @@
             gap: 8px;
             padding: 8px 16px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-tertiary);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
             white-space: nowrap;
+            opacity: 0.4;
         }
 
         .step-item-stepper.active {
             background: var(--accent-blue);
             color: white;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 10px 20px;
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 85, 233, 0.3);
         }
 
         .step-item-stepper.completed {
-            color: var(--accent-mint);
+            color: var(--accent-blue);
             cursor: pointer;
+            opacity: 0.6;
         }
 
         .step-item-stepper.completed:hover {
-            background: var(--bg-tertiary);
+            background: rgba(86, 157, 255, 0.1);
+            opacity: 1;
         }
 
         .step-item-stepper:not(.active):not(.completed) {
             cursor: not-allowed;
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         .step-number {
@@ -593,17 +628,21 @@
             justify-content: center;
             font-size: 12px;
             font-weight: 600;
+            transition: all 0.3s;
         }
 
         .step-item-stepper.active .step-number {
             background: white;
             border-color: white;
             color: var(--accent-blue);
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
         }
 
         .step-item-stepper.completed .step-number {
-            background: var(--accent-mint);
-            border-color: var(--accent-mint);
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             color: white;
         }
 

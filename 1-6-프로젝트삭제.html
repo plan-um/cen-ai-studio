@@ -26,13 +26,13 @@
 
         :root {
             --bg-primary: #FFFFFF;
-            --bg-secondary: rgba(255, 255, 255, 0.8);
-            --bg-tertiary: #F5F7FA;
-            --bg-hover: rgba(239, 246, 255, 0.8);
+            --bg-secondary: rgba(255, 255, 255, 0.95);
+            --bg-tertiary: #F8FAFF;
+            --bg-hover: rgba(239, 246, 255, 0.95);
             --text-primary: #1E1E1E;
             --text-secondary: #6B7280;
             --text-tertiary: #9CA3AF;
-            --border-color: #E5E7EB;
+            --border-color: rgba(86, 157, 255, 0.2);
             --accent-blue: #0055E9;
             --accent-blue-hover: #0032A0;
             --accent-mint: #00CBC8;
@@ -259,14 +259,16 @@
         }
 
         .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            background: var(--accent-blue);
+            color: white;
+            border: 1px solid var(--accent-blue);
         }
 
         .btn-secondary:hover {
-            background: var(--bg-hover);
-            border-color: var(--accent-blue);
+            background: var(--accent-blue-hover);
+            border-color: var(--accent-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
         }
     </style>
 </head>

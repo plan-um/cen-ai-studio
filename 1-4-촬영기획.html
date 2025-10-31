@@ -149,21 +149,22 @@
         }
 
         .sidebar-header {
-            padding: 24px 20px;
+            padding: 24px 12px 24px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             height: 72px;
             box-sizing: border-box;
             position: relative;
         }
 
         .logo {
-            height: 48px;
+            height: 64px;
             width: auto;
             cursor: pointer;
             transition: opacity 0.2s ease;
+            margin-left: 4px;
         }
 
         .logo-light {
@@ -349,6 +350,32 @@
                 linear-gradient(135deg, rgba(86,157,255,0.5) 0%, rgba(0,85,233,0.35) 50%, rgba(106,20,217,0.4) 100%);
             box-shadow: 0 2px 8px rgba(86,157,255,0.15);
         }
+        .project-item.active-project {
+            position: sticky;
+            top: 8px;
+            z-index: 10;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(0, 85, 233, 0.25), 0 0 0 4px rgba(0, 85, 233, 0.1);
+            background-image:
+                linear-gradient(var(--bg-primary), var(--bg-primary)),
+                linear-gradient(135deg, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.1) 50%, rgba(106,20,217,0.12) 100%);
+        }
+
+        .project-item.active-project::before {
+            content: '진행중';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #0055E9 0%, #569DFF 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
 
         .project-header {
             display: flex;
@@ -556,12 +583,12 @@
         }
 
         .step-item-stepper.completed {
-            color: var(--accent-mint);
+            color: var(--accent-blue);
             cursor: pointer;
         }
 
         .step-item-stepper.completed:hover {
-            background: var(--bg-tertiary);
+            background: rgba(86, 157, 255, 0.1);
         }
 
         .step-item-stepper:not(.active):not(.completed) {
@@ -589,8 +616,8 @@
         }
 
         .step-item-stepper.completed .step-number {
-            background: var(--accent-mint);
-            border-color: var(--accent-mint);
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             color: white;
         }
 
@@ -734,6 +761,122 @@
             font-size: 12px;
             font-weight: 600;
             border-radius: 6px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 32px;
+        }
+
+        .form-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'SUIT', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 3px rgba(0, 85, 233, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-family: 'SUIT', sans-serif;
+            resize: vertical;
+            transition: all 0.2s;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 3px rgba(0, 85, 233, 0.1);
+        }
+
+        /* Card Radio Buttons */
+        .radio-card-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .radio-card {
+            position: relative;
+        }
+
+        .radio-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-card-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .radio-card input[type="radio"]:checked + .radio-card-label {
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 85, 233, 0.25);
+        }
+
+        .radio-card-label:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-hover);
+        }
+
+        .radio-card input[type="radio"]:checked + .radio-card-label:hover {
+            background: var(--accent-blue-hover);
         }
 
         /* Action Buttons */
@@ -1489,6 +1632,198 @@
                                 <td>8개 씬</td>
                             </tr>
                         </table>
+                    </div>
+
+                    <!-- Section 1: Project Basic Information -->
+                    <div class="document-section">
+                        <h2 class="section-title-doc">프로젝트 기본 정보</h2>
+
+                        <div class="form-section">
+                            <!-- Target Audience -->
+                            <div class="form-group">
+                                <label class="form-label">타겟 오디언스</label>
+                                <input type="text" class="form-input" placeholder="남녀노소" value="남녀노소">
+                            </div>
+
+                            <!-- Brand Tone -->
+                            <div class="form-group">
+                                <label class="form-label">브랜드 톤앤매너</label>
+                                <div class="radio-card-group">
+                                    <div class="radio-card">
+                                        <input type="radio" id="tone-bright" name="brand-tone" value="bright" checked>
+                                        <label for="tone-bright" class="radio-card-label">밝은</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="tone-dark" name="brand-tone" value="dark">
+                                        <label for="tone-dark" class="radio-card-label">어두운</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="tone-neutral" name="brand-tone" value="neutral">
+                                        <label for="tone-neutral" class="radio-card-label">중립</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="tone-warm" name="brand-tone" value="warm">
+                                        <label for="tone-warm" class="radio-card-label">따뜻한</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="tone-cool" name="brand-tone" value="cool">
+                                        <label for="tone-cool" class="radio-card-label">차가운</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="form-group">
+                                <label class="form-label">카테고리</label>
+                                <div class="radio-card-group">
+                                    <div class="radio-card">
+                                        <input type="radio" id="cat-lifestyle" name="category" value="lifestyle" checked>
+                                        <label for="cat-lifestyle" class="radio-card-label">라이프스타일</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="cat-business" name="category" value="business">
+                                        <label for="cat-business" class="radio-card-label">비즈니스</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="cat-entertainment" name="category" value="entertainment">
+                                        <label for="cat-entertainment" class="radio-card-label">엔터테인먼트</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="cat-education" name="category" value="education">
+                                        <label for="cat-education" class="radio-card-label">교육</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="cat-tech" name="category" value="tech">
+                                        <label for="cat-tech" class="radio-card-label">기술</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Platform -->
+                            <div class="form-group">
+                                <label class="form-label">업로드 매체</label>
+                                <div class="radio-card-group">
+                                    <div class="radio-card">
+                                        <input type="radio" id="platform-instagram" name="platform" value="instagram" checked>
+                                        <label for="platform-instagram" class="radio-card-label">인스타그램</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="platform-youtube" name="platform" value="youtube">
+                                        <label for="platform-youtube" class="radio-card-label">유튜브</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="platform-tiktok" name="platform" value="tiktok">
+                                        <label for="platform-tiktok" class="radio-card-label">틱톡</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="platform-facebook" name="platform" value="facebook">
+                                        <label for="platform-facebook" class="radio-card-label">페이스북</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="platform-website" name="platform" value="website">
+                                        <label for="platform-website" class="radio-card-label">웹사이트</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Color Palette -->
+                            <div class="form-group">
+                                <label class="form-label">컬러 팔레트/색감</label>
+                                <div class="radio-card-group">
+                                    <div class="radio-card">
+                                        <input type="radio" id="color-warm" name="color-palette" value="warm" checked>
+                                        <label for="color-warm" class="radio-card-label">따뜻한 톤</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="color-cool" name="color-palette" value="cool">
+                                        <label for="color-cool" class="radio-card-label">차가운 톤</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="color-neutral" name="color-palette" value="neutral">
+                                        <label for="color-neutral" class="radio-card-label">무채색</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="color-vibrant" name="color-palette" value="vibrant">
+                                        <label for="color-vibrant" class="radio-card-label">비비드</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="color-pastel" name="color-palette" value="pastel">
+                                        <label for="color-pastel" class="radio-card-label">파스텔</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Content Information -->
+                    <div class="document-section">
+                        <h2 class="section-title-doc">컨텐츠 정보</h2>
+
+                        <div class="form-section">
+                            <!-- Video Style -->
+                            <div class="form-group">
+                                <label class="form-label">영상 스타일</label>
+                                <div class="radio-card-group">
+                                    <div class="radio-card">
+                                        <input type="radio" id="style-realistic" name="video-style" value="realistic" checked>
+                                        <label for="style-realistic" class="radio-card-label">사실적</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="style-animation" name="video-style" value="animation">
+                                        <label for="style-animation" class="radio-card-label">애니메이션</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="style-documentary" name="video-style" value="documentary">
+                                        <label for="style-documentary" class="radio-card-label">다큐멘터리</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="style-cinematic" name="video-style" value="cinematic">
+                                        <label for="style-cinematic" class="radio-card-label">시네마틱</label>
+                                    </div>
+                                    <div class="radio-card">
+                                        <input type="radio" id="style-abstract" name="video-style" value="abstract">
+                                        <label for="style-abstract" class="radio-card-label">추상적</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Scene Duration -->
+                            <div class="form-group">
+                                <label class="form-label">씬별 영상 길이 (초)</label>
+                                <input type="number" class="form-input" placeholder="8" value="8" min="1" max="60">
+                            </div>
+
+                            <!-- Synopsis -->
+                            <div class="form-group">
+                                <label class="form-label">시놉시스</label>
+                                <textarea class="form-textarea" placeholder="영상의 전체적인 스토리나 시놉시스를 입력하세요. (예: 캠프용 사용 장면)"></textarea>
+                            </div>
+
+                            <!-- Key Message -->
+                            <div class="form-group">
+                                <label class="form-label">핵심 메시지</label>
+                                <textarea class="form-textarea" placeholder="전달하고자 하는 핵심 메시지를 입력하세요."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Additional Requirements -->
+                    <div class="document-section">
+                        <h2 class="section-title-doc">추가 요구사항</h2>
+
+                        <div class="form-section">
+                            <!-- Special Requirements -->
+                            <div class="form-group">
+                                <label class="form-label">특별 요구사항</label>
+                                <textarea class="form-textarea" placeholder="특별 요구사항을 입력하세요. (예: 특정 스타일 강조, 분위기 등)"></textarea>
+                            </div>
+
+                            <!-- Other Notes -->
+                            <div class="form-group">
+                                <label class="form-label">기타 메모</label>
+                                <textarea class="form-textarea" placeholder="기타 참고사항을 입력하세요."></textarea>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Scene Details -->

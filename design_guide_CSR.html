@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CEN_AI CLD_02 — 디자인 스타일 가이드 (CSR)</title>
+  <meta name="description" content="CEN_AI_CLD_02 프로젝트용 개발 지향 디자인 스타일 가이드. 토큰, 컴포넌트, 상태, 경고/얼럿, 엣지 케이스 가이드 수록.">
+  <style>
+    :root{
+      /* 색상 토큰 */
+      --brand-50:#effcf7;--brand-100:#d9f7eb;--brand-200:#b5efd9;--brand-300:#86e4c4;--brand-400:#4ed4a9;--brand-500:#16bd82;--brand-600:#0ea56f;--brand-700:#0c845a;--brand-800:#0b6848;--brand-900:#084f38;
+      --gray-50:#fafafa;--gray-100:#f5f5f5;--gray-200:#e5e5e5;--gray-300:#d4d4d4;--gray-400:#a3a3a3;--gray-500:#737373;--gray-600:#525252;--gray-700:#404040;--gray-800:#262626;--gray-900:#171717;
+      --info-50:#eff6ff;--info-500:#3b82f6;--info-700:#1d4ed8;
+      --success-50:#ecfdf5;--success-500:#10b981;--success-700:#047857;
+      --warning-50:#fffbeb;--warning-500:#f59e0b;--warning-700:#b45309;
+      --danger-50:#fef2f2;--danger-500:#ef4444;--danger-700:#b91c1c;
+
+      /* 타이포/레이아웃 */
+      --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji";
+      --text-xs:12px;--text-sm:14px;--text-md:16px;--text-lg:18px;--text-xl:20px;--text-2xl:24px;--text-3xl:28px;--text-4xl:36px;
+      --radius-xs:6px;--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;
+      --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+      --shadow-1: 0 1px 2px rgba(0,0,0,.06), 0 1px 1px rgba(0,0,0,.04);
+      --shadow-2: 0 4px 10px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.06);
+      --shadow-3: 0 8px 24px rgba(0,0,0,.12);
+      --ring: 0 0 0 3px rgba(59,130,246,.35);
+      --content-max: 1200px;
+
+      /* 모션 */
+      --ease: cubic-bezier(.2,.8,.2,1);
+      --dur-1: 120ms; --dur-2: 200ms; --dur-3: 320ms; --dur-4: 480ms;
+    }
+    html[data-theme="dark"]{
+      --gray-50:#0c0c0c;--gray-100:#141414;--gray-200:#1c1c1c;--gray-300:#232323;--gray-400:#2c2c2c;--gray-500:#5a5a5a;--gray-600:#7a7a7a;--gray-700:#b0b0b0;--gray-800:#d6d6d6;--gray-900:#f2f2f2;
+      --shadow-1: 0 1px 2px rgba(0,0,0,.45), 0 1px 1px rgba(0,0,0,.35);
+      --shadow-2: 0 4px 10px rgba(0,0,0,.5), 0 2px 4px rgba(0,0,0,.35);
+      --shadow-3: 0 8px 24px rgba(0,0,0,.55);
+      --ring: 0 0 0 3px rgba(59,130,246,.5);
+      background:#0b0b0b;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;color:var(--gray-900);background:#fff;font-family:var(--font-sans);font-size:var(--text-md);line-height:1.6}
+    html[data-theme="dark"] body{color:#eaeaea;background:var(--gray-50)}
+    a{color:var(--info-500);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:var(--content-max);margin:0 auto;padding:0 var(--space-6)}
+    header{position:sticky;top:0;background:inherit;border-bottom:1px solid var(--gray-200);backdrop-filter:saturate(1.5) blur(6px);z-index:10}
+    .row{display:flex;gap:var(--space-6);align-items:center;justify-content:space-between;padding:var(--space-4) 0}
+    .brand{display:flex;gap:var(--space-3);align-items:center}
+    .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand-400),var(--brand-600))}
+    .title{font-size:var(--text-xl);font-weight:700}
+    .muted{color:var(--gray-500);font-size:var(--text-sm)}
+    nav.toc{position:sticky;top:64px;align-self:flex-start}
+    main{display:grid;grid-template-columns:280px 1fr;gap:var(--space-8);padding:var(--space-8) 0}
+    @media (max-width: 1024px){main{grid-template-columns:1fr} nav.toc{position:static}}
+    .toc a{display:block;padding:8px 0;color:inherit}
+    .toc a:hover{color:var(--brand-600)}
+    section{margin-bottom:var(--space-12)}
+    h1,h2,h3{line-height:1.25;margin:0 0 var(--space-4)}
+    h1{font-size:var(--text-3xl)} h2{font-size:var(--text-2xl)} h3{font-size:var(--text-xl)}
+    p{margin:0 0 var(--space-4)}
+    .card{background:linear-gradient(#fff,#fff) padding-box;border:1px solid var(--gray-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-1)}
+    html[data-theme="dark"] .card{background:linear-gradient(var(--gray-100),var(--gray-100)) padding-box;border-color:var(--gray-300)}
+    .card .hd{padding:var(--space-5);border-bottom:1px solid var(--gray-200);font-weight:600}
+    .card .bd{padding:var(--space-5)}
+    .grid{display:grid;gap:var(--space-4)}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width: 768px){.grid.cols-2,.grid.cols-3{grid-template-columns:1fr}}
+
+    /* 스와치 */
+    .swatch{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-4);border:1px solid var(--gray-200);border-radius:var(--radius-md)}
+    .swatch .chip{width:56px;height:40px;border-radius:10px;box-shadow:var(--shadow-1)}
+    .mono{display:flex;gap:8px}
+    .mono .tone{width:36px;height:28px;border-radius:8px;border:1px solid var(--gray-200)}
+
+    /* 버튼 */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid transparent;background:var(--gray-900);color:#fff;font-weight:600;font-size:var(--text-sm);cursor:pointer;transition:all var(--dur-2) var(--ease);box-shadow:var(--shadow-1)}
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .btn:focus-visible{outline:none;box-shadow:var(--ring)}
+    .btn--primary{background:var(--brand-600)}
+    .btn--secondary{background:#fff;color:var(--gray-900);border-color:var(--gray-300)}
+    .btn--ghost{background:transparent;color:var(--gray-900);border-color:var(--gray-300)}
+    .btn--danger{background:var(--danger-500)}
+    .btn[disabled]{opacity:.5;cursor:not-allowed;filter:grayscale(.3)}
+    .btn--sm{padding:8px 12px;border-radius:10px;font-size:var(--text-xs)}
+    .btn--lg{padding:14px 18px;border-radius:14px;font-size:var(--text-md)}
+
+    /* 폼 */
+    .field{display:grid;gap:6px}
+    .label{font-weight:600;font-size:var(--text-sm)}
+    .control{display:flex;align-items:center;gap:8px}
+    .input,.select,textarea{width:100%;padding:12px 12px;border-radius:12px;border:1px solid var(--gray-300);background:#fff;color:inherit;transition:border-color var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease)}
+    html[data-theme="dark"] .input,html[data-theme="dark"] .select,html[data-theme="dark"] textarea{background:var(--gray-100);border-color:var(--gray-300)}
+    .input::placeholder,textarea::placeholder{color:var(--gray-400)}
+    .input:focus,textarea:focus,.select:focus{outline:none;box-shadow:var(--ring);border-color:var(--info-500)}
+    .hint{font-size:var(--text-sm);color:var(--gray-500)}
+    .error{font-size:var(--text-sm);color:var(--danger-500)}
+    .success{font-size:var(--text-sm);color:var(--success-500)}
+    .input--error{border-color:var(--danger-500)}
+    .input--success{border-color:var(--success-500)}
+    .input[disabled]{opacity:.6;background:var(--gray-100)}
+
+    /* 얼럿 */
+    .alert{display:flex;gap:12px;align-items:flex-start;border:1px solid;border-radius:14px;padding:14px 16px;background:#fff}
+    html[data-theme="dark"] .alert{background:var(--gray-100)}
+    .alert .icon{width:20px;height:20px;flex:0 0 20px;border-radius:6px}
+    .alert .body{flex:1}
+    .alert .title{font-weight:700;margin-bottom:4px}
+    .alert .actions{display:flex;gap:8px;margin-top:8px}
+    .alert--info{border-color:var(--info-500);background:var(--info-50)}
+    .alert--success{border-color:var(--success-500);background:var(--success-50)}
+    .alert--warning{border-color:var(--warning-500);background:var(--warning-50)}
+    .alert--danger{border-color:var(--danger-500);background:var(--danger-50)}
+
+    /* 토스트 */
+    .toast-area{position:fixed;right:24px;bottom:24px;display:grid;gap:10px;z-index:50}
+    .toast{min-width:280px;border-radius:14px;padding:12px 14px;color:#fff;box-shadow:var(--shadow-2)}
+    .toast--info{background:var(--info-700)}
+    .toast--success{background:var(--success-700)}
+    .toast--warning{background:var(--warning-700)}
+    .toast--danger{background:var(--danger-700)}
+
+    /* 테이블 */
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;background:#fff;padding:12px 10px;font-size:var(--text-sm);text-align:left;border-bottom:1px solid var(--gray-300)}
+    html[data-theme="dark"] thead th{background:var(--gray-100)}
+    tbody td{padding:12px 10px;border-bottom:1px solid var(--gray-200)}
+    tbody tr:hover{background:rgba(0,0,0,.03)}
+
+    /* 배지 */
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--gray-300);font-size:var(--text-xs)}
+    .badge--brand{border-color:transparent;background:rgba(22,189,130,.12);color:var(--brand-700)}
+    .badge--warning{border-color:transparent;background:rgba(245,158,11,.15);color:var(--warning-700)}
+    .badge--danger{border-color:transparent;background:rgba(239,68,68,.15);color:var(--danger-700)}
+
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, monospace;border:1px solid var(--gray-300);border-bottom-width:3px;padding:2px 6px;border-radius:6px;font-size:12px}
+    pre{background:var(--gray-100);padding:14px;border-radius:12px;overflow:auto}
+    code{font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">CEN_AI CLD_02 — 디자인 스타일 가이드 (CSR)</div>
+          <div class="muted">실제 개발을 위한 토큰·컴포넌트·상태·엣지 케이스 가이드</div>
+        </div>
+      </div>
+      <div class="control">
+        <button id="themeToggle" class="btn btn--secondary btn--sm" aria-pressed="false" aria-label="테마 전환">🌙 다크모드</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="toc card">
+      <div class="hd">목차</div>
+      <div class="bd">
+        <a href="#principles">1. 디자인 원칙</a>
+        <a href="#tokens">2. 디자인 토큰</a>
+        <a href="#typography">3. 타이포그래피</a>
+        <a href="#layout">4. 레이아웃 · 간격 · 브레이크포인트</a>
+        <a href="#components">5. 핵심 컴포넌트</a>
+        <a href="#states">6. 상태 · 피드백</a>
+        <a href="#alerts">7. 경고/얼럿 가이드</a>
+        <a href="#edge-cases">8. 엣지 케이스 & 사용 시나리오</a>
+        <a href="#a11y">9. 접근성(A11y) · 국제화</a>
+        <a href="#implementation">10. 구현 권장 사항</a>
+        <a href="#changelog">11. 변경 이력</a>
+      </div>
+    </nav>
+
+    <div>
+      <section id="principles" class="card">
+        <div class="hd">1. 디자인 원칙</div>
+        <div class="bd grid">
+          <p><strong>현대적이고 세련된 미니멀리즘</strong>을 지향합니다. 불필요한 장식보다 정보 계층과 상호작용 상태를 명확히 표현합니다.</p>
+          <p><strong>일관성</strong>: 토큰 중심 설계로 색상·간격·모서리·그림자·모션을 통일합니다.</p>
+          <p><strong>명확성</strong>: 작업의 결과와 위험도를 명확히 알리는 카피와 시각적 신호를 사용합니다.</p>
+          <p><strong>접근성</strong>: WCAG 2.1 AA 대비 기준, 포커스 가시성, 키보드 조작, 스크린리더 지원을 보장합니다.</p>
+        </div>
+      </section>
+
+      <section id="tokens" class="card">
+        <div class="hd">2. 디자인 토큰</div>
+        <div class="bd grid">
+          <div class="grid cols-3">
+            <div class="swatch"><div class="chip" style="background:var(--brand-600)"></div><div><div><strong>Brand</strong></div><div class="muted">--brand-600</div></div></div>
+            <div class="swatch"><div class="chip" style="background:var(--info-500)"></div><div><div><strong>Info</strong></div><div class="muted">--info-500</div></div></div>
+            <div class="swatch"><div class="chip" style="background:var(--danger-500)"></div><div><div><strong>Danger</strong></div><div class="muted">--danger-500</div></div></div>
+          </div>
+          <div>
+            <div class="muted">모노톤</div>
+            <div class="mono">
+              <div class="tone" style="background:var(--gray-100)"></div>
+              <div class="tone" style="background:var(--gray-200)"></div>
+              <div class="tone" style="background:var(--gray-300)"></div>
+              <div class="tone" style="background:var(--gray-400)"></div>
+              <div class="tone" style="background:var(--gray-500)"></div>
+              <div class="tone" style="background:var(--gray-600)"></div>
+            </div>
+          </div>
+          <pre><code>:root {
+  /* 색상 */
+  --brand-600: #0ea56f; --info-500:#3b82f6; --danger-500:#ef4444;
+  /* 간격 */
+  --space-2: 8px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
+  /* 반경 */
+  --radius-md: 12px; --radius-lg: 16px;
+  /* 그림자 */
+  --shadow-2: 0 4px 10px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.06);
+}
+</code></pre>
+        </div>
+      </section>
+
+      <section id="typography" class="card">
+        <div class="hd">3. 타이포그래피</div>
+        <div class="bd grid">
+          <p>시스템 산세리프 스택 사용. 본문 기본 16px, 줄간 1.6. 헤딩은 의미 중심으로 사용.</p>
+          <ul>
+            <li><strong>헤딩</strong>: H1 28–36px, H2 24px, H3 20px</li>
+            <li><strong>본문</strong>: 16px</li>
+            <li><strong>보조텍스트</strong>: 14px, 대비 4.5:1 이상</li>
+            <li><strong>숫자/코드</strong>: 모노스페이스 사용</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="layout" class="card">
+        <div class="hd">4. 레이아웃 · 간격 · 브레이크포인트</div>
+        <div class="bd grid">
+          <p><strong>8px 베이스 그리드</strong> 사용. 공통 여백은 8·12·16·24·32·48px을 권장합니다.</p>
+          <ul>
+            <li><strong>컨테이너</strong>: 최대 1200px, 좌우 패딩 24px</li>
+            <li><strong>브레이크포인트</strong>: sm 640, md 768, lg 1024, xl 1280</li>
+            <li><strong>카드</strong>: radius 16px, shadow-1/2, 내부 패딩 20–24px</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="components" class="card">
+        <div class="hd">5. 핵심 컴포넌트</div>
+        <div class="bd grid">
+          <h3>버튼</h3>
+          <div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+            <button class="btn btn--primary">기본 액션</button>
+            <button class="btn btn--secondary">보조 액션</button>
+            <button class="btn btn--ghost">유령 버튼</button>
+            <button class="btn btn--danger">위험 액션</button>
+          </div>
+          <pre><code>&lt;button class="btn btn--primary"&gt;저장&lt;/button&gt;
+&lt;button class="btn btn--secondary" disabled&gt;다음에 하기&lt;/button&gt;</code></pre>
+
+          <h3>폼 요소</h3>
+          <div class="grid cols-2">
+            <div class="field">
+              <label class="label" for="ex1">프로젝트 이름</label>
+              <input id="ex1" class="input" placeholder="예) 신제품 런칭 영상"/>
+              <div class="hint">2–60자 권장</div>
+            </div>
+            <div class="field">
+              <label class="label" for="ex2">파일 경로</label>
+              <input id="ex2" class="input input--error" placeholder="/path/to/file" aria-invalid="true"/>
+              <div class="error">유효한 경로가 아닙니다. 절대 경로를 확인하세요.</div>
+            </div>
+          </div>
+          <pre><code>&lt;div class="field"&gt;
+  &lt;label class="label" for="name"&gt;프로젝트 이름&lt;/label&gt;
+  &lt;input id="name" class="input" placeholder="예) 신제품 런칭 영상"/&gt;
+  &lt;div class="hint"&gt;2–60자 권장&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+          <h3>배지</h3>
+          <div class="grid">
+            <span class="badge badge--brand">신규</span>
+            <span class="badge badge--warning">검증 필요</span>
+            <span class="badge badge--danger">실패</span>
+          </div>
+
+          <h3>테이블</h3>
+          <div class="card">
+            <div class="bd">
+              <table>
+                <thead><tr><th>이름</th><th>상태</th><th>수정일</th></tr></thead>
+                <tbody>
+                  <tr><td>씬 01</td><td><span class="badge badge--brand">완료</span></td><td>2025-10-30</td></tr>
+                  <tr><td>씬 02</td><td><span class="badge badge--warning">검증 필요</span></td><td>2025-10-30</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="states" class="card">
+        <div class="hd">6. 상태 · 피드백</div>
+        <div class="bd grid">
+          <p>입력·로딩·성공·경고·오류 상태를 색/문구/아이콘/애니메이션으로 일관되게 제공합니다.</p>
+          <ul>
+            <li><strong>진행 중</strong>: 스켈레톤 또는 미니 스피너 사용. 2초 이상은 진행 정보 제공.</li>
+            <li><strong>성공</strong>: 토스트(3–5초 자동 닫힘) + 세부 작업은 화면 내 배지 상태 갱신.</li>
+            <li><strong>오류</strong>: 원인·해결 방법·재시도 버튼 제공. 파괴적 액션은 모달 확인.</li>
+          </ul>
+          <div class="toast-area" id="demoToasts" aria-live="polite" aria-atomic="true" style="display:none">
+            <div class="toast toast--success">저장 완료</div>
+            <div class="toast toast--warning">네트워크가 불안정합니다</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="alerts" class="card">
+        <div class="hd">7. 경고/얼럿 가이드</div>
+        <div class="bd grid">
+          <h3>얼럿 레벨과 사용</h3>
+          <ul>
+            <li><strong>정보(Info)</strong>: 상황 공유. 작업 차단 없음. 예) 백그라운드 동기화 시작.</li>
+            <li><strong>성공(Success)</strong>: 작업 완료. 예) 업로드 완료.</li>
+            <li><strong>경고(Warning)</strong>: 위험 가능성 안내. 예) 저장되지 않은 변경사항.</li>
+            <li><strong>오류(Danger)</strong>: 작업 실패/차단. 즉시 조치 필요. 예) 인증 만료.</li>
+          </ul>
+
+          <div class="grid">
+            <div class="alert alert--info" role="status" aria-live="polite">
+              <div class="icon" style="background:var(--info-500)"></div>
+              <div class="body">
+                <div class="title">동기화 진행 중</div>
+                일부 기능이 순간적으로 느릴 수 있어요. 작업은 계속 가능합니다.
+                <div class="actions"><button class="btn btn--ghost btn--sm">자세히</button></div>
+              </div>
+            </div>
+            <div class="alert alert--warning" role="alert">
+              <div class="icon" style="background:var(--warning-500)"></div>
+              <div class="body">
+                <div class="title">저장되지 않은 변경사항</div>
+                페이지를 떠나면 변경사항이 사라집니다.
+                <div class="actions">
+                  <button class="btn btn--secondary btn--sm">나중에</button>
+                  <button class="btn btn--primary btn--sm">지금 저장</button>
+                </div>
+              </div>
+            </div>
+            <div class="alert alert--danger" role="alert">
+              <div class="icon" style="background:var(--danger-500)"></div>
+              <div class="body">
+                <div class="title">세션이 만료되었습니다</div>
+                보안을 위해 다시 로그인해주세요.
+                <div class="actions">
+                  <button class="btn btn--primary btn--sm">재로그인</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3>카피 가이드</h3>
+          <ul>
+            <li><strong>구체적 원인</strong>: 무엇이, 왜 발생했는지 요약</li>
+            <li><strong>즉시 행동</strong>: 기본 버튼 하나, 보조 버튼 하나</li>
+            <li><strong>기술세부</strong>: 확장/접기 영역으로 분리(개발자용)</li>
+          </ul>
+
+          <pre><code>&lt;div class="alert alert--danger" role="alert"&gt;
+  &lt;div class="title"&gt;세션이 만료되었습니다&lt;/div&gt;
+  보안을 위해 다시 로그인해주세요.
+  &lt;div class="actions"&gt;
+    &lt;button class="btn btn--primary btn--sm"&gt;재로그인&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <section id="edge-cases" class="card">
+        <div class="hd">8. 엣지 케이스 & 사용 시나리오</div>
+        <div class="bd grid">
+          <h3>1) 빈 상태(Empty State)</h3>
+          <p><strong>사용</strong>: 초기 데이터 없음, 필터 결과 없음.</p>
+          <ul>
+            <li><strong>메시지</strong>: “아직 항목이 없습니다.”</li>
+            <li><strong>행동</strong>: 주요 생성 버튼 1개 제공</li>
+          </ul>
+          <div class="card"><div class="bd">아직 항목이 없습니다. <button class="btn btn--primary btn--sm">새로 만들기</button></div></div>
+
+          <h3>2) 로딩 지연/타임아웃</h3>
+          <ul>
+            <li><strong>3초</strong> 초과: “데이터를 불러오는 중… 약간 시간이 걸리고 있어요.”</li>
+            <li><strong>10초</strong> 초과: 재시도 버튼+네트워크 도움말</li>
+          </ul>
+          <div class="alert alert--info" role="status">데이터를 불러오는 중…</div>
+
+          <h3>3) 네트워크 오류/오프라인</h3>
+          <ul>
+            <li><strong>메시지</strong>: “네트워크 연결을 확인해주세요.”</li>
+            <li><strong>행동</strong>: 재시도, 오프라인 임시저장(가능 시)</li>
+          </ul>
+          <div class="alert alert--danger" role="alert">
+            네트워크 연결을 확인해주세요. <button class="btn btn--secondary btn--sm">재시도</button>
+          </div>
+
+          <h3>4) 권한 부족</h3>
+          <p><strong>메시지</strong>: “이 작업을 수행할 권한이 없습니다.” <span class="badge">요청: 관리자</span></p>
+          <div class="alert alert--warning" role="alert">이 작업을 수행할 권한이 없습니다. 관리자에게 요청해주세요.</div>
+
+          <h3>5) 파괴적 액션(삭제/초기화)</h3>
+          <ul>
+            <li><strong>확인 모달</strong>: 행동을 명시(예: “정말 삭제하시겠어요?”)</li>
+            <li><strong>부트스트랩</strong>: 확인은 위험색, 취소는 기본색</li>
+          </ul>
+          <div class="alert alert--danger" role="alert">정말 삭제하시겠어요? 이 작업은 되돌릴 수 없습니다. <button class="btn btn--danger btn--sm">삭제</button></div>
+
+          <h3>6) 저장되지 않은 변경사항 이탈</h3>
+          <p>탐색 전 경고. “변경사항이 사라집니다. 지금 저장하시겠어요?” 행동: 저장 / 나가기</p>
+
+          <h3>7) 파일 업로드 오류</h3>
+          <ul>
+            <li><strong>확인</strong>: 용량/형식/개수 제한을 구체적으로 표기</li>
+            <li><strong>메시지</strong>: “최대 100MB, mp4만 지원합니다.”</li>
+          </ul>
+
+          <h3>8) 중복/충돌(동시 편집)</h3>
+          <p>낙관적 업데이트 실패 시 롤백+경고. “다른 사용자의 변경이 감지되어 병합이 필요합니다.” 비교 화면으로 안내.</p>
+
+          <h3>9) 페이지네이션 경계</h3>
+          <p>마지막 페이지에서 삭제 시 이전 페이지로 안전 이동. 빈 페이지 방지.</p>
+
+          <h3>10) 시간대/포맷</h3>
+          <p>표시는 로컬, 저장은 UTC. ISO 8601 권장. 예: 2025-10-31T14:05:00Z</p>
+
+          <h3>11) 국제화(i18n) 길이 변화</h3>
+          <p>버튼 최소폭 확보, 다줄 줄바꿈 허용. 아이콘-only에는 <code>aria-label</code> 제공.</p>
+
+          <h3>12) 접근성 알림</h3>
+          <ul>
+            <li><strong>즉시 주의</strong>는 <code>role="alert"</code>, 그 외 진행 정보는 <code>aria-live="polite"</code></li>
+            <li><strong>포커스 트랩</strong>은 모달에만, 닫기 키(ESC) 제공</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="a11y" class="card">
+        <div class="hd">9. 접근성(A11y) · 국제화</div>
+        <div class="bd grid">
+          <ul>
+            <li><strong>대비</strong>: 텍스트 대비 4.5:1 이상(대형 3:1)</li>
+            <li><strong>키보드</strong>: 모든 인터랙션 탭 가능, 포커스 링 제거 금지</li>
+            <li><strong>라이브 영역</strong>: 토스트/얼럿은 스크린리더에 전달</li>
+            <li><strong>언어 속성</strong>: <code>&lt;html lang="ko"&gt;</code> 유지</li>
+          </ul>
+          <pre><code>&lt;div role="alert"&gt;세션이 만료되었습니다. 다시 로그인해주세요.&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <section id="implementation" class="card">
+        <div class="hd">10. 구현 권장 사항</div>
+        <div class="bd grid">
+          <ul>
+            <li><strong>토큰 우선</strong>: 모든 색·간격·반경·그림자는 CSS 변수 의존</li>
+            <li><strong>상태 분리</strong>: 로딩/성공/경고/오류를 컴포넌트 Prop으로 통일</li>
+            <li><strong>접근성</strong>: 포커스, 역할(role), aria-* 일관화</li>
+            <li><strong>테마</strong>: <code>html[data-theme]</code> 스위치(라이트/다크)</li>
+          </ul>
+          <pre><code>/* 상태별 클래스 예시 */
+.is-loading { opacity:.6; pointer-events:none }
+.is-error { border-color: var(--danger-500) }
+.is-success { border-color: var(--success-500) }</code></pre>
+        </div>
+      </section>
+
+      <section id="changelog" class="card">
+        <div class="hd">11. 변경 이력</div>
+        <div class="bd">
+          <ul>
+            <li><strong>2025-10-31</strong>: 초기 버전 작성(토큰/컴포넌트/엣지케이스/접근성 포함)</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      const btn=document.getElementById('themeToggle');
+      const root=document.documentElement;
+      function setTheme(t){root.setAttribute('data-theme',t);localStorage.setItem('theme',t);btn.textContent=t==='dark'?'☀️ 라이트모드':'🌙 다크모드';btn.setAttribute('aria-pressed', String(t==='dark'));}
+      const saved=localStorage.getItem('theme');
+      if(saved){setTheme(saved);} else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){setTheme('dark');}
+      btn.addEventListener('click',()=>{setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark')});
+    })();
+  </script>
+</body>
+</html>
+
+

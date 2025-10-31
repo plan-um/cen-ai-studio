@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEN AI - Design Style Guide</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/SUIT/SUIT.css">
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/gilroy-bold">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Colors */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8FAFF;
+            --bg-tertiary: #EFF6FF;
+            --text-primary: #1E1E1E;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border-color: rgba(86, 157, 255, 0.2);
+
+            /* Blue Scale */
+            --blue-50: #EAF2FF;
+            --blue-100: #D9E6FF;
+            --blue-200: #C7DAFF;
+            --blue-300: #6AA8FF;
+            --blue-500: #569DFF;
+            --blue-700: #0055E9;
+            --blue-900: #0032A0;
+
+            /* Accent Colors */
+            --accent-blue: #0055E9;
+            --accent-blue-hover: #0032A0;
+            --accent-mint: #00CBC8;
+            --accent-coral: #FF8288;
+            --accent-purple: #6A14D9;
+
+            /* Semantic Colors */
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --info: #2196F3;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-base: 0.2s ease;
+            --transition-slow: 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0D1426;
+            --bg-secondary: #1A1F2E;
+            --bg-tertiary: #252B3D;
+            --text-primary: #F9FAFB;
+            --text-secondary: #9CA3AF;
+            --text-tertiary: #6B7280;
+            --border-color: rgba(86, 157, 255, 0.2);
+            --accent-blue: #569DFF;
+            --accent-blue-hover: #0055E9;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'HallymGothic', 'SUIT', sans-serif;
+        }
+
+        .en-title {
+            font-family: 'Gilroy', 'SUIT', sans-serif;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl);
+        }
+
+        /* Header */
+        .guide-header {
+            text-align: center;
+            padding: var(--spacing-2xl) 0;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .guide-title {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            padding: 12px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: var(--spacing-2xl);
+            padding: var(--spacing-2xl);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--accent-blue);
+        }
+
+        .subsection-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .description {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.8;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        /* Card */
+        .card {
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .card-content {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Color Swatch */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-box {
+            height: 100px;
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-sm);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .color-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .color-value {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        /* Typography Examples */
+        .type-example {
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+        }
+
+        .type-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: 12px 24px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .btn-tertiary {
+            background: transparent;
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .form-input.success {
+            border-color: var(--success);
+        }
+
+        .form-helper {
+            margin-top: var(--spacing-sm);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .form-error {
+            color: var(--error);
+        }
+
+        .form-success {
+            color: var(--success);
+        }
+
+        /* Toast Messages */
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .toast-success {
+            background: #e8f5e9;
+            border: 1px solid var(--success);
+            color: #2e7d32;
+        }
+
+        .toast-warning {
+            background: #fff3e0;
+            border: 1px solid var(--warning);
+            color: #e65100;
+        }
+
+        .toast-error {
+            background: #ffebee;
+            border: 1px solid var(--error);
+            color: #c62828;
+        }
+
+        .toast-info {
+            background: #e3f2fd;
+            border: 1px solid var(--info);
+            color: #1565c0;
+        }
+
+        [data-theme="dark"] .toast-success {
+            background: rgba(76, 175, 80, 0.15);
+            border-color: rgba(76, 175, 80, 0.4);
+            color: #81c784;
+        }
+
+        [data-theme="dark"] .toast-warning {
+            background: rgba(255, 152, 0, 0.15);
+            border-color: rgba(255, 152, 0, 0.4);
+            color: #ffb74d;
+        }
+
+        [data-theme="dark"] .toast-error {
+            background: rgba(244, 67, 54, 0.15);
+            border-color: rgba(244, 67, 54, 0.4);
+            color: #e57373;
+        }
+
+        [data-theme="dark"] .toast-info {
+            background: rgba(33, 150, 243, 0.15);
+            border-color: rgba(33, 150, 243, 0.4);
+            color: #64b5f6;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            border: 1px solid;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            border-color: var(--success);
+            color: #2e7d32;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-color: var(--warning);
+            color: #e65100;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            border-color: var(--error);
+            color: #c62828;
+        }
+
+        .alert-info {
+            background: #e3f2fd;
+            border-color: var(--info);
+            color: #1565c0;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .badge-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .badge-error {
+            background: var(--error);
+            color: white;
+        }
+
+        /* Score Badge (실제 프로젝트) */
+        .score-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .score-high {
+            background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
+            color: white;
+        }
+
+        .score-medium {
+            background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
+            color: white;
+        }
+
+        .score-low {
+            background: linear-gradient(135deg, #F44336 0%, #E57373 100%);
+            color: white;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .table th {
+            background: var(--bg-tertiary);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Spacing Examples */
+        .spacing-box {
+            background: var(--accent-blue);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+        }
+
+        /* Shadow Examples */
+        .shadow-example {
+            padding: var(--spacing-lg);
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Icon */
+        .icon {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* Use Case Box */
+        .use-case {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .use-case-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: var(--spacing-sm);
+            color: var(--accent-blue);
+        }
+
+        .use-case-list {
+            list-style-position: inside;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .use-case-list li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Example Container */
+        .example-container {
+            background: var(--bg-primary);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+        }
+
+        .example-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Dos and Don'ts */
+        .dos-donts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .do-box,
+        .dont-box {
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            border: 2px solid;
+        }
+
+        .do-box {
+            background: rgba(76, 175, 80, 0.05);
+            border-color: var(--success);
+        }
+
+        .dont-box {
+            background: rgba(244, 67, 54, 0.05);
+            border-color: var(--error);
+        }
+
+        .do-title,
+        .dont-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .do-title {
+            color: var(--success);
+        }
+
+        .dont-title {
+            color: var(--error);
+        }
+
+        /* Project Components (실제 프로젝트 요소) */
+        .project-item {
+            border-radius: 10px;
+            background: var(--bg-tertiary);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+        }
+
+        .project-header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .project-thumbnail {
+            width: 64px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            flex-shrink: 0;
+        }
+
+        .project-info {
+            flex: 1;
+        }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .project-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Workflow Stepper */
+        .workflow-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .step-item-stepper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            opacity: 0.4;
+        }
+
+        .step-item-stepper.active {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 10px 20px;
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 85, 233, 0.3);
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .step-item-stepper.active .step-number {
+            background: white;
+            border-color: white;
+            color: var(--accent-blue);
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
+        }
+
+        .step-arrow {
+            color: var(--border-color);
+            font-size: 16px;
+        }
+
+        /* Scene Card */
+        .scene-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .scene-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .scene-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .scene-image {
+            width: 100%;
+            height: 180px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .scene-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .dos-donts {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .section {
+                padding: var(--spacing-md);
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg class="icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <div class="container">
+        <header class="guide-header">
+            <h1 class="guide-title">CEN AI Design System</h1>
+        </header>
+
+        <!-- BRANDING -->
+        <section id="branding" class="section">
+            <h2 class="section-title">1. 브랜딩</h2>
+            <p class="description">CEN AI의 브랜드 아이덴티티를 정의하는 핵심 요소들입니다.</p>
+
+            <h3 class="subsection-title">1.1 로고</h3>
+            <div class="card">
+                <h4 class="card-title">로고 사용 규칙</h4>
+                <div class="card-content">
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>최소 크기:</strong> 높이 64px (좌측 사이드바), 32px (일반 사용)</li>
+                        <li><strong>클리어 스페이스:</strong> 로고 주변 최소 16px 여백 확보</li>
+                        <li><strong>라이트 모드:</strong> 컬러 로고 사용 (logo-light)</li>
+                        <li><strong>다크 모드:</strong> 화이트 로고 사용 (logo-dark)</li>
+                        <li><strong>배경:</strong> 충분한 대비를 가진 배경 위에만 배치</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dos-donts" style="margin-top: 24px;">
+                <div class="do-box">
+                    <h4 class="do-title">
+                        <svg class="icon" viewBox="0 0 24 24" style="color: var(--success);">
+                            <path d="M20 6L9 17l-5-5"/>
+                        </svg>
+                        권장사항
+                    </h4>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>충분한 여백 확보</li>
+                        <li>원본 비율 유지</li>
+                        <li>테마에 맞는 버전 사용</li>
+                    </ul>
+                </div>
+                <div class="dont-box">
+                    <h4 class="dont-title">
+                        <svg class="icon" viewBox="0 0 24 24" style="color: var(--error);">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                        금지사항
+                    </h4>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>로고 변형 및 왜곡</li>
+                        <li>로고 색상 변경</li>
+                        <li>낮은 대비 배경 사용</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">1.2 컬러 팔레트</h3>
+
+            <h4 style="margin-top: 24px; margin-bottom: 16px; font-weight: 600;">Primary Colors</h4>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #569DFF;"></div>
+                    <div class="color-name">Blue 500</div>
+                    <div class="color-value">#569DFF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #0055E9;"></div>
+                    <div class="color-name">Blue 700 (Primary)</div>
+                    <div class="color-value">#0055E9</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #0032A0;"></div>
+                    <div class="color-name">Blue 900</div>
+                    <div class="color-value">#0032A0</div>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 24px; margin-bottom: 16px; font-weight: 600;">Blue Scale</h4>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #EAF2FF;"></div>
+                    <div class="color-name">Blue 50</div>
+                    <div class="color-value">#EAF2FF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #D9E6FF;"></div>
+                    <div class="color-name">Blue 100</div>
+                    <div class="color-value">#D9E6FF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #C7DAFF;"></div>
+                    <div class="color-name">Blue 200</div>
+                    <div class="color-value">#C7DAFF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #6AA8FF;"></div>
+                    <div class="color-name">Blue 300</div>
+                    <div class="color-value">#6AA8FF</div>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 24px; margin-bottom: 16px; font-weight: 600;">Accent Colors</h4>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #00CBC8;"></div>
+                    <div class="color-name">Mint</div>
+                    <div class="color-value">#00CBC8</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #FF8288;"></div>
+                    <div class="color-name">Coral</div>
+                    <div class="color-value">#FF8288</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #6A14D9;"></div>
+                    <div class="color-name">Purple</div>
+                    <div class="color-value">#6A14D9</div>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 24px; margin-bottom: 16px; font-weight: 600;">Semantic Colors</h4>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #4CAF50;"></div>
+                    <div class="color-name">Success</div>
+                    <div class="color-value">#4CAF50</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #FF9800;"></div>
+                    <div class="color-name">Warning</div>
+                    <div class="color-value">#FF9800</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #F44336;"></div>
+                    <div class="color-name">Error</div>
+                    <div class="color-value">#F44336</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #2196F3;"></div>
+                    <div class="color-name">Info</div>
+                    <div class="color-value">#2196F3</div>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 24px; margin-bottom: 16px; font-weight: 600;">Neutral Colors (Light Mode)</h4>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #FFFFFF; border: 2px solid #E5E7EB;"></div>
+                    <div class="color-name">Background Primary</div>
+                    <div class="color-value">#FFFFFF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #F8FAFF;"></div>
+                    <div class="color-name">Background Tertiary</div>
+                    <div class="color-value">#F8FAFF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #1E1E1E;"></div>
+                    <div class="color-name">Text Primary</div>
+                    <div class="color-value">#1E1E1E</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #6B7280;"></div>
+                    <div class="color-name">Text Secondary</div>
+                    <div class="color-value">#6B7280</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">1.3 타이포그래피</h3>
+
+            <div class="type-example">
+                <div class="type-label">H1 - 페이지 메인 타이틀</div>
+                <h1 style="font-size: 48px; font-weight: 700; line-height: 1.2;">신제품 런칭 광고</h1>
+                <div class="code-block">font-size: 48px; font-weight: 700; line-height: 1.2;</div>
+            </div>
+
+            <div class="type-example">
+                <div class="type-label">H2 - 섹션 타이틀</div>
+                <h2 style="font-size: 32px; font-weight: 700; line-height: 1.3;">스토리보드 생성</h2>
+                <div class="code-block">font-size: 32px; font-weight: 700; line-height: 1.3;</div>
+            </div>
+
+            <div class="type-example">
+                <div class="type-label">H3 - 서브섹션 타이틀</div>
+                <h3 style="font-size: 24px; font-weight: 600; line-height: 1.4;">프로젝트 정보</h3>
+                <div class="code-block">font-size: 24px; font-weight: 600; line-height: 1.4;</div>
+            </div>
+
+            <div class="type-example">
+                <div class="type-label">Body Large - 중요한 설명 텍스트</div>
+                <p style="font-size: 18px; font-weight: 400; line-height: 1.6;">AI가 자동으로 스토리보드를 생성합니다.</p>
+                <div class="code-block">font-size: 18px; font-weight: 400; line-height: 1.6;</div>
+            </div>
+
+            <div class="type-example">
+                <div class="type-label">Body - 일반 본문</div>
+                <p style="font-size: 14px; font-weight: 400; line-height: 1.6;">영상 제작에 필요한 모든 정보를 입력하고 AI가 최적의 스토리보드를 생성하도록 하세요.</p>
+                <div class="code-block">font-size: 14px; font-weight: 400; line-height: 1.6;</div>
+            </div>
+
+            <div class="type-example">
+                <div class="type-label">Small - 부가 정보</div>
+                <p style="font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--text-secondary);">최종 수정: 2024년 1월 15일</p>
+                <div class="code-block">font-size: 12px; font-weight: 400; line-height: 1.5;</div>
+            </div>
+
+            <h4 style="margin-top: 24px; margin-bottom: 16px; font-weight: 600;">폰트 패밀리</h4>
+            <div class="card">
+                <div class="card-content">
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>한글 본문:</strong> SUIT (기본)</li>
+                        <li><strong>한글 헤딩:</strong> HallymGothic</li>
+                        <li><strong>영문 헤딩:</strong> Gilroy</li>
+                        <li><strong>코드/숫자:</strong> Monaco, Courier New (monospace)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">1.4 톤앤매너</h3>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">브랜드 보이스</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li><strong>전문적이지만 친근한</strong> - 기술적이면서도 접근하기 쉬운 톤</li>
+                            <li><strong>명확하고 간결한</strong> - 복잡한 개념을 쉽게 설명</li>
+                            <li><strong>혁신적이고 미래지향적</strong> - AI 기술의 가능성 강조</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">작문 가이드</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li>능동태 사용 권장</li>
+                            <li>긍정적인 언어 사용</li>
+                            <li>전문 용어는 필요시에만, 설명 추가</li>
+                            <li>사용자 중심 언어 (당신, 여러분)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAYOUT -->
+        <section id="layout" class="section">
+            <h2 class="section-title">2. 레이아웃</h2>
+            <p class="description">일관된 레이아웃과 간격 체계를 통해 조화로운 UI를 구성합니다.</p>
+
+            <h3 class="subsection-title">2.1 그리드 시스템</h3>
+            <div class="card">
+                <h4 class="card-title">그리드 규칙</h4>
+                <div class="card-content">
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>최대 컨테이너 너비:</strong> 1400px (데스크톱)</li>
+                        <li><strong>사이드바 너비:</strong> 280px (확장), 72px (축소)</li>
+                        <li><strong>컬럼 갭:</strong> 24px ~ 32px</li>
+                        <li><strong>그리드 타입:</strong> CSS Grid 사용 권장</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">2.2 간격 체계</h3>
+            <p class="description">4px 기반의 일관된 간격 체계를 사용합니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Spacing Scale</div>
+                <div style="display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div class="spacing-box" style="width: 4px; height: 4px;"></div>
+                        <div style="margin-top: 8px; font-size: 12px;">xs: 4px</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="spacing-box" style="width: 8px; height: 8px;"></div>
+                        <div style="margin-top: 8px; font-size: 12px;">sm: 8px</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="spacing-box" style="width: 16px; height: 16px;"></div>
+                        <div style="margin-top: 8px; font-size: 12px;">md: 16px</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="spacing-box" style="width: 24px; height: 24px;"></div>
+                        <div style="margin-top: 8px; font-size: 12px;">lg: 24px</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="spacing-box" style="width: 32px; height: 32px;"></div>
+                        <div style="margin-top: 8px; font-size: 12px;">xl: 32px</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="spacing-box" style="width: 48px; height: 48px;"></div>
+                        <div style="margin-top: 8px; font-size: 12px;">2xl: 48px</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+/* CSS Variables */
+--spacing-xs: 4px;
+--spacing-sm: 8px;
+--spacing-md: 16px;
+--spacing-lg: 24px;
+--spacing-xl: 32px;
+--spacing-2xl: 48px;
+            </div>
+
+            <h3 class="subsection-title">2.3 브레이크포인트</h3>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>디바이스</th>
+                            <th>브레이크포인트</th>
+                            <th>컨테이너 너비</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>모바일 (Small)</td>
+                            <td>&lt; 640px</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td>태블릿 (Medium)</td>
+                            <td>641px ~ 1024px</td>
+                            <td>100%</td>
+                        </tr>
+                        <tr>
+                            <td>데스크톱 (Large)</td>
+                            <td>1025px ~ 1440px</td>
+                            <td>1200px</td>
+                        </tr>
+                        <tr>
+                            <td>대형 데스크톱 (XL)</td>
+                            <td>&gt; 1440px</td>
+                            <td>1400px</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">2.4 반응형 규칙</h3>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">모바일 우선 (Mobile First)</h4>
+                    <div class="card-content">
+                        <p>모바일 레이아웃을 기본으로 하고, 더 큰 화면을 위한 스타일을 추가합니다.</p>
+                        <div class="code-block" style="margin-top: 12px;">
+/* 모바일 기본 */
+.container {
+  padding: 16px;
+}
+
+/* 태블릿 이상 */
+@media (min-width: 768px) {
+  .container {
+    padding: 32px;
+  }
+}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">적응형 레이아웃</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li>사이드바: 데스크톱에서만 표시</li>
+                            <li>그리드: 자동으로 컬럼 조정</li>
+                            <li>폰트 크기: 작은 화면에서 축소</li>
+                            <li>터치 타겟: 최소 44x44px</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPONENTS -->
+        <section id="components" class="section">
+            <h2 class="section-title">3. 컴포넌트</h2>
+            <p class="description">실제 프로젝트에서 사용되는 UI 컴포넌트들과 모든 상태 정의입니다.</p>
+
+            <h3 class="subsection-title">3.1 버튼</h3>
+
+            <div class="example-container">
+                <div class="example-label">Button States</div>
+                <div class="btn-group">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-secondary">Secondary Button</button>
+                    <button class="btn btn-tertiary">Tertiary Button</button>
+                    <button class="btn btn-primary" disabled>Disabled Button</button>
+                </div>
+            </div>
+
+            <div class="code-block">
+/* Primary Button */
+.btn-primary {
+    background: var(--accent-blue);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+/* Hover State (실제 사용 시) */
+.btn-primary:hover {
+    background: var(--accent-blue-hover);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+/* Active State (실제 사용 시) */
+.btn-primary:active {
+    transform: scale(0.98);
+}
+            </div>
+
+            <h3 class="subsection-title">3.2 워크플로우 스텝퍼 (Workflow Stepper)</h3>
+            <p class="description">실제 프로젝트에서 사용되는 단계 표시 컴포넌트입니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Workflow Stepper</div>
+                <div class="workflow-stepper">
+                    <div class="step-item-stepper">
+                        <div class="step-number">1</div>
+                        <span>정보입력</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper active">
+                        <div class="step-number">2</div>
+                        <span>스토리보드 생성</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper">
+                        <div class="step-number">3</div>
+                        <span>촬영기획</span>
+                    </div>
+                    <div class="step-arrow">→</div>
+                    <div class="step-item-stepper">
+                        <div class="step-number">4</div>
+                        <span>영상제작</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="use-case">
+                <h4 class="use-case-title">사용 위치</h4>
+                <ul class="use-case-list">
+                    <li>모든 서브페이지 헤더 영역</li>
+                    <li>현재 단계를 강조하여 사용자 위치 명확화</li>
+                    <li>완료된 단계는 클릭 가능 (opacity 0.6)</li>
+                    <li>미완료 단계는 비활성 상태 (opacity 0.3)</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">3.3 프로젝트 항목 (Project Item)</h3>
+            <p class="description">사이드바에 표시되는 프로젝트 카드입니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Project Item</div>
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-thumbnail" style="background: linear-gradient(135deg, #569DFF 0%, #0055E9 100%);"></div>
+                        <div class="project-info">
+                            <div class="project-name">신제품 런칭 광고</div>
+                            <div class="project-meta">2024.01.15 · 8개 씬</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">3.4 점수 배지 (Score Badge)</h3>
+            <p class="description">스토리보드 점수를 표시하는 그라디언트 배지입니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Score Badges</div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <span class="score-badge score-high">92/100</span>
+                    <span class="score-badge score-medium">75/100</span>
+                    <span class="score-badge score-low">58/100</span>
+                </div>
+            </div>
+
+            <div class="use-case">
+                <h4 class="use-case-title">점수 기준</h4>
+                <ul class="use-case-list">
+                    <li><strong>High (80-100):</strong> 녹색 그라디언트 (#4CAF50 → #81C784)</li>
+                    <li><strong>Medium (60-79):</strong> 주황색 그라디언트 (#FF9800 → #FFB74D)</li>
+                    <li><strong>Low (&lt;60):</strong> 빨간색 그라디언트 (#F44336 → #E57373)</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">3.5 씬 카드 (Scene Card)</h3>
+            <p class="description">스토리보드 씬을 표시하는 카드 컴포넌트입니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Scene Card</div>
+                <div class="scene-card">
+                    <div class="scene-header">
+                        <span class="scene-title">씬 1</span>
+                        <span class="score-badge score-high">92/100</span>
+                    </div>
+                    <div class="scene-image"></div>
+                    <div class="scene-description">
+                        제품이 자연광에 비춰지는 오프닝 장면
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">3.6 폼 요소</h3>
+
+            <div class="example-container">
+                <div class="example-label">Form States</div>
+                <div style="max-width: 500px;">
+                    <div class="form-group">
+                        <label class="form-label">프로젝트 이름 (기본 상태)</label>
+                        <input type="text" class="form-input" placeholder="프로젝트 이름을 입력하세요">
+                        <div class="form-helper">최소 3자 이상 입력해주세요.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">이메일 (에러 상태)</label>
+                        <input type="email" class="form-input error" value="invalid-email">
+                        <div class="form-helper form-error">올바른 이메일 형식이 아닙니다.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">비밀번호 (성공 상태)</label>
+                        <input type="password" class="form-input success" value="********">
+                        <div class="form-helper form-success">안전한 비밀번호입니다.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">설명</label>
+                        <textarea class="form-input" rows="4" placeholder="프로젝트 설명을 입력하세요"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">3.7 모달 (Modal)</h3>
+            <p class="description">실제 프로젝트에서 사용되는 모달 스타일입니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">AI 검증 결과 모달 (실제 사용 예시)</div>
+                <div style="position: relative; height: 600px; background: rgba(0,0,0,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <div class="modal" style="position: relative;">
+                        <div class="modal-header">
+                            <h3 class="modal-title">AI 검증 결과</h3>
+                            <button class="modal-close">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <span style="font-weight: 600;">전체 점수</span>
+                                    <span class="score-badge score-high">85/100</span>
+                                </div>
+                                <div style="background: var(--bg-tertiary); padding: 16px; border-radius: 8px; margin-top: 16px;">
+                                    <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                                        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 18h6"/>
+                                            <path d="M10 22h4"/>
+                                            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+                                        </svg>
+                                        개선사항 및 권장사항
+                                    </h4>
+                                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">씬 6의 브랜드 메시지 전달력이 다소 낮습니다. 제품의 핵심 가치와 브랜드 아이덴티티를 더욱 명확하게 표현할 것을 권장합니다.</p>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary">스토리보드로 이동</button>
+                                <button class="btn btn-secondary">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-container" style="margin-top: 24px;">
+                <div class="example-label">삭제 확인 모달 (실제 사용 예시)</div>
+                <div style="position: relative; height: 400px; background: rgba(0,0,0,0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                    <div class="modal" style="position: relative;">
+                        <div class="modal-header">
+                            <h3 class="modal-title" style="color: var(--error);">프로젝트를 삭제하시겠습니까?</h3>
+                            <button class="modal-close">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <p style="margin-bottom: 24px; color: var(--text-secondary);">이 작업은 되돌릴 수 없습니다. 프로젝트의 모든 데이터가 영구적으로 삭제됩니다.</p>
+                            <div class="alert alert-warning" style="margin-bottom: 24px;">
+                                <div class="alert-title">삭제될 항목</div>
+                                <ul style="margin-left: 20px; margin-top: 8px;">
+                                    <li>스토리보드 (8개)</li>
+                                    <li>업로드된 이미지 (24개)</li>
+                                    <li>프로젝트 설정</li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-primary" style="background: var(--error);">삭제</button>
+                                <button class="btn btn-secondary">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">3.8 배지 (Badge)</h3>
+            <div class="example-container">
+                <div class="example-label">Badge Variants</div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <span class="badge badge-primary">Primary</span>
+                    <span class="badge badge-success">Success</span>
+                    <span class="badge badge-warning">Warning</span>
+                    <span class="badge badge-error">Error</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIONS -->
+        <section id="interactions" class="section">
+            <h2 class="section-title">4. 인터랙션</h2>
+            <p class="description">자연스러운 사용자 경험을 위한 애니메이션과 인터랙션 규칙입니다.</p>
+
+            <h3 class="subsection-title">4.1 애니메이션 속도</h3>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>속도</th>
+                            <th>지속 시간</th>
+                            <th>사용 케이스</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fast</td>
+                            <td>0.15s</td>
+                            <td>작은 UI 변화, 툴팁 표시</td>
+                        </tr>
+                        <tr>
+                            <td>Base</td>
+                            <td>0.2s</td>
+                            <td>버튼 호버, 색상 변경, 토스트 표시</td>
+                        </tr>
+                        <tr>
+                            <td>Slow</td>
+                            <td>0.3s</td>
+                            <td>드롭다운 열기, 모달 표시, 사이드바 확장</td>
+                        </tr>
+                        <tr>
+                            <td>Slower</td>
+                            <td>0.5s ~ 0.8s</td>
+                            <td>페이지 전환, 복잡한 애니메이션</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="code-block">
+/* Transition Variables */
+--transition-fast: 0.15s ease;
+--transition-base: 0.2s ease;
+--transition-slow: 0.3s ease;
+
+/* Usage */
+.button {
+    transition: all var(--transition-base);
+}
+            </div>
+
+            <h3 class="subsection-title">4.2 이징 (Easing)</h3>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">기본 이징</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li><code>ease</code> - 일반적인 전환</li>
+                            <li><code>ease-in</code> - 시작 시 천천히</li>
+                            <li><code>ease-out</code> - 끝날 때 천천히 (권장)</li>
+                            <li><code>ease-in-out</code> - 시작과 끝 천천히</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">커스텀 이징</h4>
+                    <div class="card-content">
+                        <div class="code-block">
+/* 부드러운 등장 */
+cubic-bezier(0.16, 1, 0.3, 1)
+
+/* 바운스 효과 */
+cubic-bezier(0.68, -0.55, 0.265, 1.55)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">4.3 로딩 상태</h3>
+            <div class="example-container">
+                <div class="example-label">Loading Spinner</div>
+                <div style="display: flex; gap: 32px; align-items: center;">
+                    <div class="spinner"></div>
+                    <div>
+                        <p style="font-weight: 600; margin-bottom: 8px;">로딩 인디케이터 사용 시기:</p>
+                        <ul style="margin-left: 20px; color: var(--text-secondary); line-height: 1.8;">
+                            <li>1초 이상 걸리는 작업</li>
+                            <li>서버 요청 대기 중</li>
+                            <li>파일 업로드/다운로드</li>
+                            <li>AI 스토리보드 생성 중</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">
+/* Loading Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+            </div>
+        </section>
+
+        <!-- ACCESSIBILITY -->
+        <section id="accessibility" class="section">
+            <h2 class="section-title">5. 접근성</h2>
+            <p class="description">모든 사용자가 제품을 이용할 수 있도록 접근성 표준을 준수합니다.</p>
+
+            <h3 class="subsection-title">5.1 컬러 대비율 (WCAG 2.1 기준)</h3>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>레벨</th>
+                            <th>일반 텍스트</th>
+                            <th>큰 텍스트</th>
+                            <th>설명</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AA (최소)</td>
+                            <td>4.5:1</td>
+                            <td>3:1</td>
+                            <td>법적 요구사항 충족</td>
+                        </tr>
+                        <tr>
+                            <td>AAA (향상)</td>
+                            <td>7:1</td>
+                            <td>4.5:1</td>
+                            <td>높은 접근성 보장</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card" style="margin-top: 16px;">
+                <h4 class="card-title">프로젝트 컬러 대비 검증</h4>
+                <div class="card-content">
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li><strong>Primary Text (#1E1E1E) on White:</strong> 16.4:1 (AAA) ✓</li>
+                        <li><strong>Secondary Text (#6B7280) on White:</strong> 5.9:1 (AA) ✓</li>
+                        <li><strong>White on Blue (#0055E9):</strong> 5.8:1 (AA) ✓</li>
+                        <li><strong>Blue (#0055E9) on White:</strong> 5.8:1 (AA) ✓</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">5.2 키보드 네비게이션</h3>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">필수 키보드 지원</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li><code>Tab</code> - 다음 요소로 이동</li>
+                            <li><code>Shift+Tab</code> - 이전 요소로 이동</li>
+                            <li><code>Enter/Space</code> - 버튼 활성화</li>
+                            <li><code>Esc</code> - 모달/드롭다운 닫기</li>
+                            <li><code>Arrow keys</code> - 목록/메뉴 탐색</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">포커스 관리</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li>모든 인터랙티브 요소 포커스 가능</li>
+                            <li>명확한 포커스 인디케이터</li>
+                            <li>논리적인 Tab 순서</li>
+                            <li>모달 열릴 때 포커스 트랩</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">5.3 Alt 텍스트 규칙</h3>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">정보성 이미지</h4>
+                    <div class="card-content">
+                        <p style="margin-bottom: 12px;">의미 있는 내용을 전달하는 이미지는 설명적인 alt 텍스트 제공</p>
+                        <div class="code-block">
+<img
+    src="product.jpg"
+    alt="화이트 배경의 신제품 화장품"
+>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">장식용 이미지</h4>
+                    <div class="card-content">
+                        <p style="margin-bottom: 12px;">장식 목적의 이미지는 빈 alt 속성 사용</p>
+                        <div class="code-block">
+<img
+    src="decoration.svg"
+    alt=""
+    role="presentation"
+>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MESSAGING & NOTIFICATIONS -->
+        <section id="messaging" class="section">
+            <h2 class="section-title">6. 메시지 & 알림</h2>
+            <p class="description">사용자와의 효과적인 커뮤니케이션을 위한 다양한 메시지 타입과 사용 케이스입니다.</p>
+
+            <h3 class="subsection-title">6.1 토스트 메시지 (Toast)</h3>
+            <p class="description">일시적인 피드백을 제공하는 경량 알림입니다. 3-5초 후 자동으로 사라집니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Toast Examples</div>
+                <div style="max-width: 300px;">
+                    <div class="toast toast-success">
+                        <svg class="icon" viewBox="0 0 24 24" style="color: inherit;">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                        <span>자동 저장되었습니다</span>
+                    </div>
+                    <div class="toast toast-warning">
+                        <svg class="icon" viewBox="0 0 24 24" style="color: inherit;">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                            <path d="M12 9v4"/>
+                            <path d="M12 17h.01"/>
+                        </svg>
+                        <span>연결이 불안정합니다</span>
+                    </div>
+                    <div class="toast toast-error">
+                        <svg class="icon" viewBox="0 0 24 24" style="color: inherit;">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="m15 9-6 6"/>
+                            <path d="m9 9 6 6"/>
+                        </svg>
+                        <span>파일 업로드 실패</span>
+                    </div>
+                    <div class="toast toast-info">
+                        <svg class="icon" viewBox="0 0 24 24" style="color: inherit;">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4"/>
+                            <path d="M12 8h.01"/>
+                        </svg>
+                        <span>자동 저장중...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="use-case">
+                <h4 class="use-case-title">토스트 사용 케이스</h4>
+                <ul class="use-case-list">
+                    <li><strong>Success:</strong> 자동 저장 완료, 스토리보드 생성 완료, 프로젝트 저장 성공</li>
+                    <li><strong>Warning:</strong> 네트워크 불안정, 세션 만료 임박, 한도 초과 경고</li>
+                    <li><strong>Error:</strong> 이미지 업로드 실패, 서버 연결 실패, 권한 없음</li>
+                    <li><strong>Info:</strong> AI 생성 진행중, 자동 저장중, 업데이트 안내</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">6.2 알림 메시지 (Alert)</h3>
+            <p class="description">페이지 내에서 중요한 정보를 강조하는 박스형 메시지입니다.</p>
+
+            <div class="example-container">
+                <div class="example-label">Alert Examples</div>
+                <div class="alert alert-success">
+                    <div class="alert-title">스토리보드가 성공적으로 생성되었습니다</div>
+                    <div>8개의 씬이 생성되었습니다. 각 씬을 확인하고 수정할 수 있습니다.</div>
+                </div>
+                <div class="alert alert-warning">
+                    <div class="alert-title">무료 플랜 한도 임박</div>
+                    <div>이번 달 생성 가능한 프로젝트가 2개 남았습니다. 플랜을 업그레이드하시겠습니까?</div>
+                </div>
+                <div class="alert alert-error">
+                    <div class="alert-title">필수 정보를 입력해주세요</div>
+                    <div>프로젝트 이름과 타겟 고객은 필수 입력 항목입니다.</div>
+                </div>
+                <div class="alert alert-info">
+                    <div class="alert-title">AI 생성 시간 안내</div>
+                    <div>스토리보드 생성에는 약 2-3분이 소요됩니다. 잠시만 기다려 주세요.</div>
+                </div>
+            </div>
+
+            <div class="use-case">
+                <h4 class="use-case-title">알림 사용 케이스</h4>
+                <ul class="use-case-list">
+                    <li><strong>Success:</strong> 작업 완료 확인, 스토리보드 생성 완료</li>
+                    <li><strong>Warning:</strong> 플랜 한도 임박, 저장하지 않은 변경사항</li>
+                    <li><strong>Error:</strong> 폼 검증 실패, 필수 정보 누락, 파일 형식 오류</li>
+                    <li><strong>Info:</strong> AI 생성 진행 안내, 기능 사용 방법</li>
+                </ul>
+            </div>
+
+            <h3 class="subsection-title">6.3 엣지 케이스 & 에러 처리</h3>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">1. 빈 상태 (Empty State)</h4>
+                    <div class="card-content">
+                        <div style="text-align: center; padding: 24px 0;">
+                            <svg class="icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin: 0 auto 16px; color: var(--text-tertiary);">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                            <h4 style="font-size: 16px; margin-bottom: 8px;">프로젝트가 없습니다</h4>
+                            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">첫 프로젝트를 만들어보세요</p>
+                            <button class="btn btn-primary" style="font-size: 13px; padding: 8px 16px;">새 프로젝트</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 class="card-title">2. 네트워크 오류</h4>
+                    <div class="card-content">
+                        <div class="alert alert-error">
+                            <div class="alert-title">연결 오류</div>
+                            <div style="font-size: 14px;">인터넷 연결을 확인하고 다시 시도해주세요.</div>
+                            <button class="btn btn-primary" style="margin-top: 12px; font-size: 13px; padding: 8px 16px;">다시 시도</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 class="card-title">3. 파일 업로드 오류</h4>
+                    <div class="card-content">
+                        <div class="alert alert-error">
+                            <div class="alert-title">파일 크기 초과</div>
+                            <div style="font-size: 14px;">최대 10MB까지 업로드 가능합니다. (현재: 15.2MB)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 class="card-title">4. 검색 결과 없음</h4>
+                    <div class="card-content">
+                        <div style="text-align: center; padding: 24px 0;">
+                            <svg class="icon" viewBox="0 0 24 24" style="width: 48px; height: 48px; margin: 0 auto 16px; color: var(--text-tertiary);">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <h4 style="font-size: 16px; margin-bottom: 8px;">검색 결과가 없습니다</h4>
+                            <p style="color: var(--text-secondary); font-size: 14px;">다른 검색어를 시도해보세요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MISC -->
+        <section id="misc" class="section">
+            <h2 class="section-title">7. 기타</h2>
+            <p class="description">추가적인 디자인 요소들과 규칙입니다.</p>
+
+            <h3 class="subsection-title">7.1 그림자 (Shadow)</h3>
+            <div class="grid grid-4">
+                <div class="shadow-example" style="box-shadow: var(--shadow-sm);">
+                    <div>Small</div>
+                    <div class="code-block" style="margin-top: 8px; font-size: 11px;">shadow-sm</div>
+                </div>
+                <div class="shadow-example" style="box-shadow: var(--shadow-md);">
+                    <div>Medium</div>
+                    <div class="code-block" style="margin-top: 8px; font-size: 11px;">shadow-md</div>
+                </div>
+                <div class="shadow-example" style="box-shadow: var(--shadow-lg);">
+                    <div>Large</div>
+                    <div class="code-block" style="margin-top: 8px; font-size: 11px;">shadow-lg</div>
+                </div>
+                <div class="shadow-example" style="box-shadow: var(--shadow-xl);">
+                    <div>XL</div>
+                    <div class="code-block" style="margin-top: 8px; font-size: 11px;">shadow-xl</div>
+                </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 16px;">
+/* Shadow Variables */
+--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.08);
+--shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            </div>
+
+            <h3 class="subsection-title">7.2 Border Radius</h3>
+            <div class="grid grid-4">
+                <div style="background: var(--accent-blue); height: 80px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                    Small (4px)
+                </div>
+                <div style="background: var(--accent-blue); height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                    Medium (8px)
+                </div>
+                <div style="background: var(--accent-blue); height: 80px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                    Large (12px)
+                </div>
+                <div style="background: var(--accent-blue); height: 80px; border-radius: 16px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
+                    XL (16px)
+                </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 16px;">
+/* Border Radius Variables */
+--radius-sm: 4px;   /* Icons, small elements */
+--radius-md: 8px;   /* Buttons, inputs */
+--radius-lg: 12px;  /* Cards, panels */
+--radius-xl: 16px;  /* Modals, large containers */
+--radius-full: 9999px; /* Pills, badges */
+            </div>
+
+            <h3 class="subsection-title">7.3 이미지 비율 및 처리</h3>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h4 class="card-title">권장 이미지 비율</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li><strong>프로젝트 썸네일:</strong> 16:9 또는 4:3</li>
+                            <li><strong>스토리보드 이미지:</strong> 16:9</li>
+                            <li><strong>프로필 이미지:</strong> 1:1 (정사각형)</li>
+                            <li><strong>배너 이미지:</strong> 21:9 (ultra wide)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4 class="card-title">이미지 최적화</h4>
+                    <div class="card-content">
+                        <ul style="margin-left: 20px; line-height: 2;">
+                            <li>WebP 형식 우선 사용</li>
+                            <li>적절한 크기로 리사이징</li>
+                            <li>Lazy loading 적용</li>
+                            <li>품질: 80-90%</li>
+                            <li>대체 텍스트(alt) 필수</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">7.4 글래스모피즘 (Glassmorphism)</h3>
+            <div class="card">
+                <h4 class="card-title">반투명 효과</h4>
+                <div class="card-content">
+                    <p style="margin-bottom: 16px;">사이드바와 헤더에 사용되는 글래스 효과입니다.</p>
+                    <div class="code-block">
+/* Glassmorphism */
+.sidebar, .header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+[data-theme="dark"] .sidebar,
+[data-theme="dark"] .header {
+    background: rgba(26, 31, 46, 0.9);
+}
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">7.5 그라디언트</h3>
+            <div class="grid grid-2">
+                <div style="height: 120px; background: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; text-align: center;">
+                    Gradient 1<br/>Primary Gradient
+                </div>
+                <div style="height: 120px; background: linear-gradient(90deg, #00CBC8 0%, #569DFF 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; text-align: center;">
+                    Gradient 2<br/>Accent Gradient
+                </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 16px;">
+/* Gradients */
+--gradient-1: linear-gradient(135deg, #569DFF 0%, #0055E9 50%, #6A14D9 100%);
+--gradient-2: linear-gradient(90deg, #00CBC8 0%, #569DFF 100%);
+
+/* Usage */
+.title {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+            </div>
+
+            <h3 class="subsection-title">7.6 Z-Index 레이어</h3>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>레이어</th>
+                            <th>Z-Index</th>
+                            <th>사용 예</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Base</td>
+                            <td>0</td>
+                            <td>일반 콘텐츠</td>
+                        </tr>
+                        <tr>
+                            <td>Sticky</td>
+                            <td>10</td>
+                            <td>고정된 사이드바 항목</td>
+                        </tr>
+                        <tr>
+                            <td>Header/Nav</td>
+                            <td>100</td>
+                            <td>상단 네비게이션</td>
+                        </tr>
+                        <tr>
+                            <td>Dropdown</td>
+                            <td>1000</td>
+                            <td>드롭다운 메뉴</td>
+                        </tr>
+                        <tr>
+                            <td>Modal/Toast</td>
+                            <td>9999</td>
+                            <td>모달, 토스트</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 48px 0; border-top: 1px solid var(--border-color); margin-top: 48px;">
+            <p style="color: var(--text-secondary);">CEN AI Design System v1.0</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const currentTheme = document.body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>

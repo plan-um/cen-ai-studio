@@ -41,9 +41,10 @@
     /**
      * Generate HTML for a single project
      */
-    function generateProjectHTML(project) {
+    function generateProjectHTML(project, isFirst) {
+        const activeClass = isFirst ? ' active-project' : '';
         return `
-            <div class="project-item" id="project-${project.id}">
+            <div class="project-item${activeClass}" id="project-${project.id}">
                 <div class="project-header">
                     <img src="${project.thumbnail}" alt="Project" class="project-thumbnail" onclick="toggleProjectExpand(${project.id})">
                     <div class="project-info" onclick="toggleProjectExpand(${project.id})">
@@ -91,7 +92,7 @@
                         <div class="sidebar-section-title">최근 프로젝트</div>
                     </div>
                     <div class="project-list">
-                        ${projects.map(project => generateProjectHTML(project)).join('')}
+                        ${projects.map((project, index) => generateProjectHTML(project, index === 0)).join('')}
                     </div>
                 </div>
 

@@ -692,6 +692,101 @@
             color: var(--text-secondary);
         }
 
+        /* Toast Messages */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 300px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideDown 0.3s ease-out;
+            pointer-events: auto;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .toast-loading {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .toast-loading .toast-icon {
+            color: var(--accent-blue);
+        }
+
+        .toast-success {
+            background: #e8f5e9;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+        }
+
+        .toast-success .toast-icon {
+            color: #4caf50;
+        }
+
+        .toast-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast-message {
+            flex: 1;
+        }
+
+        .toast-close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            padding: 0;
+            background: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: inherit;
+            opacity: 0.6;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .toast-close:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .toast-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         /* Scene Detail Layout */
         .scene-detail-container {
             display: grid;
@@ -902,6 +997,16 @@
 
         [data-theme="dark"] .history-panel {
             background: rgba(26, 31, 46, 0.85);
+        }
+
+        [data-theme="dark"] .toast-success {
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            color: #81c784;
+        }
+
+        [data-theme="dark"] .toast-success .toast-icon {
+            color: #81c784;
         }
 
         .history-panel.open {
@@ -1553,6 +1658,36 @@
                     <p class="page-description">AI가 생성한 씬 이미지를 확인하고 세부 정보를 수정하세요</p>
                 </div>
 
+                <!-- Toast Messages (Example Display) -->
+                <div class="toast-container">
+                    <div class="toast toast-loading">
+                        <div class="toast-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" opacity="0.25"/>
+                                <path d="M12 2 A10 10 0 0 1 22 12" stroke-linecap="round">
+                                    <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+                                </path>
+                            </svg>
+                        </div>
+                        <span class="toast-message">자동 저장중...</span>
+                    </div>
+                    <div class="toast toast-success">
+                        <div class="toast-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M9 12l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <span class="toast-message">자동 저장되었습니다</span>
+                        <button class="toast-close" onclick="this.parentElement.remove()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Scene Detail -->
                 <div class="scene-detail-container">
                     <!-- Left: Scene Image -->
@@ -1672,13 +1807,11 @@
                             </svg>
                             이전 씬
                         </button>
-                        <button class="btn btn-primary" onclick="saveScene()">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                <polyline points="7 3 7 8 15 8"></polyline>
+                        <button class="btn btn-primary" disabled style="opacity: 0.6; cursor: not-allowed;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 6L9 17l-5-5"/>
                             </svg>
-                            저장
+                            자동 저장 완료
                         </button>
                         <button class="btn btn-secondary" id="nextSceneBtn" onclick="navigateScene(1)">
                             다음 씬

@@ -137,19 +137,22 @@
         }
 
         .sidebar-header {
-            padding: 24px 20px;
+            padding: 24px 12px 24px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             height: 72px;
             box-sizing: border-box;
+            position: relative;
         }
 
         .logo {
-            height: 48px;
+            height: 64px;
             width: auto;
             cursor: pointer;
+            transition: opacity 0.2s ease;
+            margin-left: 4px;
         }
 
         .logo-light { display: block; }
@@ -333,6 +336,32 @@
                 linear-gradient(135deg, rgba(86,157,255,0.5) 0%, rgba(0,85,233,0.35) 50%, rgba(106,20,217,0.4) 100%);
             box-shadow: 0 2px 8px rgba(86,157,255,0.15);
         }
+        .project-item.active-project {
+            position: sticky;
+            top: 8px;
+            z-index: 10;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 8px 24px rgba(0, 85, 233, 0.25), 0 0 0 4px rgba(0, 85, 233, 0.1);
+            background-image:
+                linear-gradient(var(--bg-primary), var(--bg-primary)),
+                linear-gradient(135deg, rgba(86,157,255,0.15) 0%, rgba(0,85,233,0.1) 50%, rgba(106,20,217,0.12) 100%);
+        }
+
+        .project-item.active-project::before {
+            content: '진행중';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #0055E9 0%, #569DFF 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
 
         .project-header:hover {
             background: var(--bg-hover);
@@ -528,13 +557,20 @@
             white-space: nowrap;
         }
 
-        .step-item-stepper.active {
+                .step-item-stepper.active {
             background: var(--accent-blue);
             color: white;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 10px 20px;
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 85, 233, 0.3);
         }
 
-        .step-item-stepper.completed {
-            color: var(--accent-mint);
+                .step-item-stepper.completed {
+            color: var(--accent-blue);
+            cursor: pointer;
+            opacity: 0.6;
         }
 
         .step-number {
@@ -548,17 +584,21 @@
             justify-content: center;
             font-size: 12px;
             font-weight: 600;
+            transition: all 0.3s;
         }
 
-        .step-item-stepper.active .step-number {
+                .step-item-stepper.active .step-number {
             background: white;
             border-color: white;
             color: var(--accent-blue);
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
         }
 
         .step-item-stepper.completed .step-number {
-            background: var(--accent-mint);
-            border-color: var(--accent-mint);
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
             color: white;
         }
 
@@ -1424,16 +1464,16 @@
                                 </div>
                                 <img src="CEN_img/SOLIUM_광고/Scene 1 - 언덕 위의 여성.png" alt="Scene 1" class="scene-image">
                                 <div class="scene-detail-grid">
-                                    <div class="detail-label">Picture</div>
+                                    <div class="detail-label">타이틀</div>
                                     <div class="detail-value">실내 스튜디오, 자연광 활용</div>
 
-                                    <div class="detail-label">Description</div>
+                                    <div class="detail-label">설명</div>
                                     <div class="detail-value">브랜드 로고와 제품이 부드럽게 등장하는 오프닝 씬. 따뜻한 톤으로 브랜드의 친근함을 강조.</div>
 
-                                    <div class="detail-label">Sound</div>
+                                    <div class="detail-label">효과음</div>
                                     <div class="detail-value">부드러운 피아노 배경음악, 자연 효과음</div>
 
-                                    <div class="detail-label">Text</div>
+                                    <div class="detail-label">문구</div>
                                     <div class="detail-value">"자연이 주는 아름다움"</div>
                                 </div>
                             </div>
@@ -1459,16 +1499,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 2 - 들판의 풀과 바람.png" alt="Scene 2" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">야외 공원, 드론 촬영</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">모델이 자연 속에서 제품을 사용하는 모습. 생동감 있는 움직임과 표정 강조.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">경쾌한 어쿠스틱 기타, 새소리</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"매일을 특별하게"</div>
                                         </div>
                                     </div>
@@ -1494,16 +1534,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 3 - 숲속의 하늘을 바라보는 여성.png" alt="Scene 3" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">실내 스튜디오, 클로즈업 촬영</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">제품의 디테일과 질감을 강조하는 클로즈업 컷. 프리미엄 감성 전달.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">잔잔한 스트링, 제품 텍스처 효과음</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"순수한 성분, 확실한 효과"</div>
                                         </div>
                                     </div>
@@ -1529,16 +1569,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 4 - 잎 위의 물방울.png" alt="Scene 4" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">카페 실내, 슬라이더 촬영</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">일상에서 자신감 있게 제품을 사용하는 엔딩 씬. 브랜드 메시지와 로고로 마무리.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">업리프팅 사운드, 브랜드 징글</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"당신의 아름다움을 완성하세요"</div>
                                         </div>
                                     </div>
@@ -1564,16 +1604,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 5 - 피부 위의 물방울.png" alt="Scene 5" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">클로즈업, 매크로 촬영</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">피부에 제품을 바른 후 수분감을 강조하는 디테일 촬영. 텍스처와 효과 부각.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">부드러운 앰비언트, 물방울 소리</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"자연의 수분을 그대로"</div>
                                         </div>
                                     </div>
@@ -1599,16 +1639,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 6 - 에센스를 바르는 손.png" alt="Scene 6" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">핸드 클로즈업, 슬로우 모션</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">제품 사용 과정을 보여주는 핸드 디테일. 사용법과 질감 전달.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">부드러운 배경음악, 질감 효과음</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"피부가 원하는 것"</div>
                                         </div>
                                     </div>
@@ -1634,16 +1674,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 7 - 자신감 있는 미소.png" alt="Scene 7" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">인물 클로즈업, 자연광</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">제품 사용 후 자신감 있는 표정. 긍정적 결과와 만족감 표현.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">밝은 피아노, 긍정적 분위기</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"빛나는 당신"</div>
                                         </div>
                                     </div>
@@ -1669,16 +1709,16 @@
                                         </div>
                                         <img src="CEN_img/SOLIUM_광고/Scene 8 - 브랜드 엔딩.png" alt="Scene 8" class="scene-image">
                                         <div class="scene-detail-grid">
-                                            <div class="detail-label">Picture</div>
+                                            <div class="detail-label">타이틀</div>
                                             <div class="detail-value">브랜드 로고 중심, 제품 배치</div>
 
-                                            <div class="detail-label">Description</div>
+                                            <div class="detail-label">설명</div>
                                             <div class="detail-value">브랜드 로고와 제품이 함께 나오는 엔딩 씬. 최종 메시지 전달.</div>
 
-                                            <div class="detail-label">Sound</div>
+                                            <div class="detail-label">효과음</div>
                                             <div class="detail-value">브랜드 시그니처 사운드, 마무리 음악</div>
 
-                                            <div class="detail-label">Text</div>
+                                            <div class="detail-label">문구</div>
                                             <div class="detail-value">"SOLIUM - 자연에서 시작된 아름다움"</div>
                                         </div>
                                     </div>
@@ -1688,6 +1728,12 @@
 
                 <!-- Action Buttons -->
                 <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="goBack()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        뒤로 가기
+                    </button>
                     <button class="btn btn-outline" onclick="exportPlanning()">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1700,7 +1746,7 @@
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
-                        AI 영상 생산 시작하기
+                        AI 영상 생성 시작하기
                     </button>
                 </div>
             </div>
@@ -1759,6 +1805,10 @@
         }
 
         // Start Production
+        function goBack() {
+            window.history.back();
+        }
+
         function startProduction() {
             window.location.href = '1-5-영상제작.html';
         }
